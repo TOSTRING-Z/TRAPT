@@ -1,0 +1,231 @@
+## TRAPT
+
+[TRAPT](https://bio.liclab.net/TRAPT) is a multi-stage fused deep learning framework for transcription regulators prediction via integraing large-scale epigenomic data.
+
+## Usage
+
+### Online
+We have developed a corresponding web service (https://bio.liclab.net/TRAPT). The website is designed to accepts gene sets input by users for analysis, allowing easy retrieval of analytical results. We've also thoughtfully included an email notification feature. On the results page, the website displays all TR activity scores, as well as the ranking and all individual scores of TRs. Concurrently, the website provides annotation details and relevant quality control information for each transcriptional regulator. Compared to offline tools, online analysis tools offer additional features on the browsing and result analysis pages. The online tools facilitate visualization of the predicted 3D protein structure for each TR, leveraging AlphaFold's predictions. Additionally, the online tools incorporate a genome browser to facilitate user interaction with the genomic tracks associated with each TR.
+
+### Offline
+
+First, download library: 
+
+[TRAPT library](https://bio.liclab.net/TRAPT/download)
+
+
+Second, install TRAPT:
+
+```sh
+conda create --name TRAPT python=3.7
+conda activate TRAPT
+pip install TRAPT
+```
+
+Run TRAPT using a [case](https://bio.liclab.net/TRAPT/static/download/ESR1@DataSet_01_111_down500.txt):
+
+Use shell commands:
+```bash
+# help
+trapt --help
+# run
+trapt --library library \
+      --input ESR1@DataSet_01_111_down500.txt \
+      --output output/test/ESR1@DataSet_01_111_down500
+```
+
+Using the python interface:
+```python
+import os
+from TRAPT.Tools import Args, RP_Matrix
+from TRAPT.Run import runTRAPT
+
+# library path
+library = 'library'
+# input file path
+input = 'ESR1@DataSet_01_111_down500.txt'
+# output file path
+output = 'output/test/ESR1@DataSet_01_111_down500'
+
+args = Args(input, output, library)
+runTRAPT(args)
+```
+
+### De novo library
+
+```bash
+# Constructing TR-RP matrix
+python3 src/TRAPT/CalcTRRPMatrix.py library
+# Constructing H3K27ac-RP matrix
+python3 src/TRAPT/CalcSampleRPMatrix.py H3K27ac library
+# Constructing ATAC-RP matrix
+python3 src/TRAPT/CalcSampleRPMatrix.py ATAC library
+# Reconstruct TR-H3K27ac adjacency matrix
+python3 src/TRAPT/DLVGAE.py H3K27ac library
+# Reconstruct TR-ATAC adjacency matrix
+python3 src/TRAPT/DLVGAE.py ATAC library
+# Prediction D-RP(H3K27ac) matrix
+python3 src/TRAPT/CalcTRSampleRPMatrix.py H3K27ac library
+# Prediction D-RP(ATAC) matrix
+python3 src/TRAPT/CalcTRSampleRPMatrix.py ATAC library
+```
+
+## Research details
+
+### KD ablation experiment
+```shell
+python3 src/TRAPT/DLVGAE.py H3K27ac library false new/result/1.1
+python3 src/TRAPT/DLVGAE.py ATAC library false new/result/1.1
+ln -s library/RP_Matrix_TR.h5ad new/result/1.1
+ln -s library/RP_Matrix_H3K27ac.h5ad new/result/1.1
+ln -s library/RP_Matrix_ATAC.h5ad new/result/1.1
+python3 src/TRAPT/CalcTRSampleRPMatrix.py H3K27ac new/result/1.1
+python3 src/TRAPT/CalcTRSampleRPMatrix.py ATAC new/result/1.1
+python3 new/script/1.1/run_mult.py --input_dir input/KnockTFv1/down --output_dir new/result/1.1/output/TRAPT-NDL --library new/result/1.1 --use_dl False
+python3 new/script/1.1/run_mult.py --input_dir input/KnockTFv1/up --output_dir new/result/1.1/output/TRAPT-NDL --library new/result/1.1 --use_dl False
+python3 new/script/1.1/RankTRAPT.py --output_dir new/result/1.1/output/TRAPT-NDL --name TRAPT-NDL --type down500,up500 --rank_path new/result/1.1/files
+python3 new/script/1.1/RankTRAPT.py --output_dir output/KnockTFv1 --name TRAPT-DL --type down500,up500 --rank_path new/result/1.1/files
+python3 new/script/1.1/Rank.py --output_path new/result/1.1/figure --name TRAPT-KD --type ALL --rank_path new/result/1.1/files --columns TRAPT-DL,TRAPT-NDL
+# loss
+python3 new/script/1.1/loss_DLVGAE.py
+python3 new/script/1.1/loss_DLFS.py
+```
+![img](./new/result/1.1/figure/rank_TRAPT-KD@mmr_bar.svg)
+![img](./new/result/1.1/figure/rank_TRAPT-KD@boxplot.svg)
+![img](./new/result/1.1/figure/loss-D-RP-student[DL].svg)
+![img](./new/result/1.1/figure/loss-U-RP-student[DL].svg)
+### TR decay rate
+```shell
+python3 new/script/2.5/CalcTRRPMatrix.py --library library --output new/result/2.5
+python3 new/script/2.5/decay_rate.py
+```
+![img](./new/result/2.5/long.svg)
+![img](./new/result/2.5/short.svg)
+
+### The differences in model variant predictions TR
+```shell
+python3 new/script/2.8/RankTRAPT_var.py --output_dir output/KnockTFv1 --rank_path new/result/2.8/files --name H3K27ac --model H3K27ac
+python3 new/script/2.8/RankTRAPT_var.py --output_dir output/KnockTFv1 --rank_path new/result/2.8/files --name ATAC --model ATAC
+
+python3 new/script/2.8/var_predict.py --rank_x new/result/2.8/files/rank_H3K27ac.csv --rank_y new/result/2.8/files/rank_ATAC.csv --output_path new/result/2.8/figure/rank_scatterplot_h3k27ac-atac.svg --title "H3K27ac/ATAC rank"
+```
+![img](./new/result/2.8/figure/rank_scatterplot_h3k27ac-atac.svg)
+
+```shell
+python3 new/script/2.8/RankTRAPT_var.py --output_dir output/KnockTFv1 --rank_path new/result/2.8/files --name TRAPT --model TRAPT
+python new/script/2.8/TR_RP_run.py --input_path input/KnockTFv1/down --output_path new/result/2.8/output-TR_RP
+python new/script/2.8/TR_RP_run.py --input_path input/KnockTFv1/up --output_path new/result/2.8/output-TR_RP
+python3 new/script/2.8/RankTRAPT_var.py --output_dir new/result/2.8/output-TR_RP --rank_path new/result/2.8/files --name TR --model TR
+
+python3 new/script/2.8/var_predict.py --rank_x new/result/2.8/files/rank_TRAPT.csv --rank_y new/result/2.8/files/rank_TR.csv --output_path new/result/2.8/figure/rank_scatterplot_trapt-tr.svg --title "TRAPT/TR rank"
+```
+![img](./new/result/2.8/figure/rank_scatterplot_trapt-tr.svg)
+```shell
+python3 new/script/2.8/Rank_var.py --output_path new/result/2.8/figure --name Model-variant --type ALL --rank_path new/result/2.8/files --source KnockTF --columns TRAPT,ATAC,H3K27ac,TR
+```
+![img](./new/result/2.8/figure/rank_Model-variant@boxplot.svg)
+
+### Algorithm comparison using cistrome background data
+```shell
+# KnockTF benchmark dataset
+python3 new/script/2.11/RankTRAPT_Source.py --output_dir output/KnockTFv1 --rank_path new/result/2.11/files --source cistrome --name TRAPT-source_of_cistrome --model TRAPT
+cp other/rank_{Lisa,BART}.csv new/result/2.11/files
+python3 new/script/3.11/Rank.py --output_path new/result/2.11/figure --name TRAPT-cistrome --type ALL --rank_path new/result/2.11/files --source KnockTF --columns TRAPT-source_of_cistrome,Lisa,BART
+```
+![img](./new/result/2.11/figure/rank_TRAPT-cistrome@boxplot.svg)
+![img](./new/result/2.11/figure/rank_TRAPT-cistrome@mmr_bar.svg)
+
+```shell
+# Lisa benchmark dataset
+
+## TRAPT
+python3 new/script/1.1/run_mult.py --input_dir input/Lisa/down --output_dir new/result/2.11/output-Lisa
+python3 new/script/1.1/run_mult.py --input_dir input/Lisa/up --output_dir new/result/2.11/output-Lisa
+python3 new/script/2.11/RankTRAPT_Source.py --output_dir new/result/2.11/output-Lisa --rank_path new/result/2.11/files --source cistrome --name TRAPT-cistrome_lisa --model TRAPT
+
+## Lisa new/script/2.11/lisa_bart.sh
+python3 new/script/2.11/RankLisa.py --match_dir new/result/2.11/output-Lisa --input_path new/result/2.11/lisa --type down,up --output_path new/result/2.11/files_lisa
+
+## BART new/script/2.11/lisa_bart.sh
+python3 new/script/2.11/RankBART.py --match_dir new/result/2.11/output-Lisa --input_path new/result/2.11/bart --type down,up --output_path new/result/2.11/files_lisa
+
+## ChEA3
+python3 new/script/2.11/chea3_run.py --input_path input/Lisa/down --output_path new/result/2.11/chea3/down
+python3 new/script/2.11/chea3_run.py --input_path input/Lisa/up --output_path new/result/2.11/chea3/up
+python3 new/script/2.11/RankChEA3.py --match_dir new/result/2.11/output-Lisa --input_path new/result/2.11/chea3 --type down,up --output_path new/result/2.11/files_lisa
+
+## i-cisTarget
+python3 new/script/2.11/icistarget_run.py --input_path input/Lisa/down --output_path new/result/2.11/icistarget/down --download_dir /root/下载 --executable_path /install/chromedriver_linux64/chromedriver
+python3 new/script/2.11/icistarget_run.py --input_path input/Lisa/up --output_path new/result/2.11/icistarget/up --download_dir /root/下载 --executable_path /install/chromedriver_linux64/chromedriver
+python3 new/script/2.11/RankicisTarget.py --match_dir new/result/2.11/output-Lisa --input_path new/result/2.11/icistarget --type down,up --output_path new/result/2.11/files_lisa
+
+python3 new/script/1.1/Rank.py --output_path new/result/2.11/figure --name Lisa-benchmark-dataset --type ALL --rank_path new/result/2.11/files_lisa --source Lisa --columns TRAPT-cistrome_lisa,Lisa,BART,i-cisTarget,ChEA3
+```
+![img](./new/result/2.11/figure/rank_Lisa-benchmark-dataset@boxplot.svg)
+![img](./new/result/2.11/figure/rank_Lisa-benchmark-dataset@mmr_bar.svg)
+
+
+### Overlap between selected epigenetic profiles and TR peaks
+```shell
+sed '1d' input/AD/genename_out.txt | awk '{print $10}' | head -n 200 > new/result/2.16/input/AD_200.txt
+python3 src/TRAPT/Run.py --input new/result/2.16/input/AD_200.txt --output new/result/2.16/output/AD_200
+# 172.27.0.239 /data/zgr/tmp
+python3 get_marks.py --ssh_user zhangguorui --ssh_ip 10.100.3.6 --marks_path /wyzdata8/SEdb1/all_bam/sample --input H3K27ac_info_samples.csv --output_path marks
+python3 get_marks.py --ssh_user zhangguorui --ssh_ip 10.100.3.6 --marks_path /wyzdata5/SEdb2/bam --input H3K27ac_info_samples.csv --output_path marks
+
+python3 new/script/2.16/bam2bw.py
+ls new/result/2.16/marks/hg19/*.bam|while read bam;do
+    python3 new/script/2.16/bam2bw.py --bam $bam
+done
+ls new/result/2.16/marks/hg38/*.bam|while read bam;do
+    python3 new/script/2.16/bam2bw.py --genome hg38to19 --bam $bam
+done
+# IGV visualization
+```
+
+### Dataset analysis code, chart code
+```shell
+# Fig. 2 | Evaluation of TRAPT and comparative methods on TR knockdown/knockout and TF binding datasets.
+### TRAPT
+python3 new/script/1.1/RankTRAPT.py --output_dir output/KnockTFv1 --name TRAPT --type down500,up500 --rank_path 'new/result/3.11/Fig. 2/files'
+### Lisa
+python3 new/script/2.11/RankLisa.py --match_dir output/KnockTFv1 --input_path other/lisa --type down,up --output_path 'new/result/3.11/Fig. 2/files'
+### BART
+python3 new/script/2.11/RankBART.py --match_dir output/KnockTFv1 --input_path other/bart --type down,up --output_path 'new/result/3.11/Fig. 2/files'
+### ChEA3
+python3 new/script/2.11/RankChEA3.py --match_dir output/KnockTFv1 --input_path other/chea3 --type down,up --output_path 'new/result/3.11/Fig. 2/files'
+### i-cisTarget
+python3 new/script/2.11/RankicisTarget.py --match_dir output/KnockTFv1 --input_path other/icistarget --type down,up --output_path 'new/result/3.11/Fig. 2/files'
+### Plotting
+python3 new/script/3.11/Rank_all.py --output_path 'new/result/3.11/Fig. 2/figure' --name rank_KnockTF-benchmark-dataset --type ALL --rank_path 'new/result/3.11/Fig. 2/files' --source KnockTF --columns TRAPT,Lisa,BART,i-cisTarget,ChEA3
+```
+
+![img](./new/result/3.11/Fig.%202/figure/rank_rank_KnockTF-benchmark-dataset@mmr_bar.svg)
+![img](./new/result/3.11/Fig.%202/figure/rank_rank_KnockTF-benchmark-dataset@boxplot.svg)
+![img](./new/result/3.11/Fig.%202/figure/rank_rank_KnockTF-benchmark-dataset@bar.svg)
+![img](./new/result/3.11/Fig.%202/figure/rank_rank_KnockTF-benchmark-dataset@line.svg)
+![img](./new/result/3.11/Fig.%202/figure/rank_rank_KnockTF-benchmark-dataset@groupbar.svg)
+```shell
+# Fig. 3 | Using the differential gene sets from TR knockdown/knockout experiments by KnockTF, we evaluated the performance of TRAPT.
+python3 new/script/3.11/rank_scatter_plot.py
+```
+![img](./new/result/3.11/Fig.%203/figure/rank_scatter.svg)
+```shell
+# Fig. 4 | Illustration of the TRAPT framework using downregulated genes from ESR1 gene knockout experiments in gastric cancer and KMCF7 breast cancer.
+python3 new/script/3.11/case_esr1.py
+```
+![img](./new/result/3.11/Fig.%204/figure/ESR1-KD-MCF7.svg)
+![img](./new/result/3.11/Fig.%204/figure/ppi.svg)
+![img](./new/result/3.11/Fig.%204/GTEx.svg)
+![img](./new/result/3.11/Fig.%204/TCGA.svg)
+```shell
+# Fig. 5 | Prediction of functional transcriptional regulators for Alzheimer's disease using post-GWAS analysis.
+python3 new/script/3.11/enrichment.py
+```
+![img](./new/result/3.11/Fig.%205/figure/enrichment.svg)
+```shell
+# Fig. 6 | TRAPT identifies transcriptional regulators associated with cell fate and tissue identity. 
+python3 new/script/3.11/gtex_diff_analysis.py
+python3 new/script/3.11/gtex_heatmap.py
+```
+![img](./new/result/3.11/Fig.%206/figure/GTEx-heatmap.svg)
