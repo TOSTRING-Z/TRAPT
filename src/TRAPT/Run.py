@@ -89,12 +89,10 @@ def main():
     parser.add_argument("--input", "-i", type=str, default=None, help = "Enter a gene list")
     parser.add_argument("--output", "-o", type=str, default=None, help = "Enter an output folder")
     parser.add_argument("--background_genes", "-b", type=int, default=6000, help = "Background gene count")
-    parser.add_argument("--use_dl", "-d", type=str2bool, default=True, help = "Using knowledge distillation")
+    parser.add_argument("--use_kd", "-d", type=str2bool, default=True, help = "Using knowledge distillation")
     parser.add_argument("--tr_type", type=str, default="all", help = "all/tr/tcof/cr")
     parser.add_argument("--source", type=str, default="all", help = "all/cistrome/chip_altas/gtrd/remap/chip-atlas/remap/encode/geo")
     args = Args(**dict(parser.parse_args()._get_kwargs()))
-    os.environ["CUDA_VISIBLE_DEVICES"] = ""
-    os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
     runTRAPT(args)
 
 if __name__ == "__main__":

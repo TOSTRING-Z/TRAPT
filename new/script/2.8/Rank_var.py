@@ -1,10 +1,7 @@
-import os
-
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
-from sklearn.preprocessing import minmax_scale
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -14,6 +11,7 @@ parser.add_argument("--output_path", type=str, default=None)
 parser.add_argument("--rank_path", type=str, default=None)
 parser.add_argument("--type", type=str, default="ALL",help="ALL/TF/CR/TcoF/CR_TcoF")
 parser.add_argument("--columns", type=str, default="TRAPT")
+parser.add_argument("--col_names", type=str, default="TRAPT")
 parser.add_argument("--source", type=str, default="KnockTF")
 args = parser.parse_args()
 
@@ -25,6 +23,7 @@ rank_path = args.rank_path
 color_palette = ["#3c5488", "#f39b7f", "#8491b4", "#91d1c2", "#fccde5"]
 
 columns = args.columns.split(",")
+col_names = args.col_names.split(",")
 data = pd.read_csv(f"{args.library}/TRs_info.txt", sep="\t")
 
 ALL = set(data["tr_base"].drop_duplicates())
@@ -96,27 +95,39 @@ color = {
 
 
 # # # # # # # # # # # # # # # # # # # # # # # #
-# # # # # # # # mean rank 箱线图 # # # # # # # #
+# # # # # # MRR 柱状图  # # # # # #
 # # # # # # # # # # # # # # # # # # # # # # # #
-
+print("MMR score:")
 data = pd.DataFrame()
-for method in columns:
-    add_data = pd.read_csv(f"{rank_path}/rank_{method}.csv")
-    add_up = add_data[add_data["id"].str.contains("up")]
-    add_up = add_up[add_up.tr.map(lambda x: x in TR)]
-    add_up["type"] = "up"
-    add_up["method"] = method
-    add_up["rank"] = add_up["rank"] / add_up["rank"].max()
-    add_down = add_data[add_data["id"].str.contains("down")]
-    add_down = add_down[add_down.tr.map(lambda x: x in TR)]
-    add_down["type"] = "down"
-    add_down["method"] = method
-    add_down["rank"] = add_down["rank"] / add_down["rank"].max()
+for i,method in enumerate(columns):
+    add_data = pd.read_csv(f"{rank_path}/rank_%s.csv" % method)
+    add_data = add_data.loc[add_data["tr"].apply(lambda x: x in TR)]
+    add_up = add_data[add_data["id"].str.contains("up")].copy()
+    add_up["Type"] = "up"
+    add_up["Method"] = col_names[i]
+    mmr = np.round(np.mean(1 / pd.to_numeric(add_up["rank"])),4)
+    add_up["Mean Reciprocal Rank"] = mmr
+    add_down = add_data[add_data["id"].str.contains("down")].copy()
+    add_down["Type"] = "down"
+    add_down["Method"] = col_names[i]
+    mmr = np.round(np.mean(1 / pd.to_numeric(add_down["rank"])),4)
+    add_down["Mean Reciprocal Rank"] = mmr
     data = pd.concat([data, add_up, add_down], ignore_index=True)
 
-sn = sns.boxplot(
-    x="method", y="rank",hue="type", data=data, palette=color_palette, fliersize=1, width=0.8
+data["-Rank"] = -data["rank"]
+data["Reciprocal Rank"] = 1 / data["rank"]
+
+data = (
+    data[["Method", "Mean Reciprocal Rank", "Type"]]
+    .groupby(["Method","Type"])
+    .mean()
+    .loc[col_names]
+    .reset_index()
 )
-plt.title(f"Ranking of target TRs using knockdown/knockout datasets")
-plt.savefig(f"{output_path}/rank_{name}@boxplot.svg")
+g = sns.barplot(x="Mean Reciprocal Rank", y="Method", hue="Type", data=data)
+sns.despine(bottom=False, left=False)
+plt.title(f"Overall {title} recovery performance of differential genes in {args.source}")
+plt.xlabel("Mean Reciprocal Rank")
+plt.ylabel("Algorithms")
+plt.savefig(f"{output_path}/rank_{name}@mmr_bar.svg")
 plt.close()

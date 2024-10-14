@@ -34,9 +34,9 @@ for t in types:
             rank_score = summary_data.loc[summary_data["TR"] == TR, "Rank"].values[0]
         if rank_score > 915:
             rank_score = 916
-        rank.append([TR, rank_score])
+        rank.append([tr, TR, rank_score])
 
-rank = pd.DataFrame(rank, columns=["tr", "rank"])
+rank = pd.DataFrame(rank, columns=["id", "tr", "rank"])
 rank.to_csv("%s/rank_BART.csv" % args.output_path, index=False)
 top_sum = len(rank.query('rank <= 10'))
 print("Total:", len(rank), "top_sum: ", top_sum)

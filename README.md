@@ -54,12 +54,6 @@ runTRAPT(args)
 ### De novo library
 
 ```bash
-# Constructing TR-RP matrix
-python3 src/TRAPT/CalcTRRPMatrix.py library
-# Constructing H3K27ac-RP matrix
-python3 src/TRAPT/CalcSampleRPMatrix.py H3K27ac library
-# Constructing ATAC-RP matrix
-python3 src/TRAPT/CalcSampleRPMatrix.py ATAC library
 # Reconstruct TR-H3K27ac adjacency matrix
 python3 src/TRAPT/DLVGAE.py H3K27ac library
 # Reconstruct TR-ATAC adjacency matrix
@@ -69,6 +63,40 @@ python3 src/TRAPT/CalcTRSampleRPMatrix.py H3K27ac library
 # Prediction D-RP(ATAC) matrix
 python3 src/TRAPT/CalcTRSampleRPMatrix.py ATAC library
 ```
+
+## Case 1: Inferring Key Regulators in Breast Cancer Using Bulk RNA-seq
+### Data Preparation
+```shell
+mkdir -p new/result/case1
+```
+### Differential Expression Analysis
+```shell
+
+```
+### TRAPT Infers Key Regulators
+```shell
+
+```
+
+## Case 2: Inferring key regulators in human hematopoietic stem cells using scRNA-seq data.
+### Data Preparation
+```shell
+mkdir -p new/result/case2
+wget -c https://bio.liclab.net/TRAPT/static/download/data.csv.gz -O new/result/case2/data.csv.gz
+```
+### Data Processing (Dimensionality Reduction, Clustering, Identification of Marker Genes)
+```shell
+Rscript new/script/case2/data_processing.r
+```
+![img](./new/result/case2/cluster-umap.svg)
+![img](./new/result/case2/cluster-pca.svg)
+### TRAPT Infers Key Regulators for Clusters
+```shell
+trapt --library library \
+      --input 'new/result/case2/output/markers_top200-[pDCs-LMPs].txt' \
+      --output new/result/case2/trapt_output
+```
+
 
 ## Research details
 
@@ -81,11 +109,11 @@ ln -s library/RP_Matrix_H3K27ac.h5ad new/result/1.1
 ln -s library/RP_Matrix_ATAC.h5ad new/result/1.1
 python3 src/TRAPT/CalcTRSampleRPMatrix.py H3K27ac new/result/1.1
 python3 src/TRAPT/CalcTRSampleRPMatrix.py ATAC new/result/1.1
-python3 new/script/1.1/run_mult.py --input_dir input/KnockTFv1/down --output_dir new/result/1.1/output/TRAPT-NDL --library new/result/1.1 --use_dl False
-python3 new/script/1.1/run_mult.py --input_dir input/KnockTFv1/up --output_dir new/result/1.1/output/TRAPT-NDL --library new/result/1.1 --use_dl False
-python3 new/script/1.1/RankTRAPT.py --output_dir new/result/1.1/output/TRAPT-NDL --name TRAPT-NDL --type down500,up500 --rank_path new/result/1.1/files
-python3 new/script/1.1/RankTRAPT.py --output_dir output/KnockTFv1 --name TRAPT-DL --type down500,up500 --rank_path new/result/1.1/files
-python3 new/script/1.1/Rank.py --output_path new/result/1.1/figure --name TRAPT-KD --type ALL --rank_path new/result/1.1/files --columns TRAPT-DL,TRAPT-NDL
+python3 new/script/1.1/run_mult.py --input_dir input/KnockTFv1/down --output_dir new/result/1.1/output/TRAPT-NKD --library new/result/1.1 --use_kd False
+python3 new/script/1.1/run_mult.py --input_dir input/KnockTFv1/up --output_dir new/result/1.1/output/TRAPT-NKD --library new/result/1.1 --use_kd False
+python3 new/script/1.1/RankTRAPT.py --output_dir new/result/1.1/output/TRAPT-NKD --name TRAPT-NKD --type down500,up500 --rank_path new/result/1.1/files
+python3 new/script/1.1/RankTRAPT.py --output_dir output/KnockTFv1 --name TRAPT-KD --type down500,up500 --rank_path new/result/1.1/files
+python3 new/script/1.1/Rank.py --output_path new/result/1.1/figure --name TRAPT-KD --type ALL --rank_path new/result/1.1/files --columns TRAPT-KD,TRAPT-NKD
 # loss
 python3 new/script/1.1/loss_DLVGAE.py
 python3 new/script/1.1/loss_DLFS.py
@@ -104,10 +132,10 @@ python3 new/script/2.5/decay_rate.py
 
 ### The differences in model variant predictions TR
 ```shell
-python3 new/script/2.8/RankTRAPT_var.py --output_dir output/KnockTFv1 --rank_path new/result/2.8/files --name H3K27ac --model H3K27ac
-python3 new/script/2.8/RankTRAPT_var.py --output_dir output/KnockTFv1 --rank_path new/result/2.8/files --name ATAC --model ATAC
+python3 new/script/2.8/RankTRAPT_var.py --output_dir output/KnockTFv1 --rank_path new/result/2.8/files --name TRAPT-H3K27ac --model H3K27ac
+python3 new/script/2.8/RankTRAPT_var.py --output_dir output/KnockTFv1 --rank_path new/result/2.8/files --name TRAPT-ATAC --model ATAC
 
-python3 new/script/2.8/var_predict.py --rank_x new/result/2.8/files/rank_H3K27ac.csv --rank_y new/result/2.8/files/rank_ATAC.csv --output_path new/result/2.8/figure/rank_scatterplot_h3k27ac-atac.svg --title "H3K27ac/ATAC rank"
+python3 new/script/2.8/var_predict.py --rank_x new/result/2.8/files/rank_TRAPT-H3K27ac.csv --rank_y new/result/2.8/files/rank_TRAPT-ATAC.csv --output_path new/result/2.8/figure/rank_scatterplot_h3k27ac-atac.svg --title "TRAPT-H3K27ac vs. TRAPT-ATAC"
 ```
 ![img](./new/result/2.8/figure/rank_scatterplot_h3k27ac-atac.svg)
 
@@ -115,15 +143,21 @@ python3 new/script/2.8/var_predict.py --rank_x new/result/2.8/files/rank_H3K27ac
 python3 new/script/2.8/RankTRAPT_var.py --output_dir output/KnockTFv1 --rank_path new/result/2.8/files --name TRAPT --model TRAPT
 python new/script/2.8/TR_RP_run.py --input_path input/KnockTFv1/down --output_path new/result/2.8/output-TR_RP
 python new/script/2.8/TR_RP_run.py --input_path input/KnockTFv1/up --output_path new/result/2.8/output-TR_RP
-python3 new/script/2.8/RankTRAPT_var.py --output_dir new/result/2.8/output-TR_RP --rank_path new/result/2.8/files --name TR --model TR
+python3 new/script/2.8/RankTRAPT_var.py --output_dir new/result/2.8/output-TR_RP --rank_path new/result/2.8/files --name TR-model --model TR
+# peak in promoter
+python3 new/script/2.8/peak_in_promoter_matrix.py --library library --output library
 
-python3 new/script/2.8/var_predict.py --rank_x new/result/2.8/files/rank_TRAPT.csv --rank_y new/result/2.8/files/rank_TR.csv --output_path new/result/2.8/figure/rank_scatterplot_trapt-tr.svg --title "TRAPT/TR rank"
+python new/script/2.8/TR_Peak_run.py --input_path input/KnockTFv1/down --output_path new/result/2.8/output-TR_peak
+python new/script/2.8/TR_Peak_run.py --input_path input/KnockTFv1/up --output_path new/result/2.8/output-TR_peak
+python3 new/script/2.8/RankTRAPT_var.py --output_dir new/result/2.8/output-TR_peak --rank_path new/result/2.8/files --name Peak-promoter-model --model Peak
+
+python3 new/script/2.8/var_predict.py --rank_x new/result/2.8/files/rank_TRAPT.csv --rank_y new/result/2.8/files/rank_Peak-promoter-model.csv --output_path new/result/2.8/figure/rank_scatterplot_trapt-peak.svg --title "TRAPT vs. Peak-promoter-model"
 ```
-![img](./new/result/2.8/figure/rank_scatterplot_trapt-tr.svg)
+![img](./new/result/2.8/figure/rank_scatterplot_trapt-peak.svg)
 ```shell
-python3 new/script/2.8/Rank_var.py --output_path new/result/2.8/figure --name Model-variant --type ALL --rank_path new/result/2.8/files --source KnockTF --columns TRAPT,ATAC,H3K27ac,TR
+python3 new/script/2.8/Rank_var.py --output_path new/result/2.8/figure --name Model-variant --type ALL --rank_path new/result/2.8/files --source KnockTF --columns TRAPT,TRAPT-H3K27ac,TR-model,Peak-promoter-model --col_names 'TRAPT,TRAPT(ATAC-),TRAPT(H3K27ac-),Peak-promoter-model'
 ```
-![img](./new/result/2.8/figure/rank_Model-variant@boxplot.svg)
+![img](./new/result/2.8/figure/rank_Model-variant@mmr_bar.svg)
 
 ### Algorithm comparison using cistrome background data
 ```shell

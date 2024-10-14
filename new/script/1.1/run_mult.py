@@ -20,7 +20,7 @@ parser.add_argument("--processes", type=int, default=2)
 parser.add_argument("--restart_step", type=int, default=3200)
 parser.add_argument("--threads", type=int, default=16)
 parser.add_argument("--background_genes", type=int, default=6000)
-parser.add_argument("--use_dl", type=str2bool, default=True)
+parser.add_argument("--use_kd", type=str2bool, default=True)
 args = parser.parse_args()
 
 import sys
@@ -37,13 +37,13 @@ def execute_from_command_line(argv):
     os.execl(python, python, *argv)
 
 
-def get_params(input_dir, output_dir, library, restart_step, threads, trunk_size, background_genes, use_dl):
+def get_params(input_dir, output_dir, library, restart_step, threads, trunk_size, background_genes, use_kd):
     step = 0
     for input in tqdm(sorted(glob(f'{input_dir}/*'), reverse=False)):
         name = os.path.basename(input).split('.')[0]
         final_output = os.path.join(output_dir, name)
         os.system(f'mkdir -p {final_output}')
-        args = Args(input, final_output, library, threads, trunk_size, background_genes, use_dl)
+        args = Args(input, final_output, library, threads, trunk_size, background_genes, use_kd)
         if os.path.exists(f'{final_output}/TR_detail.txt'):
             continue
         print(f'\033[1;31m # # # {input} # # #\033[0m')
@@ -69,7 +69,7 @@ if __name__ == '__main__':
                 args.threads, 
                 trunk_size, 
                 args.background_genes, 
-                args.use_dl
+                args.use_kd
             ),
         ):
             step += 1

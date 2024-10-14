@@ -1,105 +1,94 @@
 import os
-import re
-import sys
 
 from multiprocessing import Pool
 
 import anndata as ad
-import h5py
 import numpy as np
 import pandas as pd
 from scipy import sparse
 from tqdm import tqdm
 
 
-class CalcTRRPMatrix():
-    def __init__(self,library='library',output='library'):
-        self.library = library
-        self.output = output
-        self.hg38_refseq = os.path.join(library,'hg38_refseq.ucsc')
-        self.dhs_hg38_rose = os.path.join(library,'dhs_hg38_rose.bed')
-        self.DHS_TO_GENE = os.path.join(library,'dhs_hg38_rose_DHS_TO_GENE.txt')
-    
-    def dhs2gene(self,sample):
-        id = re.findall('dhs@(.*?).csv',sample)[0]
-        try:
-            r = 100000
-            d_ = 10000
-            e = self.TR_info.loc[id,'Distal Intergenic Percentage']
-            if e > 0:
-                m = e
-            else:
-                m = 0.01
-            alpha = (r-d_)/np.log(2/m-0.99)
-            sample_name = re.findall(r'dhs@(.*?).csv',sample)[0]
-            vec = pd.read_csv(sample,sep='\t',header=None)[0].values
-            rp_vec = []
-            for gene in self.genes:
-                index = self.dhs_gene_g.loc[gene,'index']
-                s = vec[index]
-                d = self.dhs_gene_g.loc[gene,'DISTANCE']
-                w = np.ones(d.shape)
-                w[d > d_] = 2/(np.exp((d[d > d_]-d_)/alpha)+1)
-                w[d > r] = 0
-                rp = np.mean(np.multiply(w,s))
-                rp_vec.append(rp)
-            rp_vec = sparse.csr_matrix(rp_vec)
-            return sample_name,rp_vec
-        except:
-            print('Error %s !' % sample)
-            return None
-
-    def run(self):
-        ucsc_gene = pd.read_csv(self.hg38_refseq,sep='\t')
-        ucsc_gene = ucsc_gene[['name','name2']]
-        ucsc_gene.columns = ['GENES','SYMBOLS']
-        ucsc_gene = ucsc_gene.drop_duplicates()
-        dhs_hg38 = pd.read_csv(self.dhs_hg38_rose,sep='\t',header=None)
-        dhs_hg38 = dhs_hg38.reset_index()[['index',0]]
-        dhs_hg38.columns = ['index','DHS']
-        dhs_gene = pd.read_csv(self.DHS_TO_GENE,sep='\t')
-        dhs_gene = dhs_gene.iloc[:,[0,4,5]]
-        dhs_gene.columns = ['DHS','GENES','DISTANCE']
-        dhs_gene_merge = dhs_gene.merge(dhs_hg38,on='DHS')
-        dhs_gene_merge = dhs_gene_merge.merge(ucsc_gene,on='GENES')
-        dhs_gene_merge = dhs_gene_merge.drop_duplicates(['DHS','SYMBOLS'])
-        self.dhs_gene_g = dhs_gene_merge.groupby('SYMBOLS').agg({
-            'DISTANCE':list,
-            'index': list
-        })
-        self.dhs_gene_g['DISTANCE'] = self.dhs_gene_g['DISTANCE'].apply(lambda x:np.array(x))
-        self.genes = self.dhs_gene_g.index
-        self.TR_info = pd.read_csv(os.path.join(self.library,'TRs_info.txt'),sep='\t',index_col=0)
-        # New data
-        # from glob import glob
-        # samples = golb(os.path.join(self.library,'TR_matrix','dhs@*.csv'))
-        tr_dhs_ad = h5py.File(os.path.join(self.library,'TR_DHS.h5ad'))
-        samples = np.array(tr_dhs_ad['obs']['tr'],dtype=str)
-        samples = list(map(lambda x:os.path.join(self.library,'TR_matrix',f'dhs@{x}.csv'),samples))
-
-        args = list(map(lambda sample:(sample),samples))
-        rp_matrix = []
-        sample_list = []
-        with Pool(16) as pool:
-            for row in tqdm(pool.imap(self.dhs2gene, args),total=len(args)):
-                if row:
-                    sample_name,rp_vec = row
-                    sample_list.append(sample_name)
-                    rp_matrix.append(rp_vec)
-
-        rp_matrix = sparse.vstack(rp_matrix,dtype='float32')
-        rp_matrix_ad = ad.AnnData(rp_matrix)
-        rp_matrix_ad.var_names = self.genes
-        rp_matrix_ad.obs_names = sample_list
-
-        obs = rp_matrix_ad.obs
-        obs.index.name = 'tr'
-        obs = obs.join(self.TR_info,how='left')
-        obs['index'] = range(len(obs))
-
-        rp_matrix_ad.obs = obs
-        rp_matrix_ad.write_h5ad(os.path.join(self.output,f'RP_Matrix_TR.h5ad'))
+def dhs2gene(params):
+    args,sample,vec = params
+    try:
+        r = 100000
+        d_ = 10000
+        e = args.TR_info.loc[sample,'Distal Intergenic Percentage']
+        if e > 0:
+            m = e
+        else:
+            m = 0.01
+        alpha = (r-d_)/np.log(2/m-0.99)
+        rp_vec = []
+        vec = vec.toarray()[:,0]
+        for gene in args.genes:
+            index = args.dhs_gene_g.loc[gene,'index']
+            s = vec[index]
+            d = args.dhs_gene_g.loc[gene,'DISTANCE']
+            w = np.ones(d.shape)
+            w[d > d_] = 2/(np.exp((d[d > d_]-d_)/alpha)+1)
+            w[d > r] = 0
+            rp = np.mean(np.multiply(w,s))
+            rp_vec.append(rp)
+        rp_vec = sparse.csr_matrix(rp_vec)
+        return sample,rp_vec
+    except:
+        print('Error %s !' % sample)
+        return None
 
 if __name__ == '__main__':
-    library = sys.argv[1]
-    CalcTRRPMatrix(library=library,output=library).run()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--library", type=str, default="library")
+    parser.add_argument("--output", type=str, default="library")
+    parser.add_argument("--hg38_refseq", type=str, default="library/hg38_refseq.ucsc")
+    parser.add_argument("--dhs_hg38_rose", type=str, default="library/dhs_hg38_rose.bed")
+    parser.add_argument("--DHS_TO_GENE", type=str, default="library/dhs_hg38_rose_DHS_TO_GENE.txt")
+    args = parser.parse_args()
+
+    ucsc_gene = pd.read_csv(args.hg38_refseq,sep='\t')
+    ucsc_gene = ucsc_gene[['name','name2']]
+    ucsc_gene.columns = ['GENES','SYMBOLS']
+    ucsc_gene = ucsc_gene.drop_duplicates()
+    dhs_hg38 = pd.read_csv(args.dhs_hg38_rose,sep='\t',header=None)
+    dhs_hg38 = dhs_hg38.reset_index()[['index',0]]
+    dhs_hg38.columns = ['index','DHS']
+    dhs_gene = pd.read_csv(args.DHS_TO_GENE,sep='\t')
+    dhs_gene = dhs_gene.iloc[:,[0,4,5]]
+    dhs_gene.columns = ['DHS','GENES','DISTANCE']
+    dhs_gene_merge = dhs_gene.merge(dhs_hg38,on='DHS')
+    dhs_gene_merge = dhs_gene_merge.merge(ucsc_gene,on='GENES')
+    dhs_gene_merge = dhs_gene_merge.drop_duplicates(['DHS','SYMBOLS'])
+    args.dhs_gene_g = dhs_gene_merge.groupby('SYMBOLS').agg({
+        'DISTANCE':list,
+        'index': list
+    })
+    args.dhs_gene_g['DISTANCE'] = args.dhs_gene_g['DISTANCE'].apply(lambda x:np.array(x))
+    args.genes = args.dhs_gene_g.index
+    args.TR_info = pd.read_csv(os.path.join(args.library,'TRs_info.txt'),sep='\t',index_col=0)
+    tr_dhs_ad = ad.read_h5ad(os.path.join(args.library,'TR_DHS.h5ad'))
+    samples = np.array(tr_dhs_ad['obs']['tr'],dtype=str)
+
+    params = ((args,tr_dhs_ad.obs.index[i],tr_dhs_ad[i].X.T) for i in np.arange(tr_dhs_ad.shape[0]))
+    rp_matrix = []
+    sample_list = []
+    with Pool(16) as pool:
+        for row in tqdm(pool.imap(dhs2gene, params),total=tr_dhs_ad.shape[0]):
+            if row:
+                sample_name,rp_vec = row
+                sample_list.append(sample_name)
+                rp_matrix.append(rp_vec)
+
+    rp_matrix = sparse.vstack(rp_matrix,dtype='float32')
+    rp_matrix_ad = ad.AnnData(rp_matrix)
+    rp_matrix_ad.var_names = args.genes
+    rp_matrix_ad.obs_names = sample_list
+
+    obs = rp_matrix_ad.obs
+    obs.index.name = 'tr'
+    obs = obs.join(args.TR_info,how='left')
+    obs['index'] = range(len(obs))
+
+    rp_matrix_ad.obs = obs
+    rp_matrix_ad.write_h5ad(os.path.join(args.output,f'RP_Matrix_TR.h5ad'))

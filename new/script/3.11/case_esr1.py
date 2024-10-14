@@ -108,7 +108,7 @@ plt.clf()
 
 
 # GTEx
-"""
+""" https://xenabrowser.net/datapages/
 wget -c https://toil-xena-hub.s3.us-east-1.amazonaws.com/download/gtex_gene_expected_count.gz
 wget -c https://toil-xena-hub.s3.us-east-1.amazonaws.com/download/GTEX_phenotype.gz
 wget -c https://toil-xena-hub.s3.us-east-1.amazonaws.com/download/probeMap%2Fgencode.v23.annotation.gene.probemap
@@ -159,7 +159,7 @@ plt.savefig("new/result/3.11/Fig. 4/GTEx.svg")
 plt.clf()
 
 # TCGA
-"""
+""" https://xenabrowser.net/datapages/
 wget -c https://gdc-hub.s3.us-east-1.amazonaws.com/download/TCGA-BRCA.htseq_counts.tsv.gz
 wget -c https://gdc-hub.s3.us-east-1.amazonaws.com/download/TCGA-BRCA.htseq_fpkm.tsv.gz
 wget -c https://gdc-hub.s3.us-east-1.amazonaws.com/download/gencode.v22.annotation.gene.probeMap

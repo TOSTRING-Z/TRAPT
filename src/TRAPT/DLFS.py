@@ -80,7 +80,7 @@ class FeatureSelection:
         pos_weight = float(len(T) - T.sum()) / T.sum()
         sample_weight = np.ones(len(T))
         sample_weight[T.astype(bool)] = pos_weight
-        if self.args.use_dl:
+        if self.args.use_kd:
             input = Input(X.shape[1:])
             y = Dense(2, activation="relu")(input)
             feature_extraction = Model(input, y)
@@ -156,6 +156,7 @@ class FeatureSelection:
             shuffle=self.shuffle,
             verbose=0,
         )
+        return model
 
     def get_corr(self, v1: list, v2: list):
         return np.array([np.corrcoef(v1, v2[i])[0, 1] for i in range(len(v2))])

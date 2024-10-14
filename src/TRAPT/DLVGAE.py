@@ -185,7 +185,7 @@ class CalcSTM:
         )
         return loss
 
-    def init_vgae(self, h, use_dl):
+    def init_vgae(self, h, use_kd):
         seed_torch()
         self.h = h
         self.edge_index = self.get_edge_index(self.RP_Matrix.TR, self.RP_Matrix.Sample)
@@ -238,7 +238,7 @@ class CalcSTM:
                 self.optimizer_vgae.zero_grad()
                 h = self.model_vgae.encoder.predict_h(x, edge_index)
                 z = self.model_vgae.encode(x, edge_index)
-                if use_dl:
+                if use_kd:
                     dl_loss = mse_loss(h, self.h)
                 else:
                     dl_loss = 0
@@ -333,7 +333,7 @@ class CalcSTM:
 
         return self.model_cvae.predict_h(dataset).detach()
 
-    def run(self,use_dl=True):
+    def run(self,use_kd=True):
         self.epochs_cvae = 10
         self.epochs_vgae = 100
         # self.epochs_cvae = 1
@@ -343,16 +343,16 @@ class CalcSTM:
         # Teacher
         z = self.init_cvae()
         # Student
-        self.init_vgae(z,use_dl)
+        self.init_vgae(z,use_kd)
 
 
 if __name__ == '__main__':
     type = sys.argv[1]
     library = sys.argv[2]
-    use_dl = True
+    use_kd = True
     checkpoint_path = library
     if len(sys.argv) > 3:
-        use_dl = False if sys.argv[3].lower() == "false" else True
+        use_kd = False if sys.argv[3].lower() == "false" else True
     if len(sys.argv) > 4:
         checkpoint_path = sys.argv[4]
 
@@ -362,4 +362,4 @@ if __name__ == '__main__':
         TR = RPMatrix(library, 'RP_Matrix_TR.h5ad').norm('l1').get_data()
         Sample = RPMatrix(library, f'RP_Matrix_{type}.h5ad').norm('l1').get_data()
 
-    CalcSTM(RP_Matrix, type, checkpoint_path).run(use_dl)
+    CalcSTM(RP_Matrix, type, checkpoint_path).run(use_kd)

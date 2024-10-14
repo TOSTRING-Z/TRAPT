@@ -7,14 +7,14 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler
 class Args:
     def __init__(self, input, output, library="library", 
                  threads=16, trunk_size=2048 * 16, background_genes=6000, 
-                 use_dl=True, tr_type="all", source="all") -> None:
+                 use_kd=True, tr_type="all", source="all") -> None:
         self.input = input
         self.output = output
         self.library = library
         self.threads = threads
         self.trunk_size = trunk_size
         self.background_genes = background_genes
-        self.use_dl = use_dl
+        self.use_kd = use_kd
         self.tr_type = tr_type
         self.source = source
         if not os.path.exists(output):

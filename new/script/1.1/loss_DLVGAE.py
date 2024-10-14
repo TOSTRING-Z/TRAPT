@@ -327,7 +327,7 @@ def plot_losses(losses,label,color,save_path,save=True):
 
 if __name__ == '__main__':
     type = "H3K27ac"
-    checkpoint_path = "new/result/1.1/checkpoint_path_dl"
+    checkpoint_path = "new/result/1.1/checkpoint_path_kd"
     library = "library"
     assert type in ['H3K27ac', 'ATAC']
     random.seed(2024)
@@ -345,6 +345,6 @@ if __name__ == '__main__':
     plot_losses(student_losses_train,"D-RP student model (train)",color_palette[3],"new/result/1.1/figure/loss-D-RP-student[DL].svg")
     plot_losses(teacher_losses,"D-RP teacher model",color_palette[0],"new/result/1.1/figure/loss-D-RP-teacher.svg")
 
-    student_losses_val_not_dl,student_losses_train_not_dl,_ =  CalcSTM(RP_Matrix_, type, "new/result/1.1/checkpoint_path_not_dl").run(0.1,0.1,0,epochs_cvae=0,epochs_vgae=100)
-    plot_losses(student_losses_val_not_dl,"D-RP student model (val)",color_palette[2],"new/result/1.1/figure/loss-D-RP-student[not-DL].svg",save=False)
-    plot_losses(student_losses_train_not_dl,"D-RP student model (train)",color_palette[3],"new/result/1.1/figure/loss-D-RP-student[not-DL].svg")
+    student_losses_val_not_kd,student_losses_train_not_kd,_ =  CalcSTM(RP_Matrix_, type, "new/result/1.1/checkpoint_path_not_kd").run(0.1,0.1,0,epochs_cvae=0,epochs_vgae=100)
+    plot_losses(student_losses_val_not_kd,"D-RP student model (val)",color_palette[2],"new/result/1.1/figure/loss-D-RP-student[not-DL].svg",save=False)
+    plot_losses(student_losses_train_not_kd,"D-RP student model (train)",color_palette[3],"new/result/1.1/figure/loss-D-RP-student[not-DL].svg")

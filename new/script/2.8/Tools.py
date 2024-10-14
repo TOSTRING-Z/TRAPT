@@ -5,14 +5,14 @@ import numpy as np
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
 class Args:
-    def __init__(self, input, output, library="library", threads=16, trunk_size=2048 * 16, background_genes=6000, use_dl=True) -> None:
+    def __init__(self, input, output, library="library", threads=16, trunk_size=2048 * 16, background_genes=6000, use_kd=True) -> None:
         self.input = input
         self.output = output
         self.library = library
         self.threads = threads
         self.trunk_size = trunk_size
         self.background_genes = background_genes
-        self.use_dl = use_dl
+        self.use_kd = use_kd
         if not os.path.exists(output):
             os.mkdir(output)
 

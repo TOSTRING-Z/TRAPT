@@ -43,7 +43,7 @@ class FeatureSelectionLoss(FeatureSelection):
         sample_weight = np.ones(len(T))
         sample_weight[T.astype(bool)] = pos_weight
         self.history = {}
-        if self.args.use_dl:
+        if self.args.use_kd:
             input = Input(X.shape[1:])
             y = Dense(2, activation="relu")(input)
             feature_extraction = Model(input, y)
@@ -103,11 +103,11 @@ if __name__=='__main__':
     parser.add_argument("--input", "-i", type=str, default="input/KnockTFv1/down/AR@DataSet_01_192_down500.txt", help = "Enter a gene list")
     parser.add_argument("--output", "-o", type=str, default="new/result/1.1/files", help = "Enter an output folder")
     parser.add_argument("--background_genes", "-b", type=int, default=6000, help = "Background gene count")
-    parser.add_argument("--use_dl", "-d", type=str2bool, default=True, help = "Using knowledge distillation")
+    parser.add_argument("--use_kd", "-d", type=str2bool, default=True, help = "Using knowledge distillation")
     args = Args(**dict(parser.parse_args()._get_kwargs()))
     rp_matrix = RP_Matrix(args.library)
 
-    args.use_dl = True
+    args.use_kd = True
     FS_H3K27ac = FeatureSelectionLoss(args, rp_matrix.H3K27ac, Type.H3K27ac)
     H3K27ac_RP,H3K27ac_info_samples = FS_H3K27ac.run()
     teacher_loss = FS_H3K27ac.history["teacher"].history
@@ -117,7 +117,7 @@ if __name__=='__main__':
     plot_losses(student_loss["loss"],"U-RP student model (train)",color_palette[3],"new/result/1.1/figure/loss-U-RP-student[DL].svg")
     plot_losses(teacher_loss["loss"],"U-RP teacher model",color_palette[0],"new/result/1.1/figure/loss-U-RP-teacher.svg")
 
-    args.use_dl = False
+    args.use_kd = False
     FS_H3K27ac = FeatureSelectionLoss(args, rp_matrix.H3K27ac, Type.H3K27ac)
     H3K27ac_RP,H3K27ac_info_samples = FS_H3K27ac.run()
     student_loss = FS_H3K27ac.history["student"].history

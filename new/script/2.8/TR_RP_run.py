@@ -17,6 +17,8 @@ for file in tqdm(files):
     input = os.path.join(args_.input_path,file)
     output = os.path.join(args_.output_path,file.split(".")[0])
     args = Args(input, output, args_.library)
+    if os.path.exists(f"{args.output}/TR_detail.txt"):
+        continue
     rp_matrix = RP_Matrix(args.library)
     CTR_TR = CalcTRAUC(args, rp_matrix.TR, 1)
     RP_TR_auc = CTR_TR.run()
