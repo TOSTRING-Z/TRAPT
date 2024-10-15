@@ -16,7 +16,7 @@ First, download library:
 
 Second, install TRAPT:
 
-```sh
+```shell
 conda create --name TRAPT python=3.7
 conda activate TRAPT
 pip install TRAPT
@@ -25,7 +25,7 @@ pip install TRAPT
 Run TRAPT using a [case](https://bio.liclab.net/TRAPT/static/download/ESR1@DataSet_01_111_down500.txt):
 
 Use shell commands:
-```bash
+```shell
 # help
 trapt --help
 # run
