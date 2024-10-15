@@ -68,14 +68,18 @@ python3 src/TRAPT/CalcTRSampleRPMatrix.py ATAC library
 ### Data Preparation
 ```shell
 mkdir -p new/result/case1
+wget -c https://tcga-xena-hub.s3.us-east-1.amazonaws.com/download/TCGA.BRCA.sampleMap%2FHiSeqV2.gz -O new/result/case1/TCGA.BRCA.sampleMap_HiSeqV2.gz
 ```
 ### Differential Expression Analysis
 ```shell
-
+Rscript new/script/case1/data_processing.r
 ```
+![img](./new/result/case1/volcano_plot_limma_voom.svg)
 ### TRAPT Infers Key Regulators
 ```shell
-
+trapt --library library \
+      --input new/result/case1/genes.txt \
+      --output new/result/case1/trapt_output
 ```
 
 ## Case 2: Inferring key regulators in human hematopoietic stem cells using scRNA-seq data.
@@ -90,7 +94,7 @@ Rscript new/script/case2/data_processing.r
 ```
 ![img](./new/result/case2/cluster-umap.svg)
 ![img](./new/result/case2/cluster-pca.svg)
-### TRAPT Infers Key Regulators for Clusters
+### TRAPT Infers Key Regulators of Cell Fate Determination
 ```shell
 trapt --library library \
       --input 'new/result/case2/output/markers_top200-[pDCs-LMPs].txt' \
