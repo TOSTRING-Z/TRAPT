@@ -18,7 +18,7 @@ dataset_melt = pd.melt(
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-fig, ax1 = plt.subplots(figsize=(10, 30))
+fig, ax1 = plt.subplots(figsize=(5, 10))
 sns.barplot(
     data=dataset_melt,
     x="Count",
