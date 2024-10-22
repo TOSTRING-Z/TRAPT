@@ -91,9 +91,13 @@ wget -c https://bio.liclab.net/TRAPT/static/download/data.csv.gz -O new/result/c
 ### Data Processing (Dimensionality Reduction, Clustering, Identification of Marker Genes)
 ```shell
 Rscript new/script/case2/data_processing.r
+python3 new/script/case2/integrated_degs.py
+Rscript new/script/case2/multi_volcano_plot.r
 ```
 ![img](./new/result/case2/cluster-umap.svg)
 ![img](./new/result/case2/cluster-pca.svg)
+![img](./new/result/case2/mult_volcano_plot.svg)
+
 ### TRAPT Infers Key Regulators of Cell Fate Determination
 ```shell
 trapt --library library \
@@ -264,12 +268,8 @@ python3 new/script/3.11/enrichment.py
 
 ```shell
 # Fig. 6 | TRAPT identifies transcriptional regulators associated with cell fate and tissue identity. 
-python3 new/script/2.18/integrated_degs.py
-Rscript new/script/2.18/multiVolcanoPlot.r
-```
-![img](./new/result/3.11/Fig.%206/mult_volcano_plot.svg)
 ```shell
-python3 new/script/3.11/gtex_diff_analysis.py
+python3 new/script/case2/gtex_diff_analysis.py
 python3 new/script/3.11/gtex_heatmap.py
 ```
 ![img](./new/result/3.11/Fig.%206/figure/GTEx-heatmap.svg)
