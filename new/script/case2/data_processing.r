@@ -70,7 +70,7 @@ for (item in diffs){
   print(item)
   h <- item[2]
   c <- item[1]
-  markers <- FindMarkers(object, group.by="CellType", ident.1=h, ident.2=c, only.pos = FALSE, min.pct = 0.2, max.cells.per.ident = 250)
+  markers <- FindMarkers(object, group.by="CellType", ident.1=h, ident.2=c, only.pos = TRUE, min.pct = 0.2, logfc.threshold = 0.25, max.cells.per.ident = 250)
   write.csv(markers,paste0("output/markers_top200-[",h,"-",c,"].csv"))
   write.table(data.frame(rownames(head(markers, 200))),paste0("output/markers_top200-[",h,"-",c,"].txt"),row.names=F,col.names=F, quote=F)
 }
