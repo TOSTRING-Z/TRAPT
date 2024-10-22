@@ -154,7 +154,7 @@ p <- ggplot(data = df) +
                   segment.ncp = 3,
                   segment.angle = 10,
                   direction = "y", 
-                  hjust = "left",
+                  hjust = "right",
                   max.overlaps = 100
   ) + 
   scale_color_gradientn(colours = c("#3288bd", "#66c2a5","#ffffbf", "#f46d43", "#9e0142"),

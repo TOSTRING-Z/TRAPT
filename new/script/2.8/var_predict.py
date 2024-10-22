@@ -26,6 +26,10 @@ data[x_y_name[1]] = 1/np.power(data.rank_y,0.5)
 data["score"] = data[x_y_name].mean(axis=1)
 data["top"] = data[["rank_x","rank_y"]].min(axis=1) <= 10
 # 散点图
+# fc-list | grep Arial
+# /home/tostring/miniconda3/envs/TRAPT/fonts/
+# cp /usr/share/fonts/truetype/msttcorefonts/*.ttf /home/tostring/miniconda3/envs/TRAPT/fonts/
+sns.set_style(None, {"font.sans-serif": "Arial"})
 f, ax = plt.subplots(figsize=(6, 6))
 sns.despine(f, ax, left=False, bottom=False)
 sns.scatterplot(

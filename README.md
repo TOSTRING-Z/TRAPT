@@ -261,8 +261,14 @@ python3 new/script/3.11/case_esr1.py
 python3 new/script/3.11/enrichment.py
 ```
 ![img](./new/result/3.11/Fig.%205/figure/enrichment.svg)
+
 ```shell
 # Fig. 6 | TRAPT identifies transcriptional regulators associated with cell fate and tissue identity. 
+python3 new/script/2.18/integrated_degs.py
+Rscript new/script/2.18/multiVolcanoPlot.r
+```
+![img](./new/result/3.11/Fig.%206/mult_volcano_plot.svg)
+```shell
 python3 new/script/3.11/gtex_diff_analysis.py
 python3 new/script/3.11/gtex_heatmap.py
 ```

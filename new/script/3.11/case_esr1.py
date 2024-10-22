@@ -133,6 +133,8 @@ expr_genes = set(expr.index)
 sorted_tfs = data[data.top.values].sort_values("score", ascending=False)["tr_base"]
 sorted_tfs = sorted_tfs[sorted_tfs.map(lambda x: x in expr_genes)]
 expr_tissue = expr.loc[sorted_tfs, tissue]
+print(expr_tissue.shape)
+
 corr = np.corrcoef(expr_tissue)
 corr = pd.DataFrame(corr, index=expr_tissue.index, columns=expr_tissue.index)
 d = corr.iloc[:, :]
@@ -195,6 +197,8 @@ expr_genes = set(expr.index)
 sorted_tfs = data[data.top.values].sort_values("score", ascending=False)["tr_base"]
 sorted_tfs = sorted_tfs[sorted_tfs.map(lambda x: x in expr_genes)]
 expr_tissue = expr_tissue.loc[sorted_tfs]
+
+print(expr_tissue.shape)
 
 # expr_tissue = np.log2(expr_tissue + 1)
 
