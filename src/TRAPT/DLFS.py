@@ -82,7 +82,7 @@ class FeatureSelection:
         sample_weight[T.astype(bool)] = pos_weight
         if self.args.use_kd:
             input = Input(X.shape[1:])
-            y = Dense(2, activation="relu")(input)
+            y = Dense(2, activation="relu", kernel_regularizer=SparseGroupLasso(groups=self.groups))(input)
             feature_extraction = Model(input, y)
             t = feature_extraction(input)
             output = Dense(1)(t)

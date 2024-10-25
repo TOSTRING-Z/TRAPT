@@ -4,16 +4,14 @@ library(ggrepel)
 dat <- read.csv("new/result/case2/data.csv")
 head(dat)
 
-color.arr <- NULL
-onlyAnnotateUp <- F
 log2Foldchang <- 0.25
 adjp <- 0.05
+
 max_overlaps <- 10
 width <- 0.9
-if (is.null(color.arr)) {
-  len <- length(unique(dat$cluster))
-  color.arr <- scales::hue_pal()(len)
-}
+
+len <- length(unique(dat$cluster))
+color.arr <- scales::hue_pal()(len)
 
 dat.plot <- dat %>% mutate(
   "significance" = case_when(
@@ -21,24 +19,24 @@ dat.plot <- dat %>% mutate(
     TRUE ~ "None"
   )
 )
-head(dat.plot)
+
 tbl <- table(dat.plot$significance)
-print(tbl)
+
 background.dat <- data.frame(
   dat.plot %>% group_by(cluster) %>% filter(avg_log2FC > 0) %>% summarise("y.localup" = max(avg_log2FC)),
   x.local = seq(1:length(unique(dat.plot$cluster)))
 )
-head(background.dat)
+
 x.number <- background.dat %>% select(cluster, x.local)
 dat.plot <- dat.plot %>% left_join(x.number, by = "cluster")
 dat.marked.up <- dat.plot %>%
   filter(significance == "Up" & isTR == 1) %>%
   group_by(cluster) %>% 
-  arrange(avg_log2FC) %>% 
+  arrange(desc(p_val_adj)) %>% 
   top_n(5,abs(avg_log2FC))
 
 dat.marked <- dat.marked.up 
-dat.marked[which(dat.marked$gene=="E2F1")[[1]],]
+
 dat.infor <- background.dat %>%
   mutate("y.infor" = rep(0, length(cluster)))
 
@@ -68,7 +66,7 @@ vol.plot <- ggplot() +
   labs(x = NULL, y = "log2 Fold change") +
   geom_text(dat.infor, mapping = aes(x.local, y.infor, label = cluster)) +
   ggrepel::geom_label_repel(
-    data = if (onlyAnnotateUp) dat.marked.up else dat.marked,
+    data = dat.marked,
     mapping = aes(x = x.local, y = avg_log2FC, label = gene),
     force = 2,
     max.overlaps = max_overlaps,

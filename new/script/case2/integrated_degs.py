@@ -1,5 +1,5 @@
 import pandas as pd
-#  os.chdir("/data/zgr/data/TRAPT/tool/")
+
 input = "new/result/case2"
 output = "new/result/case2/data.csv"
 library = "library"

@@ -122,14 +122,18 @@ python3 new/script/1.1/run_mult.py --input_dir input/KnockTFv1/up --output_dir n
 python3 new/script/1.1/RankTRAPT.py --output_dir new/result/1.1/output/TRAPT-NKD --name TRAPT-NKD --type down500,up500 --rank_path new/result/1.1/files
 python3 new/script/1.1/RankTRAPT.py --output_dir output/KnockTFv1 --name TRAPT-KD --type down500,up500 --rank_path new/result/1.1/files
 python3 new/script/1.1/Rank.py --output_path new/result/1.1/figure --name TRAPT-KD --type ALL --rank_path new/result/1.1/files --columns TRAPT-KD,TRAPT-NKD
+```
+![img](./new/result/1.1/figure/rank_TRAPT-KD@mmr_bar.svg)
+![img](./new/result/1.1/figure/rank_TRAPT-KD@boxplot.svg)
+```shell
 # loss
 python3 new/script/1.1/loss_DLVGAE.py
 python3 new/script/1.1/loss_DLFS.py
 ```
-![img](./new/result/1.1/figure/rank_TRAPT-KD@mmr_bar.svg)
-![img](./new/result/1.1/figure/rank_TRAPT-KD@boxplot.svg)
-![img](./new/result/1.1/figure/loss-D-RP-student[DL].svg)
-![img](./new/result/1.1/figure/loss-U-RP-student[DL].svg)
+![img](./new/result/1.1/figure/loss-D-RP-student.svg)
+![img](./new/result/1.1/figure/loss-U-RP-student.svg)
+![img](./new/result/1.1/figure/auroc-D-RP-student.svg)
+![img](./new/result/1.1/figure/auprc-D-RP-student.svg)
 ### TR decay rate
 ```shell
 python3 new/script/2.5/CalcTRRPMatrix.py --library library --output new/result/2.5
