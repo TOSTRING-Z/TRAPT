@@ -366,13 +366,13 @@ if __name__ == '__main__':
 
     student_metric_val_not_kd,student_metric_train_not_kd,_ =  CalcSTM(RP_Matrix_, type, "new/result/1.1/checkpoint_path_not_kd").run(0.0,0.1,0,epochs_cvae=0,epochs_vgae=500)
 
-    plot_lines(student_metric_val[:,0],"Validation set (KD)",color_palette[1])
-    plot_lines(student_metric_train[:,0],"Train set (KD)",color_palette[2])
-    plot_lines(student_metric_val_not_kd[:,0],"Validation set (NKD)",color_palette[3])
-    plot_lines(student_metric_train_not_kd[:,0],"Train set (NKD)",color_palette[4], "new/result/1.1/figure/loss-D-RP-student.svg", title="Loss of the D-RP student model")
-
     plot_lines(student_metric_val[:,1],"D-RP student model (KD)",color_palette[2])
     plot_lines(student_metric_val_not_kd[:,1],"D-RP student model (NKD)",color_palette[3],"new/result/1.1/figure/auroc-D-RP-student.svg",title="Validation set AUROC for the D-RP model",ylabel="AURPC")
 
     plot_lines(student_metric_val[:,2],"D-RP student model (KD)",color_palette[2])
     plot_lines(student_metric_val_not_kd[:,2],"D-RP student model (NKD)",color_palette[3],"new/result/1.1/figure/auprc-D-RP-student.svg",title="Validation set AUPRC for the D-RP model",ylabel="AUPRC")
+
+    plot_lines(student_metric_val[:,0],"Validation set (KD)",color_palette[1])
+    plot_lines(student_metric_train[:,0],"Train set (KD)",color_palette[2])
+    plot_lines(student_metric_val_not_kd[:,0],"Validation set (NKD)",color_palette[3])
+    plot_lines(student_metric_train_not_kd[:,0],"Train set (NKD)",color_palette[4], "new/result/1.1/figure/loss-D-RP-student.svg", title="Loss of the D-RP student model")
