@@ -368,7 +368,7 @@ if __name__ == '__main__':
 
     plot_lines(student_metric_val[:,0],"Validation set (KD)",color_palette[1])
     plot_lines(student_metric_train[:,0],"Train set (KD)",color_palette[2])
-    plot_lines(student_metric_val_not_kd[:,0],"Validation set (KD)",color_palette[3])
+    plot_lines(student_metric_val_not_kd[:,0],"Validation set (NKD)",color_palette[3])
     plot_lines(student_metric_train_not_kd[:,0],"Train set (NKD)",color_palette[4], "new/result/1.1/figure/loss-D-RP-student.svg", title="Loss of the D-RP student model")
 
     plot_lines(student_metric_val[:,1],"D-RP student model (KD)",color_palette[2])

@@ -127,5 +127,5 @@ if __name__=='__main__':
 
     plot_lines(student_loss_kd["val_loss"],"Validation set (KD)",color_palette[1])
     plot_lines(student_loss_kd["loss"],"Train set (KD)",color_palette[2])
-    plot_lines(student_loss_not_kd["val_loss"],"Validation set (KD)",color_palette[3])
+    plot_lines(student_loss_not_kd["val_loss"],"Validation set (NKD)",color_palette[3])
     plot_lines(student_loss_not_kd["loss"],"Train set (NKD)",color_palette[4], "new/result/1.1/figure/loss-U-RP-student.svg", title="Loss of the U-RP student model")
