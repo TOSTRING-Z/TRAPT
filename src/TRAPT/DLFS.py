@@ -11,7 +11,7 @@ from keras.models import Model
 from keras.optimizers import Adam
 from keras.regularizers import Regularizer
 
-def seed_tensorflow(seed=2023):
+def seed_tensorflow(seed=23):
     random.seed(seed)
     np.random.seed(seed)
     tf.random.set_seed(seed)
@@ -73,10 +73,8 @@ class FeatureSelection:
         self.group_size = 10
         self.top = 10
         self.shuffle = True
-        self.early_stopping = EarlyStopping(patience=4)
 
     def TSFS(self, X, T):
-        seed_tensorflow()
         pos_weight = float(len(T) - T.sum()) / T.sum()
         sample_weight = np.ones(len(T))
         sample_weight[T.astype(bool)] = pos_weight
@@ -101,7 +99,6 @@ class FeatureSelection:
                 verbose=0,
             )
             Y = feature_extraction.predict(X)
-            seed_tensorflow()
             input = Input((X.shape[-1],))
             output = Dense(
                 Y.shape[-1] * 10,
@@ -110,7 +107,7 @@ class FeatureSelection:
             )(input)
         else:
             Y = np.expand_dims(T,-1)
-            input = Input((X.shape[-1],))
+            input = Input(X.shape[1:])
             output = Dense(
                 Y.shape[-1] * 10 * 2,
                 activation="relu",
@@ -174,7 +171,6 @@ class FeatureSelection:
         self.sort_by_group(y)
         X = self.data_ad.X.T
         true_index = np.where(y.astype(bool))[0]
-        np.random.seed(2023)
         false_index = np.random.choice(
             np.where(~y.astype(bool))[0], self.args.background_genes, replace=False
         )

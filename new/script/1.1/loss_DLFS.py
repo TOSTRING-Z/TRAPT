@@ -1,17 +1,10 @@
-import random
 import argparse
 import numpy as np
-import pandas as pd
-import tensorflow as tf
 from keras import Input, Model
-from keras import backend as K
-from keras.callbacks import EarlyStopping
-from keras.layers import Dense, Dropout
+from keras.layers import Dense
 from keras.models import Model
 from keras.optimizers import Adam
-from keras.regularizers import Regularizer
 import matplotlib.pyplot as plt
-from sklearn.metrics import auc, precision_recall_curve, roc_curve
 from TRAPT.Tools import RP_Matrix, Args, Type
 from TRAPT.Run import str2bool
 from TRAPT.DLFS import *
@@ -45,7 +38,6 @@ class FeatureSelectionLoss(FeatureSelection):
                 T,
                 epochs=self.epochs,
                 batch_size=self.batch_size,
-                callbacks=[self.early_stopping],
                 validation_split=0.1,
                 sample_weight=sample_weight,
                 shuffle=self.shuffle,
@@ -61,12 +53,16 @@ class FeatureSelectionLoss(FeatureSelection):
             )(input)
         else:
             Y = np.expand_dims(T,-1)
-            input = Input((X.shape[-1],))
+            input = Input(X.shape[1:])
             output = Dense(
                 Y.shape[-1] * 10 * 2,
                 activation="relu",
                 kernel_regularizer=SparseGroupLasso(groups=self.groups),
             )(input)
+            output = Dense(
+                Y.shape[-1] * 2,
+                activation="relu",
+            )(output)
         o_1 = Dense(Y.shape[-1], activation="relu")(output)
         self.student = Model(input, o_1)
         self.student.compile(optimizer=Adam(self.learning_rate), loss="mse", weighted_metrics=[])

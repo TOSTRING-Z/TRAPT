@@ -7,11 +7,10 @@ import numpy as np
 import pandas as pd
 import torch
 import torch.nn.modules.loss
-import torch_geometric.transforms as T
 from scipy import sparse
 from sklearn.preprocessing import normalize
 from torch import Tensor, nn
-from torch.nn.functional import binary_cross_entropy, kl_div, mse_loss
+from torch.nn.functional import binary_cross_entropy, mse_loss
 from torch.utils.data import DataLoader
 from torch_geometric.data import Data
 from torch_geometric.nn import VGAE, GCNConv, InnerProductDecoder
@@ -20,7 +19,7 @@ from tqdm import tqdm
 from TRAPT.Tools import RPMatrix
 
 
-def seed_torch(seed=2023):
+def seed_torch(seed=23):
     random.seed(seed)
     os.environ['PYTHONHASHSEED'] = str(seed)
     np.random.seed(seed)
@@ -93,7 +92,6 @@ class CVAE(nn.Module):
         decoded = self.decoder(torch.concat([z, condition], dim=1))
         return decoded
 
-
 class CalcSTM:
     def __init__(self, RP_Matrix, type, checkpoint_path, device='cpu'):
         self.type = type
@@ -109,7 +107,6 @@ class CalcSTM:
             ],
             dim=0,
         ).to(self.device)
-        self.is_val = 0
 
     @staticmethod
     def get_cos_similar_matrix(m1, m2):
@@ -145,23 +142,7 @@ class CalcSTM:
             size = torch.Size(data.shape)
             return torch.sparse_coo_tensor(indices, values, size)
 
-    def test(self, data):
-        self.model_vgae.eval()
-        with torch.no_grad():
-            from sklearn.metrics import average_precision_score, roc_auc_score
-
-            z = self.model_vgae.encode(
-                data.x.to(self.device), data.edge_index.to(self.device)
-            )
-            y_pred = self.model_vgae.decoder(z, sigmoid=True)
-            y_pred = y_pred.detach().cpu().numpy().flatten()
-            index = np.random.choice(np.arange(len(self.y)), len(self.y) // 1000)
-            return roc_auc_score(self.y[index], y_pred[index]), average_precision_score(
-                self.y, y_pred
-            )
-
     def save_graph(self):
-        print(self.test(self.data))
         x, edge_index = self.data.x.to(self.device), self.data.edge_index.to(
             self.device
         )
@@ -189,21 +170,9 @@ class CalcSTM:
         seed_torch()
         self.h = h
         self.edge_index = self.get_edge_index(self.RP_Matrix.TR, self.RP_Matrix.Sample)
-        print("Edge sum:", self.edge_index.shape[1])
         self.data = Data(x=self.data, edge_index=self.edge_index)
-        if self.is_val:
-            self.transform = T.RandomLinkSplit(
-                num_val=0.2,
-                num_test=0,
-                neg_sampling_ratio=0,
-                add_negative_train_samples=False,
-            )
-            self.train_data, self.val_data, self.test_data = self.transform(self.data)
-            x = self.train_data.x.to(self.device)
-            edge_index = self.train_data.edge_index.to(self.device)
-        else:
-            x = self.data.x.to(self.device)
-            edge_index = self.data.edge_index.to(self.device)
+        x = self.data.x.to(self.device)
+        edge_index = self.data.edge_index.to(self.device)
         self.num_features = self.data.num_features
         self.num_nodes = self.data.num_nodes
         values = torch.ones(self.edge_index.shape[1])
@@ -221,10 +190,7 @@ class CalcSTM:
         decoder = InnerProductDecoderWeight(self.A_e)
         self.model_vgae = VGAE(encoder, decoder).to(self.device)
         self.optimizer_vgae = torch.optim.Adam(self.model_vgae.parameters(), lr=0.01)
-        if (
-            os.path.exists(f'{self.checkpoint_path}/model_student_{self.type}.pt')
-            and not self.is_val
-        ):
+        if os.path.exists(f'{self.checkpoint_path}/model_student_{self.type}.pt'):
             checkpoint = torch.load(
                 f'{self.checkpoint_path}/model_student_{self.type}.pt',
                 map_location=self.device,
@@ -248,31 +214,22 @@ class CalcSTM:
                 loss.backward()
                 self.optimizer_vgae.step()
                 if epoch % 1 == 0:
-                    if self.is_val:
-                        auc, ap = self.test(self.val_data)
-                        print(f"batch:", auc, ap)
                     print(
-                        f"epoch: {epoch}, loss: {loss}, dl_loss: {dl_loss}, re_loss: {re_loss}, kl_loss: {kl_loss}"
+                        f'epoch: {epoch}, loss: {loss}, kl_loss: {kl_loss}, re_loss: {re_loss}, dl_loss: {dl_loss}'
                     )
-                    if not self.is_val:
-                        checkpoint = {
-                            'model_state_dict': self.model_vgae.state_dict(),
-                            'optimizer_state_dict': self.optimizer_vgae.state_dict(),
-                        }
-                        torch.save(
-                            checkpoint,
-                            f'{self.checkpoint_path}/model_student_{self.type}.pt',
-                        )
-            if not self.is_val:
-                torch.save(
-                    checkpoint,
-                    f'{self.checkpoint_path}/model_student_{self.type}.pt',
-                )
-        if self.is_val:
-            auc, ap = self.test(self.val_data)
-            print(f"batch:", auc, ap)
-        else:
-            self.save_graph()
+                    checkpoint = {
+                        'model_state_dict': self.model_vgae.state_dict(),
+                        'optimizer_state_dict': self.optimizer_vgae.state_dict(),
+                    }
+                    torch.save(
+                        checkpoint,
+                        f'{self.checkpoint_path}/model_student_{self.type}.pt',
+                    )
+            torch.save(
+                checkpoint,
+                f'{self.checkpoint_path}/model_student_{self.type}.pt',
+            )
+        self.save_graph()
 
     def init_cvae(self):
         seed_torch()
@@ -293,10 +250,7 @@ class CalcSTM:
         ).to(self.device)
         self.optimizer_cvae = torch.optim.Adam(self.model_cvae.parameters(), lr=0.01)
         loss_func = nn.MSELoss()
-        if (
-            os.path.exists(f'{self.checkpoint_path}/model_teacher_{self.type}.pt')
-            and not self.is_val
-        ):
+        if os.path.exists(f'{self.checkpoint_path}/model_teacher_{self.type}.pt'):
             checkpoint = torch.load(
                 f'{self.checkpoint_path}/model_teacher_{self.type}.pt',
                 map_location=self.device,
@@ -321,23 +275,20 @@ class CalcSTM:
                 print(
                     f'epoch: {epoch}, loss: {loss}, kl_loss: {kl_loss}, re_loss: {re_loss}'
                 )
-                if not self.is_val:
-                    checkpoint = {
-                        'model_state_dict': self.model_cvae.state_dict(),
-                        'optimizer_state_dict': self.optimizer_cvae.state_dict(),
-                    }
-                    torch.save(
-                        checkpoint,
-                        f'{self.checkpoint_path}/model_teacher_{self.type}.pt',
-                    )
+                checkpoint = {
+                    'model_state_dict': self.model_cvae.state_dict(),
+                    'optimizer_state_dict': self.optimizer_cvae.state_dict(),
+                }
+                torch.save(
+                    checkpoint,
+                    f'{self.checkpoint_path}/model_teacher_{self.type}.pt',
+                )
 
         return self.model_cvae.predict_h(dataset).detach()
 
     def run(self,use_kd=True):
         self.epochs_cvae = 10
         self.epochs_vgae = 100
-        # self.epochs_cvae = 1
-        # self.epochs_vgae = 1
         self.h_dim = 48
         self.z_dim = 24
         # Teacher

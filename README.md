@@ -110,22 +110,6 @@ trapt --library library \
 
 ### KD ablation experiment
 ```shell
-python3 src/TRAPT/DLVGAE.py H3K27ac library false new/result/1.1
-python3 src/TRAPT/DLVGAE.py ATAC library false new/result/1.1
-ln -s library/RP_Matrix_TR.h5ad new/result/1.1
-ln -s library/RP_Matrix_H3K27ac.h5ad new/result/1.1
-ln -s library/RP_Matrix_ATAC.h5ad new/result/1.1
-python3 src/TRAPT/CalcTRSampleRPMatrix.py H3K27ac new/result/1.1
-python3 src/TRAPT/CalcTRSampleRPMatrix.py ATAC new/result/1.1
-python3 new/script/1.1/run_mult.py --input_dir input/KnockTFv1/down --output_dir new/result/1.1/output/TRAPT-NKD --library new/result/1.1 --use_kd False
-python3 new/script/1.1/run_mult.py --input_dir input/KnockTFv1/up --output_dir new/result/1.1/output/TRAPT-NKD --library new/result/1.1 --use_kd False
-python3 new/script/1.1/RankTRAPT.py --output_dir new/result/1.1/output/TRAPT-NKD --name TRAPT-NKD --type down500,up500 --rank_path new/result/1.1/files
-python3 new/script/1.1/RankTRAPT.py --output_dir output/KnockTFv1 --name TRAPT-KD --type down500,up500 --rank_path new/result/1.1/files
-python3 new/script/1.1/Rank.py --output_path new/result/1.1/figure --name TRAPT-KD --type ALL --rank_path new/result/1.1/files --columns TRAPT-KD,TRAPT-NKD
-```
-![img](./new/result/1.1/figure/rank_TRAPT-KD@mmr_bar.svg)
-![img](./new/result/1.1/figure/rank_TRAPT-KD@boxplot.svg)
-```shell
 # loss
 python3 new/script/1.1/loss_DLVGAE.py
 python3 new/script/1.1/loss_DLFS.py
@@ -187,7 +171,7 @@ python3 new/script/3.11/Rank.py --output_path new/result/2.11/figure --name TRAP
 ## TRAPT
 python3 new/script/1.1/run_mult.py --input_dir input/Lisa/down --output_dir new/result/2.11/output-Lisa
 python3 new/script/1.1/run_mult.py --input_dir input/Lisa/up --output_dir new/result/2.11/output-Lisa
-python3 new/script/2.11/RankTRAPT_Source.py --output_dir new/result/2.11/output-Lisa --rank_path new/result/2.11/files --source cistrome --name TRAPT-cistrome_lisa --model TRAPT
+python3 new/script/2.11/RankTRAPT_Source.py --output_dir new/result/2.11/output-Lisa --rank_path new/result/2.11/files_lisa --source cistrome --name TRAPT-cistrome_lisa --model TRAPT
 
 ## Lisa new/script/2.11/lisa_bart.sh
 python3 new/script/2.11/RankLisa.py --match_dir new/result/2.11/output-Lisa --input_path new/result/2.11/lisa --type down,up --output_path new/result/2.11/files_lisa

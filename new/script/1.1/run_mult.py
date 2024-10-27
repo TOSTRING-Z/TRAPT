@@ -17,7 +17,7 @@ parser.add_argument("--input_dir", type=str, default=None)
 parser.add_argument("--output_dir", type=str, default=None)
 parser.add_argument("--library", type=str, default='library')
 parser.add_argument("--processes", type=int, default=2)
-parser.add_argument("--restart_step", type=int, default=3200)
+parser.add_argument("--restart_step", type=int, default=24)
 parser.add_argument("--threads", type=int, default=16)
 parser.add_argument("--background_genes", type=int, default=6000)
 parser.add_argument("--use_kd", type=str2bool, default=True)
@@ -72,6 +72,7 @@ if __name__ == '__main__':
                 args.use_kd
             ),
         ):
+            print("setp: %d ***************************" % step)
             step += 1
 
     if step:
