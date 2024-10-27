@@ -1,10 +1,7 @@
-import os
-
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
-from sklearn.preprocessing import minmax_scale
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -14,6 +11,7 @@ parser.add_argument("--output_path", type=str, default=None)
 parser.add_argument("--rank_path", type=str, default=None)
 parser.add_argument("--type", type=str, default="ALL",help="ALL/TF/CR/TcoF/CR_TcoF")
 parser.add_argument("--columns", type=str, default="TRAPT")
+parser.add_argument("--col_names", type=str, default="TRAPT")
 parser.add_argument("--source", type=str, default="KnockTF")
 args = parser.parse_args()
 
@@ -22,10 +20,11 @@ title = args.type
 output_path = args.output_path
 rank_path = args.rank_path
 
-color_palette = ["#d4738b", "#e8ccbb", "#edf4f7", "#9fdadb", "#648d9c"]
-
 columns = args.columns.split(",")
+col_names = args.col_names.split(",")
 data = pd.read_csv(f"{args.library}/TRs_info.txt", sep="\t")
+
+color_palette = ["#d4738b", "#e8ccbb", "#edf4f7", "#9fdadb", "#648d9c"]
 
 ALL = set(data["tr_base"].drop_duplicates())
 
@@ -86,31 +85,6 @@ TR = {
     "CR_TcoF": CR_TcoF
 }[args.type]
 
-def get_rank_dict(file):
-    software = pd.read_csv(file)
-    software = software.loc[software["tr"].apply(lambda x: x in TR)]
-    software_g = software.groupby("rank").agg({"tr": len}).reset_index()
-    software_dict = dict(software_g.values)
-    return software_dict
-
-
-def get_auc_(x, y, s=1):
-    direction = 1
-    dx = np.diff(x)
-    if np.any(dx < 0):
-        direction = -1
-    area = direction * np.trapz(y, x)
-    auc_score = area / s
-    return round(auc_score, 3)
-
-
-rank_dict = {}
-score_dict = {}
-true_dict = {}
-for method in columns:
-    rank_dict[method] = get_rank_dict(f"{rank_path}/rank_{method}.csv")
-    score_dict[method] = 0
-    true_dict[method] = 0
 
 # # # # # # # # # # # # # # # # # # # # # # # #
 # # # # # #  MRR 柱状图  # # # # # #
@@ -157,6 +131,53 @@ plt.ylabel("Algorithms")
 plt.savefig(f"{output_path}/rank_{name}@mmr_bar.svg")
 plt.close()
 
+# # # # # # # # # # # # # # # # # # # # # # # #
+# # # # # # MRR 柱状堆叠图  # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # #
+data = pd.DataFrame()
+for i, method in enumerate(columns):
+    add_data = pd.read_csv(f"{rank_path}/rank_%s.csv" % method)
+    for type_,trs in [("TF",TF),("TcoF",TcoF),("CR",CR)]:
+        add = add_data.loc[add_data["tr"].apply(lambda x: x in trs)]
+        add["Type"] = type_
+        add["Method"] = col_names[i]
+        mmr = np.round(np.mean(1 / pd.to_numeric(add["rank"])), 4)
+        add["Mean Reciprocal Rank"] = mmr
+        data = pd.concat([data, add], ignore_index=True)
+
+data["-Rank"] = -data["rank"]
+data["Reciprocal Rank"] = 1 / data["rank"]
+
+data = (
+    data[["Method", "Mean Reciprocal Rank", "Type"]]
+    .groupby(["Method", "Type"])
+    .mean()
+    .loc[col_names]
+    .reset_index()
+)
+
+# 将数据转换为堆叠格式
+stacked_data = data.pivot_table(values='Mean Reciprocal Rank', index='Method', columns='Type', fill_value=0)
+stacked_data = stacked_data.reset_index()
+stacked_data = stacked_data[['Method', 'TF', 'TcoF', 'CR']]
+
+# 绘制堆叠柱状图
+ax = stacked_data.plot(kind='barh', stacked=True, x="Method", color=["#d9baa9", "#afd4bd","#b3d8de"])
+
+# 为柱子添加边框
+for patch in ax.patches:
+    patch.set_edgecolor('#3b3b3b')
+    patch.set_linewidth(1.5)
+
+sns.despine(bottom=False, left=False)
+
+plt.title(f"Overall {title} recovery performance of differential genes in {args.source}")
+plt.xlabel("Mean Reciprocal Rank")
+plt.ylabel("Algorithms")
+plt.legend(title="Type")
+plt.savefig(f"{output_path}/rank_{name}@mmr_pile_bar.svg")
+plt.close()
+
 
 # # # # # # # # # # # # # # # # # # # # # # # #
 # # # # # # # # mean rank 箱线图 # # # # # # # #
@@ -171,6 +192,7 @@ for method in columns:
     # add_data = add_data[add_data['rank']<=200]
     add_data["rank"] = add_data["rank"] / add_data["rank"].max()
     data = pd.concat([data, add_data], ignore_index=True)
+
 
 sn = sns.boxplot(
     x="method", y="rank", data=data, palette=color_palette, fliersize=1, width=0.8

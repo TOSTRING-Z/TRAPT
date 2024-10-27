@@ -59,10 +59,6 @@ class FeatureSelectionLoss(FeatureSelection):
                 activation="relu",
                 kernel_regularizer=SparseGroupLasso(groups=self.groups),
             )(input)
-            output = Dense(
-                Y.shape[-1] * 2,
-                activation="relu",
-            )(output)
         o_1 = Dense(Y.shape[-1], activation="relu")(output)
         self.student = Model(input, o_1)
         self.student.compile(optimizer=Adam(self.learning_rate), loss="mse", weighted_metrics=[])

@@ -159,12 +159,16 @@ python3 new/script/2.8/Rank_var.py --output_path new/result/2.8/figure --name Mo
 ```shell
 # KnockTF benchmark dataset
 python3 new/script/2.11/RankTRAPT_Source.py --output_dir output/KnockTFv1 --rank_path new/result/2.11/files --source cistrome --name TRAPT-source_of_cistrome --model TRAPT
-cp other/rank_{Lisa,BART}.csv new/result/2.11/files
-python3 new/script/3.11/Rank.py --output_path new/result/2.11/figure --name TRAPT-cistrome --type ALL --rank_path new/result/2.11/files --source KnockTF --columns TRAPT-source_of_cistrome,Lisa,BART
+## Lisa
+python3 new/script/2.11/RankLisa.py --match_dir output/KnockTFv1 --input_path other/lisa --type down,up --output_path new/result/2.11/files
+## BART
+python3 new/script/2.11/RankBART.py --match_dir output/KnockTFv1 --input_path other/bart --type down,up --output_path new/result/2.11/files
+
+python3 new/script/2.11/Rank_pile.py --output_path new/result/2.11/figure --name TRAPT-cistrome --type ALL --rank_path new/result/2.11/files --source KnockTF --columns TRAPT-source_of_cistrome,Lisa,BART --col_names 'TRAPT-source_of_cistrome,Lisa,BART'
 ```
 ![img](./new/result/2.11/figure/rank_TRAPT-cistrome@boxplot.svg)
 ![img](./new/result/2.11/figure/rank_TRAPT-cistrome@mmr_bar.svg)
-
+![img](./new/result/2.11/figure/rank_TRAPT-cistrome@mmr_pile_bar.svg)
 ```shell
 # Lisa benchmark dataset
 

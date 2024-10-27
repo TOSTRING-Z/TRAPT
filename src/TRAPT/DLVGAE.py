@@ -205,17 +205,17 @@ class CalcSTM:
                 h = self.model_vgae.encoder.predict_h(x, edge_index)
                 z = self.model_vgae.encode(x, edge_index)
                 if use_kd:
-                    dl_loss = mse_loss(h, self.h)
+                    kd_loss = mse_loss(h, self.h)
                 else:
-                    dl_loss = 0
+                    kd_loss = 0
                 re_loss = self.recon_loss(z)
                 kl_loss = (1 / self.num_nodes) * self.model_vgae.kl_loss()
-                loss = re_loss + kl_loss + dl_loss
+                loss = re_loss + kl_loss + kd_loss
                 loss.backward()
                 self.optimizer_vgae.step()
                 if epoch % 1 == 0:
                     print(
-                        f'epoch: {epoch}, loss: {loss}, kl_loss: {kl_loss}, re_loss: {re_loss}, dl_loss: {dl_loss}'
+                        f'epoch: {epoch}, loss: {loss}, kl_loss: {kl_loss}, re_loss: {re_loss}, kd_loss: {kd_loss}'
                     )
                     checkpoint = {
                         'model_state_dict': self.model_vgae.state_dict(),

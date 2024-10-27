@@ -238,10 +238,10 @@ class CalcSTM:
             self.optimizer_vgae.zero_grad()
             h = self.model_vgae.encoder.predict_h(x, edge_index)
             z = self.model_vgae.encode(x, edge_index)
-            dl_loss = mse_loss(h, self.h)
+            kd_loss = mse_loss(h, self.h)
             re_loss = self.recon_loss(z, train_data, norm, weight)
             kl_loss = (1 / num_nodes) * self.model_vgae.kl_loss()
-            loss = re_loss + kl_loss + dl_weight * dl_loss
+            loss = re_loss + kl_loss + dl_weight * kd_loss
             train_auroc,train_auprc = self.test(self.model_vgae, train_data)
             metric_train.append([loss.detach(),train_auroc,train_auprc])
             loss.backward()
@@ -252,17 +252,17 @@ class CalcSTM:
                     val_num_nodes, val_norm, val_weight = get_params(val_data)
                     h = self.model_vgae.encoder.predict_h(x_val, edge_index_val)
                     z = self.model_vgae.encode(x_val, edge_index_val)
-                    dl_loss_val = mse_loss(h, self.h)
+                    kd_loss_val = mse_loss(h, self.h)
                     re_loss_val = self.recon_loss(z, val_data, val_norm, val_weight)
                     kl_loss_val = (1 / val_num_nodes) * self.model_vgae.kl_loss()
-                    loss_val = re_loss_val + kl_loss_val + dl_weight * dl_loss_val
+                    loss_val = re_loss_val + kl_loss_val + dl_weight * kd_loss_val
                     val_auroc,val_auprc = self.test(self.model_vgae, val_data)
                     metric_val.append([loss_val.detach(),val_auroc,val_auprc])
                 print(
-                    f"epoch: {epoch}, loss_val: {loss_val}, dl_loss_val: {dl_loss_val}, re_loss_val: {re_loss_val}, kl_loss_val: {kl_loss_val}"
+                    f"epoch: {epoch}, loss_val: {loss_val}, kd_loss_val: {kd_loss_val}, re_loss_val: {re_loss_val}, kl_loss_val: {kl_loss_val}"
                 )
                 print(
-                    f"epoch: {epoch}, loss: {loss}, dl_loss: {dl_loss}, re_loss: {re_loss}, kl_loss: {kl_loss}"
+                    f"epoch: {epoch}, loss: {loss}, kd_loss: {kd_loss}, re_loss: {re_loss}, kl_loss: {kl_loss}"
                 )
         return metric_val,metric_train
 
@@ -367,7 +367,7 @@ if __name__ == '__main__':
     student_metric_val_not_kd,student_metric_train_not_kd,_ =  CalcSTM(RP_Matrix_, type, "new/result/1.1/checkpoint_path_not_kd").run(0.0,0.1,0,epochs_cvae=0,epochs_vgae=500)
 
     plot_lines(student_metric_val[:,1],"D-RP student model (KD)",color_palette[2])
-    plot_lines(student_metric_val_not_kd[:,1],"D-RP student model (NKD)",color_palette[3],"new/result/1.1/figure/auroc-D-RP-student.svg",title="Validation set AUROC for the D-RP model",ylabel="AURPC")
+    plot_lines(student_metric_val_not_kd[:,1],"D-RP student model (NKD)",color_palette[3],"new/result/1.1/figure/auroc-D-RP-student.svg",title="Validation set AUROC for the D-RP model",ylabel="AUROC")
 
     plot_lines(student_metric_val[:,2],"D-RP student model (KD)",color_palette[2])
     plot_lines(student_metric_val_not_kd[:,2],"D-RP student model (NKD)",color_palette[3],"new/result/1.1/figure/auprc-D-RP-student.svg",title="Validation set AUPRC for the D-RP model",ylabel="AUPRC")

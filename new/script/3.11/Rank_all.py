@@ -22,7 +22,7 @@ title = args.type
 output_path = args.output_path
 rank_path = args.rank_path
 
-color_palette = ["#3c5488", "#f39b7f", "#8491b4", "#91d1c2", "#fccde5"]
+color_palette = ["#d4738b", "#e8ccbb", "#edf4f7", "#9fdadb", "#648d9c"]
 
 columns = args.columns.split(",")
 data = pd.read_csv(f"{args.library}/TRs_info.txt", sep="\t")
@@ -238,7 +238,7 @@ for method in columns:
 data["-Rank"] = -data["rank"]
 data["Reciprocal Rank"] = 1 / data["rank"]
 
-sn = sns.boxplot(x="Method", y="-Rank", data=data, color=color[title], fliersize=1)
+sn = sns.boxplot(x="Method", y="-Rank", data=data, palette=color_palette, fliersize=1)
 
 plt.savefig(f"{output_path}/rank_{name}@boxplot.svg")
 plt.close()
@@ -250,7 +250,7 @@ data = (
     .loc[columns]
     .reset_index()
 )
-g = sns.barplot(x="Mean Reciprocal Rank", y="Method", data=data, color=color[title])
+g = sns.barplot(x="Mean Reciprocal Rank", y="Method", data=data, palette=color_palette, edgecolor='#3b3b3b')
 for index, row in data.iterrows():
     print(row.name, row["Mean Reciprocal Rank"])
     g.text(
@@ -284,7 +284,7 @@ data_bar = pd.DataFrame([true_dict]).T
 data_bar = data_bar.reset_index()
 data_bar.columns = ["Method", "Correct number"]
 
-g = sns.barplot(y="Method", x="Correct number", data=data_bar, color=color[title])
+g = sns.barplot(y="Method", x="Correct number", data=data_bar, palette=color_palette, edgecolor='#3b3b3b')
 sns.despine(bottom=False, left=False)
 for index, row in data_bar.iterrows():
     print(row.name, row["Correct number"])
