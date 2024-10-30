@@ -17,6 +17,7 @@ class Args:
         self.use_kd = use_kd
         self.tr_type = tr_type
         self.source = source
+        self.liner = True
         if not os.path.exists(output):
             os.mkdir(output)
 

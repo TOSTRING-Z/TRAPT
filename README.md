@@ -108,24 +108,6 @@ trapt --library library \
 
 ## Research details
 
-### KD ablation experiment
-```shell
-# loss
-python3 new/script/1.1/loss_DLVGAE.py
-python3 new/script/1.1/loss_DLFS.py
-```
-![img](./new/result/1.1/figure/loss-D-RP-student.svg)
-![img](./new/result/1.1/figure/loss-U-RP-student.svg)
-![img](./new/result/1.1/figure/auroc-D-RP-student.svg)
-![img](./new/result/1.1/figure/auprc-D-RP-student.svg)
-### TR decay rate
-```shell
-python3 new/script/2.5/CalcTRRPMatrix.py --library library --output new/result/2.5
-python3 new/script/2.5/decay_rate.py
-```
-![img](./new/result/2.5/long.svg)
-![img](./new/result/2.5/short.svg)
-
 ### The differences in model variant predictions TR
 ```shell
 python3 new/script/2.8/RankTRAPT_var.py --output_dir output/KnockTFv1 --rank_path new/result/2.8/files --name TRAPT-H3K27ac --model H3K27ac
@@ -173,8 +155,8 @@ python3 new/script/2.11/Rank_pile.py --output_path new/result/2.11/figure --name
 # Lisa benchmark dataset
 
 ## TRAPT
-python3 new/script/1.1/run_mult.py --input_dir input/Lisa/down --output_dir new/result/2.11/output-Lisa
-python3 new/script/1.1/run_mult.py --input_dir input/Lisa/up --output_dir new/result/2.11/output-Lisa
+python3 new/script/2.11/run_mult.py --input_dir input/Lisa/down --output_dir new/result/2.11/output-Lisa
+python3 new/script/2.11/run_mult.py --input_dir input/Lisa/up --output_dir new/result/2.11/output-Lisa
 python3 new/script/2.11/RankTRAPT_Source.py --output_dir new/result/2.11/output-Lisa --rank_path new/result/2.11/files_lisa --source cistrome --name TRAPT-cistrome_lisa --model TRAPT
 
 ## Lisa new/script/2.11/lisa_bart.sh
@@ -193,11 +175,18 @@ python3 new/script/2.11/icistarget_run.py --input_path input/Lisa/down --output_
 python3 new/script/2.11/icistarget_run.py --input_path input/Lisa/up --output_path new/result/2.11/icistarget/up --download_dir /root/下载 --executable_path /install/chromedriver_linux64/chromedriver
 python3 new/script/2.11/RankicisTarget.py --match_dir new/result/2.11/output-Lisa --input_path new/result/2.11/icistarget --type down,up --output_path new/result/2.11/files_lisa
 
-python3 new/script/1.1/Rank.py --output_path new/result/2.11/figure --name Lisa-benchmark-dataset --type ALL --rank_path new/result/2.11/files_lisa --source Lisa --columns TRAPT-cistrome_lisa,Lisa,BART,i-cisTarget,ChEA3
+python3 new/script/2.11/Rank.py --output_path new/result/2.11/figure --name Lisa-benchmark-dataset --type ALL --rank_path new/result/2.11/files_lisa --source Lisa --columns TRAPT-cistrome_lisa,Lisa,BART,i-cisTarget,ChEA3
 ```
 ![img](./new/result/2.11/figure/rank_Lisa-benchmark-dataset@boxplot.svg)
 ![img](./new/result/2.11/figure/rank_Lisa-benchmark-dataset@mmr_bar.svg)
 
+### TR decay rate
+```shell
+python3 new/script/2.5/CalcTRRPMatrix.py --library library --output new/result/2.5
+python3 new/script/2.5/decay_rate.py
+```
+![img](./new/result/2.5/long.svg)
+![img](./new/result/2.5/short.svg)
 
 ### Overlap between selected epigenetic profiles and TR peaks
 ```shell
@@ -221,7 +210,7 @@ done
 ```shell
 # Fig. 2 | Evaluation of TRAPT and comparative methods on TR knockdown/knockout and TF binding datasets.
 ### TRAPT
-python3 new/script/1.1/RankTRAPT.py --output_dir output/KnockTFv1 --name TRAPT --type down500,up500 --rank_path 'new/result/3.11/Fig. 2/files'
+python3 new/script/2.11/RankTRAPT_Source.py --output_dir output/KnockTFv1 --name TRAPT --type down500,up500 --rank_path 'new/result/3.11/Fig. 2/files'
 ### Lisa
 python3 new/script/2.11/RankLisa.py --match_dir output/KnockTFv1 --input_path other/lisa --type down,up --output_path 'new/result/3.11/Fig. 2/files'
 ### BART

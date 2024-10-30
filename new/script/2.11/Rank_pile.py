@@ -36,45 +36,6 @@ TcoF = set(
 )
 CR = set(data.loc[data["tr"].apply(lambda x: "CR" in x), "tr_base"].drop_duplicates())
 
-
-for method in columns:
-    if method == "ChEA3":
-        d = pd.read_csv(
-            "other/chea3/down/ABL1@DataSet_03_001_down500$ARCHS4--Coexpression.tsv",
-            sep="\t",
-        )
-        names = set(d["TF"])
-    if method == "BART":
-        d = pd.read_csv(
-            "other/bart/down/ABL1@DataSet_03_001_down500_bart_results.txt", sep="\t"
-        )
-        names = set(d["TF"])
-    if "TRAPT" in method:
-        d = pd.read_csv(
-            "output/KnockTFv1/AGO1@DataSet_02_95_down500/TR_detail.txt", sep="\t"
-        )
-        names = set(d["tr_base"])
-    if method == "Lisa":
-        d = pd.read_csv(
-            "other/lisa/down/ABL1@DataSet_03_001_down500.txt.lisa.tsv", sep="\t"
-        )
-        names = set(d["factor"])
-    if method == "i-cisTarget":
-        d = pd.read_csv(
-            "other/icistarget/down/ABL1@DataSet_03_001_down500/icistarget/statistics.tbl",
-            sep="\t",
-        )
-        names = set(
-            d["FeatureDescription"].apply(
-                lambda x: x.split(" ")[-1] if x.startswith("ChIP") else x.split(" ")[0]
-            )
-        )
-    inter_tcof = names.intersection(TcoF)
-    inter_cr = names.intersection(CR)
-    print(
-        f"{method}, inter_tcof: {len(inter_tcof)}/{len(TcoF)}, inter_cr: {len(inter_cr)}/{len(CR)}"
-    )
-
 CR_TcoF = CR | TcoF
 
 TR = {

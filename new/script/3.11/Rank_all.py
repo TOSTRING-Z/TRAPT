@@ -14,6 +14,7 @@ parser.add_argument("--output_path", type=str, default=None)
 parser.add_argument("--rank_path", type=str, default=None)
 parser.add_argument("--type", type=str, default="ALL",help="ALL/TF/CR/TcoF/CR_TcoF")
 parser.add_argument("--columns", type=str, default="TRAPT")
+parser.add_argument("--col_names", type=str, default=None)
 parser.add_argument("--source", type=str, default="KnockTF")
 args = parser.parse_args()
 
@@ -25,6 +26,11 @@ rank_path = args.rank_path
 color_palette = ["#d4738b", "#e8ccbb", "#edf4f7", "#9fdadb", "#648d9c"]
 
 columns = args.columns.split(",")
+if args.col_names == None:
+    col_names = columns
+else:
+    col_names = args.col_names.split(",")
+col_dict = dict(zip(columns,col_names))
 data = pd.read_csv(f"{args.library}/TRs_info.txt", sep="\t")
 
 ALL = set(data["tr_base"].drop_duplicates())
@@ -45,22 +51,22 @@ for method in columns:
             sep="\t",
         )
         names = set(d["TF"])
-    if method == "BART":
+    elif method == "BART":
         d = pd.read_csv(
             "other/bart/down/ABL1@DataSet_03_001_down500_bart_results.txt", sep="\t"
         )
         names = set(d["TF"])
-    if "TRAPT" in method:
+    elif "TRAPT" in method:
         d = pd.read_csv(
             "output/KnockTFv1/AGO1@DataSet_02_95_down500/TR_detail.txt", sep="\t"
         )
         names = set(d["tr_base"])
-    if method == "Lisa":
+    elif method == "Lisa":
         d = pd.read_csv(
             "other/lisa/down/ABL1@DataSet_03_001_down500.txt.lisa.tsv", sep="\t"
         )
         names = set(d["factor"])
-    if method == "i-cisTarget":
+    elif method == "i-cisTarget":
         d = pd.read_csv(
             "other/icistarget/down/ABL1@DataSet_03_001_down500/icistarget/statistics.tbl",
             sep="\t",
@@ -70,6 +76,8 @@ for method in columns:
                 lambda x: x.split(" ")[-1] if x.startswith("ChIP") else x.split(" ")[0]
             )
         )
+    else:
+        break
     inter_tcof = names.intersection(TcoF)
     inter_cr = names.intersection(CR)
     print(
@@ -187,21 +195,22 @@ data = pd.DataFrame(data, columns=columns)
 x = np.array(range(top))
 s = top * data.iloc[:top].values.max()
 for i in range(len(columns)):
-    score = columns[i]
-    auc = get_auc_(x, data[score].values, s)
-    print(f"{score}: {auc}")
-    plt.fill_between(x, data[score], 0, alpha=0.1, color=color_palette[i])
+    col = columns[i]
+    col_name = col_dict.get(col)
+    auc = get_auc_(x, data[col].values, s)
+    print(f"{col}: {auc}")
+    plt.fill_between(x, data[col], 0, alpha=0.1, color=color_palette[i])
     plt.plot(
         x,
-        data[score],
+        data[col],
         "--",
-        label=f"{score}: {auc}",
+        label=f"{col_name}: {auc}",
         color=color_palette[i],
         linewidth=1.5,
     )
     plt.plot(
         x,
-        data[score],
+        data[col],
         "o",
         color=color_palette[i],
         markersize=6,
@@ -225,13 +234,14 @@ top = 1500
 data = pd.DataFrame()
 mrrs = []
 for method in columns:
+    col_name = col_dict.get(method)
     add_data = pd.read_csv(f"{rank_path}/rank_%s.csv" % method)
     add_data = add_data.loc[add_data["tr"].apply(lambda x: x in TR)]
-    add_data["Method"] = method
+    add_data["Method"] = col_name
     add_data = add_data[add_data["rank"] <= top]
     mmr = np.round(np.mean(1 / pd.to_numeric(add_data["rank"])),4)
     add_data["Mean Reciprocal Rank"] = mmr
-    print(f"{method}: {mmr}")
+    print(f"{col_name}: {mmr}")
     mrrs.append(mmr)
     data = pd.concat([data, add_data], ignore_index=True)
 
@@ -247,9 +257,10 @@ data = (
     data[["Method", "Mean Reciprocal Rank"]]
     .groupby("Method")
     .mean()
-    .loc[columns]
+    .loc[col_names]
     .reset_index()
 )
+
 g = sns.barplot(x="Mean Reciprocal Rank", y="Method", data=data, palette=color_palette, edgecolor='#3b3b3b')
 for index, row in data.iterrows():
     print(row.name, row["Mean Reciprocal Rank"])
@@ -283,6 +294,7 @@ for i in range(1, top + 1):
 data_bar = pd.DataFrame([true_dict]).T
 data_bar = data_bar.reset_index()
 data_bar.columns = ["Method", "Correct number"]
+data_bar["Method"] = data_bar["Method"].map(col_dict.get)
 
 g = sns.barplot(y="Method", x="Correct number", data=data_bar, palette=color_palette, edgecolor='#3b3b3b')
 sns.despine(bottom=False, left=False)
@@ -308,10 +320,11 @@ plt.close()
 
 data = pd.DataFrame()
 for method in columns:
+    col_name = col_dict.get(method)
     add_data = pd.read_csv(f"{rank_path}/rank_{method}.csv")
     add_data = add_data[add_data.tr.map(lambda x: x in TR)]
     # add_data = add_data[add_data['rank'] != add_data['rank'].max()]
-    add_data["method"] = method
+    add_data["method"] = col_name
     # add_data = add_data[add_data['rank']<=200]
     add_data["rank"] = add_data["rank"] / add_data["rank"].max()
     data = pd.concat([data, add_data], ignore_index=True)

@@ -44,22 +44,22 @@ for method in columns:
             sep="\t",
         )
         names = set(d["TF"])
-    if method == "BART":
+    elif method == "BART":
         d = pd.read_csv(
             "other/bart/down/ABL1@DataSet_03_001_down500_bart_results.txt", sep="\t"
         )
         names = set(d["TF"])
-    if "TRAPT" in method:
+    elif "TRAPT" in method:
         d = pd.read_csv(
             "output/KnockTFv1/AGO1@DataSet_02_95_down500/TR_detail.txt", sep="\t"
         )
         names = set(d["tr_base"])
-    if method == "Lisa":
+    elif method == "Lisa":
         d = pd.read_csv(
             "other/lisa/down/ABL1@DataSet_03_001_down500.txt.lisa.tsv", sep="\t"
         )
         names = set(d["factor"])
-    if method == "i-cisTarget":
+    elif method == "i-cisTarget":
         d = pd.read_csv(
             "other/icistarget/down/ABL1@DataSet_03_001_down500/icistarget/statistics.tbl",
             sep="\t",
@@ -69,6 +69,8 @@ for method in columns:
                 lambda x: x.split(" ")[-1] if x.startswith("ChIP") else x.split(" ")[0]
             )
         )
+    else:
+        break
     inter_tcof = names.intersection(TcoF)
     inter_cr = names.intersection(CR)
     print(

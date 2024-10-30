@@ -5,13 +5,15 @@ import pandas as pd
 import tensorflow as tf
 from tensorflow.keras import backend as K
 from keras import Input, Model
-from keras.callbacks import EarlyStopping
 from keras.layers import Dense, Dropout, Layer
 from keras.models import Model
 from keras.optimizers import Adam
-from keras.regularizers import Regularizer
+from keras.losses import BCE,MSE
+from keras.activations import relu 
+from keras.regularizers import Regularizer,L2
+from keras.callbacks import EarlyStopping
 
-def seed_tensorflow(seed=23):
+def seed_tensorflow(seed=2023):
     random.seed(seed)
     np.random.seed(seed)
     tf.random.set_seed(seed)
@@ -73,22 +75,42 @@ class FeatureSelection:
         self.group_size = 10
         self.top = 10
         self.shuffle = True
+        self.early_stopping = EarlyStopping(patience=4)
+
+    def get_loss(self):
+        if self.args.liner:
+            return BCE
+        else:
+            return MSE
+        
+    def get_act(self,t=1):
+        if self.args.liner:
+            return relu
+        else:
+            return CustomSigmoid(t=t)
 
     def TSFS(self, X, T):
+        seed_tensorflow()
         pos_weight = float(len(T) - T.sum()) / T.sum()
         sample_weight = np.ones(len(T))
         sample_weight[T.astype(bool)] = pos_weight
         if self.args.use_kd:
             input = Input(X.shape[1:])
-            y = Dense(2, activation="relu", kernel_regularizer=SparseGroupLasso(groups=self.groups))(input)
+            y = Dense(
+                2, 
+                activation="relu"
+            )(input)
             feature_extraction = Model(input, y)
             t = feature_extraction(input)
             output = Dense(1)(t)
-            output = CustomSigmoid(t=1)(output)
+            output = self.get_act()(output)
             teacher = Model(input, output)
             teacher.compile(
-                optimizer=Adam(self.learning_rate), loss="mse", weighted_metrics=[]
+                optimizer=Adam(self.learning_rate),
+                loss=self.get_loss(), 
+                weighted_metrics=[]
             )
+            print("U-RP teacher model running...")
             teacher.fit(
                 X,
                 T,
@@ -96,36 +118,57 @@ class FeatureSelection:
                 batch_size=self.batch_size,
                 sample_weight=sample_weight,
                 shuffle=self.shuffle,
+                callbacks=[self.early_stopping],
+                validation_split=0.15,
                 verbose=0,
             )
             Y = feature_extraction.predict(X)
-            input = Input((X.shape[-1],))
+            seed_tensorflow()
+            input = Input(X.shape[1:])
             output = Dense(
                 Y.shape[-1] * 10,
                 activation="relu",
-                kernel_regularizer=SparseGroupLasso(groups=self.groups),
+                kernel_regularizer=SparseGroupLasso(groups=self.groups)
             )(input)
+            output = Dense(Y.shape[-1], activation="relu")(output)
+            fs_model = Model(input, output)
+            fs_model.compile(optimizer=Adam(self.learning_rate), loss=MSE, weighted_metrics=[])
+            print("U-RP student model running...")
+            fs_model.fit(
+                X,
+                Y,
+                epochs=self.epochs,
+                batch_size=self.batch_size,
+                sample_weight=sample_weight,
+                shuffle=self.shuffle,
+                verbose=0,
+            )
         else:
+            print("FS model running...")
             Y = np.expand_dims(T,-1)
             input = Input(X.shape[1:])
             output = Dense(
-                Y.shape[-1] * 10 * 2,
+                Y.shape[-1] * 20,
                 activation="relu",
-                kernel_regularizer=SparseGroupLasso(groups=self.groups),
+                kernel_regularizer=L2(),
             )(input)
-        o_1 = Dense(Y.shape[-1], activation="relu")(output)
-        student = Model(input, o_1)
-        student.compile(optimizer=Adam(self.learning_rate), loss="mse")
-        student.fit(
-            X,
-            Y,
-            epochs=self.epochs,
-            batch_size=self.batch_size,
-            sample_weight=sample_weight,
-            shuffle=self.shuffle,
-            verbose=0,
-        )
-        weights = student.layers[1].get_weights()[0]
+            output = Dense(
+                Y.shape[-1] * 2,
+                activation="relu",
+            )(input)
+            output = Dense(1, activation=CustomSigmoid(t=1))(output)
+            fs_model = Model(input, output)
+            fs_model.compile(optimizer=Adam(self.learning_rate), loss=BCE, weighted_metrics=[])
+            fs_model.fit(
+                X,
+                Y,
+                epochs=self.epochs,
+                batch_size=self.batch_size,
+                sample_weight=sample_weight,
+                shuffle=self.shuffle,
+                verbose=0,
+            )
+        weights = fs_model.layers[1].get_weights()[0]
         weights = np.nan_to_num(weights, nan=0)
         weights = np.sum(np.square(weights), 1)
         return np.argsort(-weights),weights
@@ -142,7 +185,7 @@ class FeatureSelection:
         output = CustomSigmoid(t=1)(output)
         model = Model(input, output)
         model.compile(
-            optimizer=Adam(self.learning_rate), loss="mse", weighted_metrics=[]
+            optimizer=Adam(self.learning_rate), loss=MSE, weighted_metrics=[]
         )
         model.fit(
             X,
