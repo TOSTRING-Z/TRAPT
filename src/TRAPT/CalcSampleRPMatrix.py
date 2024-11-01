@@ -1,10 +1,7 @@
 import os
 import re
-import sys
-
 from glob import glob
 from multiprocessing import Pool
-
 import anndata
 import numpy as np
 import pandas as pd
@@ -14,9 +11,8 @@ from tqdm import tqdm
 def dhs2gene(args,sample):
     try:
         r = 100000
-        d_ = 10000
         m = 0.01
-        alpha = (r - d_) / np.log(2 / m - 1)
+        alpha = np.log(2 / m - 0.99) / (r - 10000)
         sample_name = re.findall(r'dhs@(.*?).csv', sample)[0]
         vec = pd.read_csv(sample, sep='\t', header=None)[0].values
         rp_vec = []
@@ -25,7 +21,7 @@ def dhs2gene(args,sample):
             s = vec[index]
             d = args.dhs_gene_g.loc[gene, 'DISTANCE']
             w = np.ones(d.shape)
-            w[d > d_] = 2 / (np.exp((d[d > d_] - d_) / alpha) + 1)
+            w[d > 10000] = 3 / (2 * np.exp((d[d > 10000] - 10000) * alpha) + 1)
             w[d > r] = 0
             rp = np.mean(np.multiply(w, s))
             rp_vec.append(rp)
@@ -35,8 +31,6 @@ def dhs2gene(args,sample):
     except:
         print('Error %s !' % sample)
         return None
-        
-
 
 if __name__ == '__main__':
     import argparse

@@ -148,13 +148,9 @@ class FeatureSelection:
             Y = np.expand_dims(T,-1)
             input = Input(X.shape[1:])
             output = Dense(
-                Y.shape[-1] * 20,
+                Y.shape[-1] * 10,
                 activation="relu",
-                kernel_regularizer=L2(),
-            )(input)
-            output = Dense(
-                Y.shape[-1] * 2,
-                activation="relu",
+                kernel_regularizer=SparseGroupLasso(groups=self.groups),
             )(input)
             output = Dense(1, activation=CustomSigmoid(t=1))(output)
             fs_model = Model(input, output)

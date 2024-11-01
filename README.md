@@ -146,6 +146,9 @@ python3 new/script/2.11/RankLisa.py --match_dir output/KnockTFv1 --input_path ot
 ## BART
 python3 new/script/2.11/RankBART.py --match_dir output/KnockTFv1 --input_path other/bart --type down,up --output_path new/result/2.11/files
 
+python3 new/script/3.11/Rank_all.py --output_path new/result/2.11/figure --name TRAPT-cistrome_TF --type TF --rank_path new/result/2.11/files --source KnockTF --columns TRAPT-source_of_cistrome,Lisa,BART --col_names 'TRAPT-source_of_cistrome,Lisa,BART'
+python3 new/script/3.11/Rank_all.py --output_path new/result/2.11/figure --name TRAPT-cistrome_CR_TcoF --type CR_TcoF --rank_path new/result/2.11/files --source KnockTF --columns TRAPT-source_of_cistrome,Lisa,BART --col_names 'TRAPT-source_of_cistrome,Lisa,BART'
+
 python3 new/script/2.11/Rank_pile.py --output_path new/result/2.11/figure --name TRAPT-cistrome --type ALL --rank_path new/result/2.11/files --source KnockTF --columns TRAPT-source_of_cistrome,Lisa,BART --col_names 'TRAPT-source_of_cistrome,Lisa,BART'
 ```
 ![img](./new/result/2.11/figure/rank_TRAPT-cistrome@boxplot.svg)
