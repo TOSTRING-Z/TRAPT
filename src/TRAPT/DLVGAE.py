@@ -287,8 +287,8 @@ class CalcSTM:
         return self.model_cvae.predict_h(dataset).detach()
 
     def run(self,use_kd=True):
-        self.epochs_cvae = 10
-        self.epochs_vgae = 100
+        self.epochs_cvae = 50
+        self.epochs_vgae = 500
         self.h_dim = 48
         self.z_dim = 24
         # Teacher

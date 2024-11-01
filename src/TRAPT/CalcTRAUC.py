@@ -40,7 +40,7 @@ class CalcTRAUC:
 
     def run(self):
         gene_vec = np.in1d(self.genes, self.geneset)
-
+        print("Calculate the AUC...")
         auc = np.zeros((self.matrix.shape[0], 1))
         with ThreadPoolExecutor(self.args.threads) as pool:
             trunk_count = int(self.matrix.shape[0] / self.args.trunk_size) + 1

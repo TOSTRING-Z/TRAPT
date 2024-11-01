@@ -75,7 +75,6 @@ class FeatureSelection:
         self.group_size = 10
         self.top = 10
         self.shuffle = True
-        self.early_stopping = EarlyStopping(patience=4)
 
     def get_loss(self):
         if self.args.liner:
@@ -118,8 +117,6 @@ class FeatureSelection:
                 batch_size=self.batch_size,
                 sample_weight=sample_weight,
                 shuffle=self.shuffle,
-                callbacks=[self.early_stopping],
-                validation_split=0.15,
                 verbose=0,
             )
             Y = feature_extraction.predict(X)
@@ -183,6 +180,7 @@ class FeatureSelection:
         model.compile(
             optimizer=Adam(self.learning_rate), loss=MSE, weighted_metrics=[]
         )
+        print("U-RP NN model running...")
         model.fit(
             X,
             y,

@@ -48,6 +48,7 @@ def runTRAPT(args: Args):
         RP_TR_ATAC_auc = CTR_TR.run()
         RP_TR_ATAC_auc.to_csv(f"{args.output}/RP_TR_ATAC_auc.csv", header=False)
 
+    print("AUC integration...")
     data_auc = pd.concat([RP_TR_H3K27ac_auc, RP_TR_ATAC_auc], axis=1)
     data_auc /= np.linalg.norm(data_auc, axis=0, keepdims=True)
     TR_activity = pd.DataFrame(
@@ -68,6 +69,7 @@ def runTRAPT(args: Args):
         "TR activity", ascending=False
     )
     TR_detail.to_csv(os.path.join(args.output, "TR_detail.txt"), index=False, sep="\t")
+    print("Program execution completed.")
     return TR_detail
 
 def str2bool(v):
