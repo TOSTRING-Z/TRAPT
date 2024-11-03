@@ -47,7 +47,6 @@ for t in types:
                 )
                 pass
             except Exception as e:
-                print(dir, e)
                 continue
             summary_data = summary_data[["tr_base"]]
             summary_data = summary_data.drop_duplicates(ignore_index=True).reset_index()
@@ -62,9 +61,9 @@ for t in types:
                 top_sum += 1
                 print(output, rank_score)
 
-print("Total:", len(rank), "top_sum: ", top_sum)
 rank = pd.DataFrame(rank, columns=["id", "tr", "rank"])
 rank = rank.sort_values(["rank","tr"])
 rank.to_csv(f"{rank_path}/rank_{name}.csv", index=False)
-
 print(rank.query("rank <= 10").groupby("tr").agg({"rank": len}))
+print("Total:", len(rank), "top_sum: ", top_sum)
+

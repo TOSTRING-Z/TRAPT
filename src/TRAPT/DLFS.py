@@ -78,9 +78,9 @@ class FeatureSelection:
 
     def get_loss(self):
         if self.args.liner:
-            return BCE
-        else:
             return MSE
+        else:
+            return BCE
         
     def get_act(self,t=1):
         if self.args.liner:

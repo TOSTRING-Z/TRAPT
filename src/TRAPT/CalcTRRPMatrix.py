@@ -60,7 +60,7 @@ if __name__ == '__main__':
     parser.add_argument("--DHS_TO_GENE", type=str, default="library/dhs_hg38_rose_DHS_TO_GENE.txt")
     parser.add_argument("--range", type=int, default=100000)
     parser.add_argument("--mean", type=str2bool, default=True)
-    parser.add_argument("--norm", type=str2bool, default=True)
+    parser.add_argument("--norm", type=str2bool, default=False)
     args = parser.parse_args()
 
     ucsc_gene = pd.read_csv(args.hg38_refseq,sep='\t')
@@ -82,9 +82,9 @@ if __name__ == '__main__':
     })
     args.dhs_gene_g['DISTANCE'] = args.dhs_gene_g['DISTANCE'].apply(lambda x:np.array(x))
     args.genes = args.dhs_gene_g.index
-    args.TR_info = pd.read_csv(os.path.join(args.library,'TRs_info.txt'),sep='\t',index_col=0)
+    TR_info = pd.read_csv(os.path.join(args.library,'TRs_info.txt'),sep='\t',index_col=0)
     if args.mean:
-        args.TR_info = args.TR_info.groupby("tr_base").agg({"Distal Intergenic Percentage":np.mean})
+        args.TR_info = TR_info.groupby("tr_base").agg({"Distal Intergenic Percentage":np.mean}).copy()
     tr_dhs_ad = ad.read_h5ad(os.path.join(args.library,'TR_DHS.h5ad'))
 
     def iter_params():
@@ -116,8 +116,8 @@ if __name__ == '__main__':
 
     obs = rp_matrix_ad.obs
     obs.index.name = 'tr'
-    obs = obs.join(args.TR_info,how='left')
+    obs = obs.join(TR_info,how='left')
     obs['index'] = range(len(obs))
 
     rp_matrix_ad.obs = obs
-    rp_matrix_ad.write_h5ad(os.path.join(args.output,f'RP_Matrix_TR.h5ad'))
+    rp_matrix_ad.write_h5ad(os.path.join(args.output,'RP_Matrix_TR.h5ad'))

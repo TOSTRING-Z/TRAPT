@@ -12,6 +12,7 @@ from sklearn.preprocessing import normalize
 from torch import Tensor, nn
 from torch.nn.functional import binary_cross_entropy, mse_loss
 from torch.utils.data import DataLoader
+import torch_geometric.transforms as T
 from torch_geometric.data import Data
 from torch_geometric.nn import VGAE, GCNConv, InnerProductDecoder
 from tqdm import tqdm
@@ -19,7 +20,7 @@ from tqdm import tqdm
 from TRAPT.Tools import RPMatrix
 
 
-def seed_torch(seed=23):
+def seed_torch(seed=2023):
     random.seed(seed)
     os.environ['PYTHONHASHSEED'] = str(seed)
     np.random.seed(seed)
@@ -35,7 +36,10 @@ class InnerProductDecoderWeight(InnerProductDecoder):
     def forward(
         self, z: Tensor, edge_index: Tensor = None, sigmoid: bool = True
     ) -> Tensor:
-        adj = torch.matmul(z, z.t())
+        if edge_index != None:
+            adj = (z[edge_index[0]] * z[edge_index[1]]).sum(dim=1)
+        else:
+            adj = torch.matmul(z, z.t())
         return torch.sigmoid(adj) if sigmoid else adj
 
 
@@ -93,7 +97,7 @@ class CVAE(nn.Module):
         return decoded
 
 class CalcSTM:
-    def __init__(self, RP_Matrix, type, checkpoint_path, device='cpu'):
+    def __init__(self, RP_Matrix, type, checkpoint_path, device='cuda'):
         self.type = type
         assert type in ['H3K27ac', 'ATAC']
         self.checkpoint_path = checkpoint_path
@@ -158,11 +162,10 @@ class CalcSTM:
         data = ad.AnnData(A_pred, obs=info, var=info)
         data.write_h5ad(f'{self.checkpoint_path}/A_pred_{self.type}.h5ad')
 
-    def recon_loss(self, z):
-        y_pred = self.model_vgae.decoder(z, sigmoid=True)
+    def recon_loss(self, z, data, norm, weight):
+        y_pred = self.model_vgae.decoder(z, data.edge_label_index, sigmoid=True)
         loss = (
-            self.norm
-            * binary_cross_entropy(y_pred.view(-1), self.y, weight=self.weight).mean()
+            norm * binary_cross_entropy(y_pred, data.edge_label, weight=weight).mean()
         )
         return loss
 
@@ -170,26 +173,34 @@ class CalcSTM:
         seed_torch()
         self.h = h
         self.edge_index = self.get_edge_index(self.RP_Matrix.TR, self.RP_Matrix.Sample)
+        print("Edge sum:", self.edge_index.shape[1])
         self.data = Data(x=self.data, edge_index=self.edge_index)
-        x = self.data.x.to(self.device)
-        edge_index = self.data.edge_index.to(self.device)
+        transform = T.Compose([
+            T.NormalizeFeatures(),
+            T.ToDevice(self.device),
+            T.RandomLinkSplit(num_val=0, num_test=0, is_undirected=True,
+                            neg_sampling_ratio=0, add_negative_train_samples=False),
+        ])
+        train_data, _, _ = transform(self.data)
+        x = train_data.x
+        edge_index = train_data.edge_label_index
         self.num_features = self.data.num_features
-        self.num_nodes = self.data.num_nodes
-        values = torch.ones(self.edge_index.shape[1])
-        size = torch.Size([self.num_nodes] * 2)
-        y = torch.sparse_coo_tensor(self.edge_index, values, size)
-        y = y.to_dense().view(-1)
-        pos_weight = (self.num_nodes**2 - y.sum()) / y.sum()
-        weight = torch.ones_like(y)
-        weight[y.numpy().astype(bool)] = pos_weight
-        self.weight = weight.to(self.device)
-        self.norm = self.num_nodes**2 / ((self.num_nodes**2 - y.sum()) * 2)
-        self.y = y.to(self.device)
+        def get_params(data):
+            num_nodes = data.num_nodes
+            y = data.edge_label
+            pos_weight = (num_nodes**2 - y.sum()) / y.sum()
+            weight = torch.ones_like(y,device=self.device)
+            weight[y.to(bool)] = pos_weight
+            norm = num_nodes**2 / ((num_nodes**2 - y.sum()) * 2)
+            return num_nodes, norm, weight
+        
+        num_nodes, norm, weight = get_params(train_data)
 
         encoder = VariationalGCNEncoder(self.data.num_features, self.h_dim, self.z_dim)
         decoder = InnerProductDecoderWeight(self.A_e)
         self.model_vgae = VGAE(encoder, decoder).to(self.device)
         self.optimizer_vgae = torch.optim.Adam(self.model_vgae.parameters(), lr=0.01)
+
         if os.path.exists(f'{self.checkpoint_path}/model_student_{self.type}.pt'):
             checkpoint = torch.load(
                 f'{self.checkpoint_path}/model_student_{self.type}.pt',
@@ -208,8 +219,8 @@ class CalcSTM:
                     kd_loss = mse_loss(h, self.h)
                 else:
                     kd_loss = 0
-                re_loss = self.recon_loss(z)
-                kl_loss = (1 / self.num_nodes) * self.model_vgae.kl_loss()
+                re_loss = self.recon_loss(z, train_data, norm, weight)
+                kl_loss = (1 / num_nodes) * self.model_vgae.kl_loss()
                 loss = re_loss + kl_loss + kd_loss
                 loss.backward()
                 self.optimizer_vgae.step()
@@ -287,15 +298,14 @@ class CalcSTM:
         return self.model_cvae.predict_h(dataset).detach()
 
     def run(self,use_kd=True):
-        self.epochs_cvae = 50
-        self.epochs_vgae = 500
+        self.epochs_cvae = 100
+        self.epochs_vgae = 1000
         self.h_dim = 48
         self.z_dim = 24
         # Teacher
         z = self.init_cvae()
         # Student
         self.init_vgae(z,use_kd)
-
 
 if __name__ == '__main__':
     type = sys.argv[1]

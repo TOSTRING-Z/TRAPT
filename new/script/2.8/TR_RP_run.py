@@ -21,6 +21,7 @@ for file in tqdm(files):
     args = Args(input, output, args_.library)
     if os.path.exists(f"{args.output}/TR_detail.txt"):
         continue
+    print(f'\033[1;31m # {args.output} running... # \033[0m')
     rp_matrix_TR = RPMatrix(args_.library, args_.rp_matrix).norm().get_data()
     CTR_TR = CalcTRAUC(args, rp_matrix_TR, 1)
     RP_TR_auc = CTR_TR.run()

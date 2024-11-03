@@ -67,24 +67,30 @@ class RPMatrix:
         self.data.X += data.X
         return self
 
-    def get_data(self):
+    def get_data(self) -> ad.AnnData:
         return self.data
 
 
 class RP_Matrix:
     def __init__(self, library) -> None:
-        self.TR = RPMatrix(library, 'RP_Matrix_TR.h5ad').norm().get_data()
+        self.TR = (
+            RPMatrix(library, 'RP_Matrix_TR.h5ad')
+            .norm().get_data()
+        )
         self.TR_H3K27ac = (
             RPMatrix(library, 'RP_Matrix_TR_H3K27ac.h5ad')
-            .norm()
-            .add(self.TR)
-            .get_data()
+            .norm().add(self.TR).get_data()
         )
         self.TR_ATAC = (
-            RPMatrix(library, 'RP_Matrix_TR_ATAC.h5ad').norm().add(self.TR).get_data()
+            RPMatrix(library, 'RP_Matrix_TR_ATAC.h5ad')
+            .norm().add(self.TR).get_data()
         )
         self.H3K27ac = (
-            RPMatrix(library, 'RP_Matrix_H3K27ac.h5ad').standard_scale().get_data()
+            RPMatrix(library, 'RP_Matrix_H3K27ac.h5ad')
+            .standard_scale().get_data()
         )
-        self.ATAC = RPMatrix(library, 'RP_Matrix_ATAC.h5ad').standard_scale().get_data()
+        self.ATAC = (
+            RPMatrix(library, 'RP_Matrix_ATAC.h5ad')
+            .standard_scale().get_data()
+        )
 

@@ -39,6 +39,7 @@ for t in types:
             output = re.findall(r"/(.*)", dir)[0]
             try:
                 summary_data = pd.read_csv("%s/TR_detail.txt" % dir, sep="\t")
+                summary_data["tr_base"] = summary_data["TR"].map(lambda x:x.split("@")[0])
                 if args.source != None:
                     summary_data = summary_data[
                         summary_data["Source"].str.upper().map(lambda s: s != args.source.upper() if args.source_exclude else s == args.source.upper())
@@ -49,7 +50,7 @@ for t in types:
                 )
                 pass
             except Exception as e:
-                print(dir, e)
+                # print(dir, e)
                 continue
             summary_data = summary_data[["tr_base"]]
             summary_data = summary_data.drop_duplicates(ignore_index=True).reset_index()
