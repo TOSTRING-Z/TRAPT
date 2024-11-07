@@ -186,6 +186,7 @@ python3 new/script/2.11/Rank.py --output_path new/result/2.11/figure --name Lisa
 ### TR decay rate
 ```shell
 python3 new/script/2.5/CalcTRRPMatrix.py --library library --output new/result/2.5
+Rscript new/script/2.5/gsea_run.r
 python3 new/script/2.5/decay_rate.py
 ```
 ![img](./new/result/2.5/long.svg)
