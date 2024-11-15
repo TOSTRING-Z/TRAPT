@@ -64,6 +64,9 @@ python3 src/TRAPT/CalcTRSampleRPMatrix.py H3K27ac library
 python3 src/TRAPT/CalcTRSampleRPMatrix.py ATAC library
 ```
 
+### Parameter Documentation
+Online documentation can be found [here](https://trapt.readthedocs.io/en/latest/).
+
 ## Case 1: Inferring Key Regulators in Breast Cancer Using Bulk RNA-seq
 ### Data Preparation
 ```shell
