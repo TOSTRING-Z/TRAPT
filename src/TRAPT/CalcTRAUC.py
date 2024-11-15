@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from concurrent.futures import ThreadPoolExecutor
 
 import numpy as np
@@ -5,8 +7,24 @@ import pandas as pd
 from numba import jit
 from tqdm import tqdm
 
+class CalcTRAUC:    
+    r"""Calculate the area under the curve (AUC) for each TR curve.
 
-class CalcTRAUC:
+    Attributes
+    ----------
+    args : TRAPT.Tools.Args
+        Global parameters for TRAPT.
+    RP_Matrix_TR_Sample : anndata.AnnData
+        The sum of TR-RP scores and D-RP scores.
+    w : np.array 
+        U-RP scores.
+    
+    Notes
+    -----
+    The input is the RP matrix, and the calculation is performed as follows:
+    
+    .. math:: IRP = (TRRP + DRP) \times URP
+    """
     def __init__(self, args, RP_Matrix_TR_Sample, w):
         self.args = args
         self.matrix = RP_Matrix_TR_Sample
@@ -17,6 +35,21 @@ class CalcTRAUC:
     @staticmethod
     @jit(nopython=True, nogil=True)
     def get_auc(params):
+        r"""Parallel computing module.
+
+        Parameters:
+        i : int
+            The i-th row of the I-RP matrix.
+        j : int
+            Default is 0.
+        labels : np.array
+            Gene vector.
+        vec : np.array
+            I-RP vector.
+
+        Returns:
+            i, j, and the AUC score of the i-th TR.
+        """
         i, j, labels, vec = params
         l_p = labels > 0.5
         p_c = np.sum(l_p)
@@ -31,6 +64,17 @@ class CalcTRAUC:
         return i, j, auc
 
     def iter_params(self, gene_vec, trunk):
+        r"""Parallel parameter module.
+
+        Parameters:
+        gene_vec : np.array
+            Gene vector.
+        trunk : int
+            Number of blocks.
+
+        Returns:
+            An iterator.
+        """
         start = trunk * self.args.trunk_size
         end = (trunk + 1) * self.args.trunk_size
         tr_rp = self.matrix[start:end].to_df().values
@@ -39,6 +83,11 @@ class CalcTRAUC:
             yield start + i, 0, gene_vec, tr_vec
 
     def run(self):
+        r"""TR auc calculation module execution entry point.
+
+        Returns:
+            A pd.DataFrame of AUC scores for TRs.
+        """
         gene_vec = np.in1d(self.genes, self.geneset)
         print("Calculate the AUC...")
         auc = np.zeros((self.matrix.shape[0], 1))

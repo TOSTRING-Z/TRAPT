@@ -9,6 +9,19 @@ from scipy import sparse
 from tqdm import tqdm
 
 def dhs2gene(args,sample):
+    r"""Calculate the Epi regulatory potential score.
+
+    Parameters:
+    args : argparse.Namespace
+        Global parameters.
+    sample : str
+        Epi sample name.
+    vec : np.array
+        Epi PRE score.
+
+    Returns:
+        Epi sample name, and Epi-RP score.
+    """
     try:
         r = 100000
         m = 0.01

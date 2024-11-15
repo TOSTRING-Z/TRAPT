@@ -5,6 +5,29 @@ import numpy as np
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
 class Args:
+    r""" TRAPT Global Parameters.
+
+    Attributes
+    ----------
+    input : str
+        Input path for the gene set.
+    output : str
+        Output path for TRAPT results.
+    library : str, optional
+        Path to the background library, default is the 'library' path in the current directory.
+    threads : int, optional
+        Number of processes used for TRAPT inference.
+    trunk_size : int, optional
+        Size of the chunks.
+    background_genes : str, optional
+        Number of background genes selected.
+    use_kd : str, optional
+        Use knowledge distillation.
+    tr_type : str, optional
+        all/tf/tcof/cr.
+    source : str, optional
+        all/cistrome/chip_altas/gtrd/remap/chip-atlas/remap/encode/geo.
+    """
     def __init__(self, input, output, library="library", 
                  threads=16, trunk_size=2048 * 16, background_genes=6000, 
                  use_kd=True, tr_type="all", source="all") -> None:
@@ -63,7 +86,7 @@ class RPMatrix:
             self.data.X = ss.fit_transform(self.data.X.T).T
         return self
 
-    def add(self, data):
+    def add(self, data:ad.AnnData):
         self.data.X += data.X
         return self
 

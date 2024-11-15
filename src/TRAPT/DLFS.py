@@ -26,12 +26,15 @@ class CustomSigmoid(Layer):
         return 1 / (1 + K.exp(-x / self.t))
 
 class SparseGroupLasso(Regularizer):
-    """
-    https://keras-ssg-lasso.readthedocs.io/en/latest/
-    argmin(w) (1/2n * ||y - Xw||^2 + λ1 * ||w||1 + λ2 * ∑g∈G √pg * ||w_g||2)
-    """
-
     def __init__(self, l1=0.01, l2=0.01, groups=None):
+        r"""Sparse Group Lasso
+        
+        Notes
+        -----
+        Please refer to https://keras-ssg-lasso.readthedocs.io/en/latest/
+        
+        .. math:: L(X, y, \beta) + (1 - \alpha)\lambda\sum_{l=1}^m \sqrt{p_l}\|\beta^l\|_2 + \alpha \lambda \|\beta\|_1
+        """
         self.l1 = l1
         self.l2 = l2
         groups = np.array(groups).astype("int32")
@@ -77,18 +80,37 @@ class FeatureSelection:
         self.shuffle = True
 
     def get_loss(self):
+        r"""U-RP teacher model loss function.
+        """
         if self.args.liner:
             return MSE
         else:
             return BCE
         
     def get_act(self,t=1):
+        r"""U-RP teacher model activation function.
+
+        Parameters:
+        t : float
+            Temperature value.
+        """
         if self.args.liner:
             return relu
         else:
             return CustomSigmoid(t=t)
 
     def TSFS(self, X, T):
+        r"""Teacher-Student Feature Selection.
+
+        Parameters:
+        X : np.array
+            Epi-RP matrix.
+        T : str
+            Input genes vector.
+
+        Returns:
+            Index values sorted by Epi sample weights, and Epi sample weights.
+        """
         seed_tensorflow()
         pos_weight = float(len(T) - T.sum()) / T.sum()
         sample_weight = np.ones(len(T))
@@ -167,6 +189,17 @@ class FeatureSelection:
         return np.argsort(-weights),weights
 
     def train(self, X, y):
+        r"""U-RP model training entry function.
+
+        Parameters:
+        X : np.array
+            Epi-RP matrix.
+        y : str
+            Input genes vector.
+        
+        Returns:
+            U-RP model.
+        """
         seed_tensorflow()
         pos_weight = float(len(y) - y.sum()) / y.sum()
         sample_weight = np.ones(len(y))
@@ -193,15 +226,24 @@ class FeatureSelection:
         return model
 
     def get_corr(self, v1: list, v2: list):
+        r"""Correlation calculation.
+        """
         return np.array([np.corrcoef(v1, v2[i])[0, 1] for i in range(len(v2))])
 
     def sort_by_group(self, vec):
+        r"""Grouping function.
+        """
         vec = self.get_corr(vec, self.data_ad.X)
         self.index = np.argsort((vec.min() - vec))
         self.data_ad = self.data_ad[self.index]
         self.groups = [i // self.group_size for i in range(len(self.index))]
 
     def run(self):
+        r"""Method execution entry point.
+
+        Returns:
+            A pd.DataFrame of U-RP scores for query Genes, and selected sample information.
+        """
         geneset = pd.read_csv(self.args.input, header=None)[0]
         genes = self.data_ad.var_names.values
         y = np.in1d(genes, geneset).astype(int)

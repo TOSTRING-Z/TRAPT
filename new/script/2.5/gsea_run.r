@@ -1,6 +1,6 @@
 # example
 input.rank <- as.data.frame(list("name" = c("g1", "g2", "g3", "g4", "g5"), "value" = c(1:5)))
-gs.db <- list("ts1\tg1\tg2\tg3", "ts2\tg1\tg2\tg3")
+gs.db <- list("ts1\t\tg1\tg2\tg3", "ts2\t\tg1\tg2\tg3")
 
 source("new/script/2.5/GSEA.1.0.11.R")
 

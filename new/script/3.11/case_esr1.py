@@ -187,11 +187,17 @@ def process_colname(x):
     s = x.split("-")  # 分割列名
     submitter_id = "-".join(s[:3])  # 提取前3个部分作为 submitter_id
     tumor = int(s[3][:-1]) < 9  # 判断第四部分中的数字是否小于9，表示是否为肿瘤
-    return [submitter_id, tumor]
+    return [x, submitter_id, tumor]
 
-phenotype = pd.DataFrame([process_colname(x) for x in col_names], columns=["submitter_id", "tumor"])
-expr.columns = phenotype["submitter_id"]
-expr_tissue = expr[phenotype["submitter_id"][phenotype["tumor"]]]
+phenotype_tumor = pd.DataFrame([process_colname(x) for x in col_names], columns=["submitter_id.samples", "submitter_id", "tumor"])
+expr.columns = phenotype_tumor["submitter_id"]
+expr_tissue = expr[phenotype_tumor["submitter_id"][phenotype_tumor["tumor"]]]
+
+phenotype_tumor = phenotype_tumor[phenotype_tumor["tumor"]]
+
+phenotype_meta = phenotype.merge(phenotype_tumor[["submitter_id.samples"]],how="inner",on="submitter_id.samples")
+phenotype_meta = phenotype_meta.dropna(axis=1)
+phenotype_meta.to_excel("new/result/3.11/Fig. 4/phenotype_meta.xlsx",index=False)
 
 expr_genes = set(expr.index)
 sorted_tfs = data[data.top.values].sort_values("score", ascending=False)["tr_base"]

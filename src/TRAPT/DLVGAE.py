@@ -97,6 +97,18 @@ class CVAE(nn.Module):
         return decoded
 
 class CalcSTM:
+    r"""D-RP model network reconstruction module.
+
+    Parameters:
+    RP_Matrix : TRAPT.Tools.RP_Matrix
+        TR-RP matrix and Epi-RP matrix.
+    type : str
+        Epi-RP type.
+    checkpoint_path : str 
+        Model save path.
+    device : str, optional
+        cpu/cuda.
+    """
     def __init__(self, RP_Matrix, type, checkpoint_path, device='cuda'):
         self.type = type
         assert type in ['H3K27ac', 'ATAC']
@@ -114,6 +126,8 @@ class CalcSTM:
 
     @staticmethod
     def get_cos_similar_matrix(m1, m2):
+        r"""Matrix cosine similarity calculation.
+        """
         num = m1.dot(m2.T)
         denom = np.linalg.norm(m1, axis=1).reshape(-1, 1) * np.linalg.norm(m2, axis=1)
         res = num / denom
@@ -121,6 +135,19 @@ class CalcSTM:
         return res
 
     def get_edge_index(self, A, B, n=10):
+        r"""Construct a heterogeneous network.
+
+        Parameters:
+        A : anndata.AnnData
+            TR-RP matrix.
+        B : anndata.AnnData
+            Epi-RP matrix.
+        n : int 
+            Number of nearest neighbors for TR.
+
+        Returns:
+            TR-Epi heterogeneous network.
+        """
         self.A_s = 0
         self.A_e = A.shape[0]
         self.B_s = self.A_e
@@ -163,6 +190,8 @@ class CalcSTM:
         data.write_h5ad(f'{self.checkpoint_path}/A_pred_{self.type}.h5ad')
 
     def recon_loss(self, z, data, norm, weight):
+        r"""Variational Gaussian Autoencoder (VGAE) reconstruction loss.
+        """
         y_pred = self.model_vgae.decoder(z, data.edge_label_index, sigmoid=True)
         loss = (
             norm * binary_cross_entropy(y_pred, data.edge_label, weight=weight).mean()
@@ -170,6 +199,14 @@ class CalcSTM:
         return loss
 
     def init_vgae(self, h, use_kd):
+        r"""D-RP student model training function.
+
+        Parameters:
+        h : torch.Tensor
+            Potential representation of the D-RP teacher model.
+        use_kd : bool
+            Utilize knowledge distillation.
+        """
         seed_torch()
         self.h = h
         self.edge_index = self.get_edge_index(self.RP_Matrix.TR, self.RP_Matrix.Sample)
@@ -243,6 +280,8 @@ class CalcSTM:
         self.save_graph()
 
     def init_cvae(self):
+        r"""D-RP teacher model training function.
+        """
         seed_torch()
         condition = np.ones(self.data.shape[0])
         condition[: self.RP_Matrix.TR.shape[0]] = 0

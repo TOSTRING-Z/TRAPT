@@ -9,6 +9,16 @@ from TRAPT.CalcTRAUC import CalcTRAUC
 from TRAPT.DLFS import FeatureSelection
 
 def runTRAPT(args: Args):
+    r"""TRAPT execution entry function.
+
+    Attributes
+    ----------
+    args : TRAPT.Tools.Args
+        Global parameters for TRAPT.
+    
+    Returns:
+        A pd.DataFrame of TR activity.
+    """
     rp_matrix = RP_Matrix(args.library)
     obs = rp_matrix.TR.obs
 
@@ -83,6 +93,8 @@ def str2bool(v):
         raise argparse.ArgumentTypeError('Boolean value expected.')
 
 def main():
+    r"""TRAPT method entry function.
+    """
     description = "usage: %prog [options] -l [LIBRARY] -i [INPUT] -o [OUTPUT]"
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument("--library", "-l", type=str, default="library", help = "Enter the library path, default is './library'")
