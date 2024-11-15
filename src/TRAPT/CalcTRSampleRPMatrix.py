@@ -6,6 +6,17 @@ import numpy as np
 
 
 class CalcTRSampleRPMatrix:
+    r"""The D-RP model network aggregation module.
+
+    Attributes
+    ----------
+    library : str
+        Path to the background library.
+    output : str
+        Output path, default is 'library'.
+    type : str
+        H3K27ac/ATAC.
+    """
     def __init__(self, library='library', output='library', type='H3K27ac'):
         self.data_ad_sample = ad.read_h5ad(
             os.path.join(library, f'RP_Matrix_{type}.h5ad')
@@ -20,6 +31,8 @@ class CalcTRSampleRPMatrix:
         self.type = type
 
     def run(self):
+        r"""D-RP model network aggregation module execution entry point.
+        """
         self.A = self.A.to_df().values
         self.A[self.A < 0.0] = 0
         self.X = self.data_ad_sample.to_df().values

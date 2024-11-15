@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2024.11.15)  15 NOV 2024 21:20
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2024.11.15)  15 NOV 2024 23:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -818,7 +818,12 @@ File: t1txtt.fd 2000/12/15 v3.1
 )
 LaTeX Font Info:    Font shape `T1/txtt/b/n' in size <10> not available
 (Font)              Font shape `T1/txtt/bx/n' tried instead on input line 111.
- [3] [4
+LaTeX Font Info:    Trying to load font information for TS1+qtm on input line 1
+17.
+
+(/usr/share/texmf/tex/latex/tex-gyre/ts1qtm.fd
+File: ts1qtm.fd 2009/09/25 v1.2 font definition file for TS1/qtm
+) [3{/usr/share/texmf/fonts/enc/dvips/tex-gyre/q-ts1.enc}] [4
 
 ]
 Chapter 2.
@@ -830,11 +835,7 @@ Chapter 3.
 
 ]
 Chapter 4.
-LaTeX Font Info:    Trying to load font information for TS1+qtm on input line 3
-70.
-(/usr/share/texmf/tex/latex/tex-gyre/ts1qtm.fd
-File: ts1qtm.fd 2009/09/25 v1.2 font definition file for TS1/qtm
-) [9{/usr/share/texmf/fonts/enc/dvips/tex-gyre/q-ts1.enc}] [10
+[9] [10
 
 ]
 Chapter 5.
@@ -844,7 +845,8 @@ Chapter 5.
 Chapter 6.
 [15]
 LaTeX Font Info:    Font shape `T1/txtt/m/it' in size <10> not available
-(Font)              Font shape `T1/txtt/m/sl' tried instead on input line 997.
+(Font)              Font shape `T1/txtt/m/sl' tried instead on input line 1054.
+
  [16] [17] [18
 
 ]
@@ -926,47 +928,65 @@ Underfull \hbox (badness 10000) in paragraph at lines 64--65
 .CalcTRAUC
  []
 
+
+Overfull \hbox (44.5024pt too wide) in paragraph at lines 72--74
+[]\T1/txtt/m/n/10 library \T1/qtm/m/n/10 (\T1/qtm/m/it/10 TRAPT.CalcTRSampleRPM
+atrix.CalcTRSampleRPMatrix
+ []
+
 [27
 
 ]
-Overfull \hbox (3.76233pt too wide) in paragraph at lines 100--101
+Overfull \hbox (39.25241pt too wide) in paragraph at lines 97--99
+[]\T1/txtt/m/n/10 output \T1/qtm/m/n/10 (\T1/qtm/m/it/10 TRAPT.CalcTRSampleRPMa
+trix.CalcTRSampleRPMatrix
+ []
+
+
+Overfull \hbox (3.76233pt too wide) in paragraph at lines 104--105
 []\T1/txtt/m/n/10 predict_h() \T1/qtm/m/n/10 (\T1/qtm/m/it/10 TRAPT.DLVGAE.Vari
 ationalGCNEncoder
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 108--110
+Underfull \hbox (badness 10000) in paragraph at lines 112--114
 []\T1/txtt/m/n/10 RP_Matrix_TR_Sample
  []
 
 
-Overfull \hbox (34.00243pt too wide) in paragraph at lines 112--114
+Overfull \hbox (34.00243pt too wide) in paragraph at lines 116--118
 []\T1/txtt/m/n/10 run() \T1/qtm/m/n/10 (\T1/qtm/m/it/10 TRAPT.CalcTRSampleRPMat
 rix.CalcTRSampleRPMatrix
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 123--124
+Underfull \hbox (badness 10000) in paragraph at lines 127--128
 []\T1/txtt/m/n/10 sort_by_group() \T1/qtm/m/n/10 (\T1/qtm/m/it/10 TRAPT.DLFS.Fe
 atureSelection
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 125--127
+Underfull \hbox (badness 10000) in paragraph at lines 129--131
 []\T1/txtt/m/n/10 sparse_to_tensor() \T1/qtm/m/n/10 (\T1/qtm/m/it/10 TRAPT.DLVG
 AE.CalcSTM
  []
 
 
-Overfull \hbox (3.8924pt too wide) in paragraph at lines 138--140
+Overfull \hbox (3.8924pt too wide) in paragraph at lines 142--144
 []\T1/txtt/m/n/10 training \T1/qtm/m/n/10 (\T1/qtm/m/it/10 TRAPT.DLVGAE.InnerPr
 oductDecoderWeight
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 140--141
+Underfull \hbox (badness 10000) in paragraph at lines 144--145
 []\T1/txtt/m/n/10 training \T1/qtm/m/n/10 (\T1/qtm/m/it/10 TRAPT.DLVGAE.Variati
 onalGCNEncoder
+ []
+
+
+Overfull \hbox (28.75244pt too wide) in paragraph at lines 166--168
+[]\T1/txtt/m/n/10 type \T1/qtm/m/n/10 (\T1/qtm/m/it/10 TRAPT.CalcTRSampleRPMatr
+ix.CalcTRSampleRPMatrix
  []
 
 [28]) (./trapt.aux)
@@ -975,13 +995,13 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
 Package rerunfilecheck Info: File `trapt.out' has not changed.
-(rerunfilecheck)             Checksum: AA371664B2D777EEDF2750E46EB9F171;1622.
+(rerunfilecheck)             Checksum: B84FA11805C62A0C09C26B572F496046;1622.
  ) 
 Here is how much of TeX's memory you used:
- 15791 strings out of 474222
- 257057 string characters out of 5748732
+ 15797 strings out of 474222
+ 257275 string characters out of 5748732
  1940975 words of memory out of 5000000
- 37556 multiletter control sequences out of 15000+600000
+ 37559 multiletter control sequences out of 15000+600000
  604821 words of font info for 79 fonts, out of 8000000 for 9000
  1142 hyphenation exceptions out of 8191
  72i,14n,79p,856b,886s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -997,10 +1017,10 @@ hare/texlive/texmf-dist/fonts/type1/public/txfonts/t1xbtt.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/public/txfonts/t1xtt.pfb></usr/share/texlive/texmf-di
 st/fonts/type1/public/txfonts/t1xtt.pfb></usr/share/texlive/texmf-dist/fonts/ty
 pe1/public/txfonts/tcxbtt.pfb>
-Output written on trapt.pdf (32 pages, 237751 bytes).
+Output written on trapt.pdf (32 pages, 238324 bytes).
 PDF statistics:
- 476 PDF objects out of 1000 (max. 8388607)
- 414 compressed objects within 5 object streams
- 118 named destinations out of 1000 (max. 500000)
+ 483 PDF objects out of 1000 (max. 8388607)
+ 421 compressed objects within 5 object streams
+ 121 named destinations out of 1000 (max. 500000)
  109 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -70,6 +70,9 @@
 </li>
 <li><a class="reference internal" href="#module-TRAPT.CalcTRSampleRPMatrix">TRAPT.CalcTRSampleRPMatrix module</a><ul>
 <li><a class="reference internal" href="#TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix"><code class="docutils literal notranslate"><span class="pre">CalcTRSampleRPMatrix</span></code></a><ul>
+<li><a class="reference internal" href="#TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix.library"><code class="docutils literal notranslate"><span class="pre">CalcTRSampleRPMatrix.library</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix.output"><code class="docutils literal notranslate"><span class="pre">CalcTRSampleRPMatrix.output</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix.type"><code class="docutils literal notranslate"><span class="pre">CalcTRSampleRPMatrix.type</span></code></a></li>
 <li><a class="reference internal" href="#TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix.run"><code class="docutils literal notranslate"><span class="pre">CalcTRSampleRPMatrix.run()</span></code></a></li>
 </ul>
 </li>
@@ -217,20 +220,19 @@ factors for sets of query genes through a fusion strategy.</p>
 <dt class="sig sig-object py" id="TRAPT.CalcSampleRPMatrix.dhs2gene">
 <span class="sig-prename descclassname"><span class="pre">TRAPT.CalcSampleRPMatrix.</span></span><span class="sig-name descname"><span class="pre">dhs2gene</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.CalcSampleRPMatrix.dhs2gene" title="Permalink to this definition"></a></dt>
 <dd><p>Calculate the Epi regulatory potential score.</p>
-<p>Parameters:
-args : argparse.Namespace</p>
-<blockquote>
-<div><p>Global parameters.</p>
-</div></blockquote>
-<dl class="simple">
-<dt>sample<span class="classifier">str</span></dt><dd><p>Epi sample name.</p>
-</dd>
-<dt>vec<span class="classifier">np.array</span></dt><dd><p>Epi PRE score.</p>
-</dd>
-</dl>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Epi sample name, and Epi-RP score.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> – argparse.Namespace
+Global parameters.</p></li>
+<li><p><strong>sample</strong> – str
+Epi sample name.</p></li>
+<li><p><strong>vec</strong> – np.array
+Epi PRE score.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Epi sample name, and Epi-RP score.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -344,20 +346,19 @@ gene_vec : np.array</p>
 <dt class="sig sig-object py" id="TRAPT.CalcTRRPMatrix.dhs2gene">
 <span class="sig-prename descclassname"><span class="pre">TRAPT.CalcTRRPMatrix.</span></span><span class="sig-name descname"><span class="pre">dhs2gene</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.CalcTRRPMatrix.dhs2gene" title="Permalink to this definition"></a></dt>
 <dd><p>Calculate the TR regulatory potential score.</p>
-<p>Parameters:
-args : argparse.Namespace</p>
-<blockquote>
-<div><p>Global parameters.</p>
-</div></blockquote>
-<dl class="simple">
-<dt>sample<span class="classifier">str</span></dt><dd><p>TR sample name.</p>
-</dd>
-<dt>vec<span class="classifier">np.array</span></dt><dd><p>TR PRE score.</p>
-</dd>
-</dl>
 <dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>TR sample name, and TR-RP score.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> – argparse.Namespace
+Global parameters.</p></li>
+<li><p><strong>sample</strong> – str
+TR sample name.</p></li>
+<li><p><strong>vec</strong> – np.array
+TR PRE score.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>TR sample name, and TR-RP score.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -374,10 +375,45 @@ args : argparse.Namespace</p>
 <dt class="sig sig-object py" id="TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TRAPT.CalcTRSampleRPMatrix.</span></span><span class="sig-name descname"><span class="pre">CalcTRSampleRPMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">library</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'library'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'library'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'H3K27ac'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The D-RP model network aggregation module.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix.library">
+<span class="sig-name descname"><span class="pre">library</span></span><a class="headerlink" href="#TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix.library" title="Permalink to this definition"></a></dt>
+<dd><p>Path to the background library.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix.output">
+<span class="sig-name descname"><span class="pre">output</span></span><a class="headerlink" href="#TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix.output" title="Permalink to this definition"></a></dt>
+<dd><p>Output path, default is ‘library’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix.type">
+<span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix.type" title="Permalink to this definition"></a></dt>
+<dd><p>H3K27ac/ATAC.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix.run">
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix.run" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>D-RP model network aggregation module execution entry point.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -504,7 +540,7 @@ t : float</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="TRAPT.DLFS.FeatureSelection.run">
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLFS.FeatureSelection.run" title="Permalink to this definition"></a></dt>
-<dd><p>Method execution entry point.</p>
+<dd><p>U-RP model execution entry point.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>A pd.DataFrame of U-RP scores for query Genes, and selected sample information.</p>
@@ -695,7 +731,8 @@ h : torch.Tensor</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="TRAPT.DLVGAE.CalcSTM.run">
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_kd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLVGAE.CalcSTM.run" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>D-RP model network reconstruction module execution entry point.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="TRAPT.DLVGAE.CalcSTM.save_graph">
@@ -719,16 +756,16 @@ h : torch.Tensor</p>
 <dd><p>Decodes the latent variables <code class="xref py py-obj docutils literal notranslate"><span class="pre">z</span></code> into edge probabilities for
 the given node-pairs <code class="xref py py-obj docutils literal notranslate"><span class="pre">edge_index</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></p>
-</dd>
-<dt class="field-even">Parameters<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
 <li><p><strong>z</strong> (<em>torch.Tensor</em>) – The latent space <span class="math notranslate nohighlight">\(\mathbf{Z}\)</span>.</p></li>
 <li><p><strong>sigmoid</strong> (<em>bool</em><em>, </em><em>optional</em>) – If set to <code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code>, does not apply
 the logistic sigmoid function to the output.
 (default: <code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code>)</p></li>
 </ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></p>
 </dd>
 </dl>
 </dd></dl>

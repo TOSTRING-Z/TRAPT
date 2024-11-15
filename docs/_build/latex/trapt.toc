@@ -8,5 +8,5 @@
 \contentsline {chapter}{\numberline {7}TRAPT.Run module}{19}{chapter.7}%
 \contentsline {chapter}{\numberline {8}TRAPT.Tools module}{21}{chapter.8}%
 \contentsline {chapter}{\numberline {9}Module contents}{23}{chapter.9}%
-\contentsline {chapter}{Python Module Index}{25}{section*.77}%
-\contentsline {chapter}{Index}{27}{section*.78}%
+\contentsline {chapter}{Python Module Index}{25}{section*.80}%
+\contentsline {chapter}{Index}{27}{section*.81}%

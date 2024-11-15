@@ -337,6 +337,8 @@ class CalcSTM:
         return self.model_cvae.predict_h(dataset).detach()
 
     def run(self,use_kd=True):
+        r"""D-RP model network reconstruction module execution entry point.
+        """
         self.epochs_cvae = 100
         self.epochs_vgae = 1000
         self.h_dim = 48

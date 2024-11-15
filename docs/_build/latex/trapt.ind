@@ -69,6 +69,8 @@
 
   \indexspace
   \bigletter L
+  \item \spxentry{library}\spxextra{TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix attribute}, 
+		\hyperpage{9}
   \item \spxentry{library}\spxextra{TRAPT.Tools.Args attribute}, \hyperpage{21}
 
   \indexspace
@@ -92,6 +94,8 @@
 
   \indexspace
   \bigletter O
+  \item \spxentry{output}\spxextra{TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix attribute}, 
+		\hyperpage{9}
   \item \spxentry{output}\spxextra{TRAPT.Tools.Args attribute}, \hyperpage{21}
 
   \indexspace
@@ -159,6 +163,8 @@
   \item \spxentry{trunk\_size}\spxextra{TRAPT.Tools.Args attribute}, \hyperpage{21}
   \item \spxentry{TSFS()}\spxextra{TRAPT.DLFS.FeatureSelection method}, \hyperpage{12}
   \item \spxentry{Type}\spxextra{class in TRAPT.Tools}, \hyperpage{22}
+  \item \spxentry{type}\spxextra{TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix attribute}, 
+		\hyperpage{9}
 
   \indexspace
   \bigletter U

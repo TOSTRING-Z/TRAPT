@@ -112,26 +112,25 @@ factors for sets of query genes through a fusion strategy.
 \pysigstopsignatures
 \sphinxAtStartPar
 Calculate the Epi regulatory potential score.
-
+\begin{quote}\begin{description}
+\sphinxlineitem{Parameters}\begin{itemize}
+\item {} 
 \sphinxAtStartPar
-Parameters:
-args : argparse.Namespace
-\begin{quote}
-
-\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{args}} \textendash{} argparse.Namespace
 Global parameters.
-\end{quote}
-\begin{description}
-\sphinxlineitem{sample}{[}str{]}
+
+\item {} 
 \sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{sample}} \textendash{} str
 Epi sample name.
 
-\sphinxlineitem{vec}{[}np.array{]}
+\item {} 
 \sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{vec}} \textendash{} np.array
 Epi PRE score.
 
-\end{description}
-\begin{quote}\begin{description}
+\end{itemize}
+
 \sphinxlineitem{Returns}
 \sphinxAtStartPar
 Epi sample name, and Epi\sphinxhyphen{}RP score.
@@ -322,26 +321,25 @@ A pd.DataFrame of AUC scores for TRs.
 \pysigstopsignatures
 \sphinxAtStartPar
 Calculate the TR regulatory potential score.
-
+\begin{quote}\begin{description}
+\sphinxlineitem{Parameters}\begin{itemize}
+\item {} 
 \sphinxAtStartPar
-Parameters:
-args : argparse.Namespace
-\begin{quote}
-
-\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{args}} \textendash{} argparse.Namespace
 Global parameters.
-\end{quote}
-\begin{description}
-\sphinxlineitem{sample}{[}str{]}
+
+\item {} 
 \sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{sample}} \textendash{} str
 TR sample name.
 
-\sphinxlineitem{vec}{[}np.array{]}
+\item {} 
 \sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{vec}} \textendash{} np.array
 TR PRE score.
 
-\end{description}
-\begin{quote}\begin{description}
+\end{itemize}
+
 \sphinxlineitem{Returns}
 \sphinxAtStartPar
 TR sample name, and TR\sphinxhyphen{}RP score.
@@ -371,6 +369,63 @@ TR sample name, and TR\sphinxhyphen{}RP score.
 \pysigstopsignatures
 \sphinxAtStartPar
 Bases: \sphinxcode{\sphinxupquote{object}}
+
+\sphinxAtStartPar
+The D\sphinxhyphen{}RP model network aggregation module.
+\index{library (TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix attribute)@\spxentry{library}\spxextra{TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix attribute}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix.library}}
+\pysigstartsignatures
+\pysigline{\sphinxbfcode{\sphinxupquote{library}}}
+\pysigstopsignatures
+\sphinxAtStartPar
+Path to the background library.
+\begin{quote}\begin{description}
+\sphinxlineitem{Type}
+\sphinxAtStartPar
+str
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+\index{output (TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix attribute)@\spxentry{output}\spxextra{TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix attribute}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix.output}}
+\pysigstartsignatures
+\pysigline{\sphinxbfcode{\sphinxupquote{output}}}
+\pysigstopsignatures
+\sphinxAtStartPar
+Output path, default is ‘library’.
+\begin{quote}\begin{description}
+\sphinxlineitem{Type}
+\sphinxAtStartPar
+str
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+\index{type (TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix attribute)@\spxentry{type}\spxextra{TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix attribute}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{index:TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix.type}}
+\pysigstartsignatures
+\pysigline{\sphinxbfcode{\sphinxupquote{type}}}
+\pysigstopsignatures
+\sphinxAtStartPar
+H3K27ac/ATAC.
+\begin{quote}\begin{description}
+\sphinxlineitem{Type}
+\sphinxAtStartPar
+str
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
 \index{run() (TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix method)@\spxentry{run()}\spxextra{TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix method}}
 
 \begin{fulllineitems}
@@ -378,6 +433,9 @@ Bases: \sphinxcode{\sphinxupquote{object}}
 \pysigstartsignatures
 \pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{run}}}{}{}
 \pysigstopsignatures
+\sphinxAtStartPar
+D\sphinxhyphen{}RP model network aggregation module execution entry point.
+
 \end{fulllineitems}
 
 
@@ -610,7 +668,7 @@ U\sphinxhyphen{}RP teacher model loss function.
 \pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{run}}}{}{}
 \pysigstopsignatures
 \sphinxAtStartPar
-Method execution entry point.
+U\sphinxhyphen{}RP model execution entry point.
 \begin{quote}\begin{description}
 \sphinxlineitem{Returns}
 \sphinxAtStartPar
@@ -944,6 +1002,9 @@ Variational Gaussian Autoencoder (VGAE) reconstruction loss.
 \pysigstartsignatures
 \pysiglinewithargsret{\sphinxbfcode{\sphinxupquote{run}}}{\emph{\DUrole{n}{use\_kd}\DUrole{o}{=}\DUrole{default_value}{True}}}{}
 \pysigstopsignatures
+\sphinxAtStartPar
+D\sphinxhyphen{}RP model network reconstruction module execution entry point.
+
 \end{fulllineitems}
 
 \index{save\_graph() (TRAPT.DLVGAE.CalcSTM method)@\spxentry{save\_graph()}\spxextra{TRAPT.DLVGAE.CalcSTM method}}
@@ -987,10 +1048,6 @@ Bases: \sphinxcode{\sphinxupquote{InnerProductDecoder}}
 Decodes the latent variables \sphinxcode{\sphinxupquote{z}} into edge probabilities for
 the given node\sphinxhyphen{}pairs \sphinxcode{\sphinxupquote{edge\_index}}.
 \begin{quote}\begin{description}
-\sphinxlineitem{Return type}
-\sphinxAtStartPar
-\sphinxcode{\sphinxupquote{Tensor}}
-
 \sphinxlineitem{Parameters}\begin{itemize}
 \item {} 
 \sphinxAtStartPar
@@ -1003,6 +1060,10 @@ the logistic sigmoid function to the output.
 (default: \sphinxcode{\sphinxupquote{True}})
 
 \end{itemize}
+
+\sphinxlineitem{Return type}
+\sphinxAtStartPar
+\sphinxcode{\sphinxupquote{Tensor}}
 
 \end{description}\end{quote}
 

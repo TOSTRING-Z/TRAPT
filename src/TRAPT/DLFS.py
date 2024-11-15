@@ -239,7 +239,7 @@ class FeatureSelection:
         self.groups = [i // self.group_size for i in range(len(self.index))]
 
     def run(self):
-        r"""Method execution entry point.
+        r"""U-RP model execution entry point.
 
         Returns:
             A pd.DataFrame of U-RP scores for query Genes, and selected sample information.

@@ -10,12 +10,12 @@ def dhs2gene(params):
     r"""Calculate the TR regulatory potential score.
 
     Parameters:
-    args : argparse.Namespace
-        Global parameters.
-    sample : str
-        TR sample name.
-    vec : np.array
-        TR PRE score.
+        args : argparse.Namespace
+            Global parameters.
+        sample : str
+            TR sample name.
+        vec : np.array
+            TR PRE score.
 
     Returns:
         TR sample name, and TR-RP score.

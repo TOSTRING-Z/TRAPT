@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from concurrent.futures import ThreadPoolExecutor
 
 import numpy as np

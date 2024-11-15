@@ -12,12 +12,12 @@ def dhs2gene(args,sample):
     r"""Calculate the Epi regulatory potential score.
 
     Parameters:
-    args : argparse.Namespace
-        Global parameters.
-    sample : str
-        Epi sample name.
-    vec : np.array
-        Epi PRE score.
+        args : argparse.Namespace
+            Global parameters.
+        sample : str
+            Epi sample name.
+        vec : np.array
+            Epi PRE score.
 
     Returns:
         Epi sample name, and Epi-RP score.
