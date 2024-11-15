@@ -1,0 +1,175 @@
+\begin{sphinxtheindex}
+\let\bigletter\sphinxstyleindexlettergroup
+\let\spxpagem \sphinxstyleindexpagemain
+\let\spxentry \sphinxstyleindexentry
+\let\spxextra \sphinxstyleindexextra
+
+  \bigletter A
+  \item \spxentry{add()}\spxextra{TRAPT.Tools.RPMatrix method}, \hyperpage{22}
+  \item \spxentry{Args}\spxextra{class in TRAPT.Tools}, \hyperpage{21}
+  \item \spxentry{args}\spxextra{in module TRAPT.Run}, \hyperpage{19}
+  \item \spxentry{args}\spxextra{TRAPT.CalcTRAUC.CalcTRAUC attribute}, \hyperpage{5}
+  \item \spxentry{ATAC}\spxextra{TRAPT.Tools.Type attribute}, \hyperpage{22}
+
+  \indexspace
+  \bigletter B
+  \item \spxentry{background\_genes}\spxextra{TRAPT.Tools.Args attribute}, \hyperpage{21}
+  \item \spxentry{binarization()}\spxextra{TRAPT.Tools.RPMatrix method}, \hyperpage{22}
+
+  \indexspace
+  \bigletter C
+  \item \spxentry{CalcSTM}\spxextra{class in TRAPT.DLVGAE}, \hyperpage{15}
+  \item \spxentry{CalcTRAUC}\spxextra{class in TRAPT.CalcTRAUC}, \hyperpage{5}
+  \item \spxentry{CalcTRSampleRPMatrix}\spxextra{class in TRAPT.CalcTRSampleRPMatrix}, 
+		\hyperpage{9}
+  \item \spxentry{call()}\spxextra{TRAPT.DLFS.CustomSigmoid method}, \hyperpage{11}
+  \item \spxentry{CustomSigmoid}\spxextra{class in TRAPT.DLFS}, \hyperpage{11}
+  \item \spxentry{CVAE}\spxextra{class in TRAPT.DLVGAE}, \hyperpage{15}
+
+  \indexspace
+  \bigletter D
+  \item \spxentry{dhs2gene()}\spxextra{in module TRAPT.CalcSampleRPMatrix}, \hyperpage{3}
+  \item \spxentry{dhs2gene()}\spxextra{in module TRAPT.CalcTRRPMatrix}, \hyperpage{7}
+
+  \indexspace
+  \bigletter F
+  \item \spxentry{FeatureSelection}\spxextra{class in TRAPT.DLFS}, \hyperpage{12}
+  \item \spxentry{forward()}\spxextra{TRAPT.DLVGAE.CVAE method}, \hyperpage{15}
+  \item \spxentry{forward()}\spxextra{TRAPT.DLVGAE.InnerProductDecoderWeight method}, 
+		\hyperpage{16}
+  \item \spxentry{forward()}\spxextra{TRAPT.DLVGAE.VariationalGCNEncoder method}, \hyperpage{16}
+
+  \indexspace
+  \bigletter G
+  \item \spxentry{get\_act()}\spxextra{TRAPT.DLFS.FeatureSelection method}, \hyperpage{12}
+  \item \spxentry{get\_auc()}\spxextra{TRAPT.CalcTRAUC.CalcTRAUC static method}, \hyperpage{5}
+  \item \spxentry{get\_config()}\spxextra{TRAPT.DLFS.SparseGroupLasso method}, \hyperpage{13}
+  \item \spxentry{get\_corr()}\spxextra{TRAPT.DLFS.FeatureSelection method}, \hyperpage{12}
+  \item \spxentry{get\_cos\_similar\_matrix()}\spxextra{TRAPT.DLVGAE.CalcSTM static method}, 
+		\hyperpage{15}
+  \item \spxentry{get\_data()}\spxextra{TRAPT.Tools.RPMatrix method}, \hyperpage{22}
+  \item \spxentry{get\_edge\_index()}\spxextra{TRAPT.DLVGAE.CalcSTM method}, \hyperpage{15}
+  \item \spxentry{get\_loss()}\spxextra{TRAPT.DLFS.FeatureSelection method}, \hyperpage{12}
+
+  \indexspace
+  \bigletter H
+  \item \spxentry{H3K27ac}\spxextra{TRAPT.Tools.Type attribute}, \hyperpage{22}
+
+  \indexspace
+  \bigletter I
+  \item \spxentry{init\_cvae()}\spxextra{TRAPT.DLVGAE.CalcSTM method}, \hyperpage{16}
+  \item \spxentry{init\_vgae()}\spxextra{TRAPT.DLVGAE.CalcSTM method}, \hyperpage{16}
+  \item \spxentry{InnerProductDecoderWeight}\spxextra{class in TRAPT.DLVGAE}, \hyperpage{16}
+  \item \spxentry{input}\spxextra{TRAPT.Tools.Args attribute}, \hyperpage{21}
+  \item \spxentry{iter\_params()}\spxextra{TRAPT.CalcTRAUC.CalcTRAUC method}, \hyperpage{6}
+
+  \indexspace
+  \bigletter K
+  \item \spxentry{kl\_div()}\spxextra{TRAPT.DLVGAE.CVAE method}, \hyperpage{15}
+
+  \indexspace
+  \bigletter L
+  \item \spxentry{library}\spxextra{TRAPT.Tools.Args attribute}, \hyperpage{21}
+
+  \indexspace
+  \bigletter M
+  \item \spxentry{main()}\spxextra{in module TRAPT.Run}, \hyperpage{19}
+  \item \spxentry{minmax\_scale()}\spxextra{TRAPT.Tools.RPMatrix method}, \hyperpage{22}
+  \item \spxentry{module}
+    \subitem \spxentry{TRAPT}, \hyperpage{23}
+    \subitem \spxentry{TRAPT.CalcSampleRPMatrix}, \hyperpage{3}
+    \subitem \spxentry{TRAPT.CalcTRAUC}, \hyperpage{5}
+    \subitem \spxentry{TRAPT.CalcTRRPMatrix}, \hyperpage{7}
+    \subitem \spxentry{TRAPT.CalcTRSampleRPMatrix}, \hyperpage{9}
+    \subitem \spxentry{TRAPT.DLFS}, \hyperpage{11}
+    \subitem \spxentry{TRAPT.DLVGAE}, \hyperpage{15}
+    \subitem \spxentry{TRAPT.Run}, \hyperpage{19}
+    \subitem \spxentry{TRAPT.Tools}, \hyperpage{21}
+
+  \indexspace
+  \bigletter N
+  \item \spxentry{norm()}\spxextra{TRAPT.Tools.RPMatrix method}, \hyperpage{22}
+
+  \indexspace
+  \bigletter O
+  \item \spxentry{output}\spxextra{TRAPT.Tools.Args attribute}, \hyperpage{21}
+
+  \indexspace
+  \bigletter P
+  \item \spxentry{predict\_h()}\spxextra{TRAPT.DLVGAE.CVAE method}, \hyperpage{15}
+  \item \spxentry{predict\_h()}\spxextra{TRAPT.DLVGAE.VariationalGCNEncoder method}, \hyperpage{17}
+
+  \indexspace
+  \bigletter R
+  \item \spxentry{recon\_loss()}\spxextra{TRAPT.DLVGAE.CalcSTM method}, \hyperpage{16}
+  \item \spxentry{reparametrize()}\spxextra{TRAPT.DLVGAE.CVAE method}, \hyperpage{15}
+  \item \spxentry{Returns}\spxextra{in module TRAPT.Run}, \hyperpage{19}
+  \item \spxentry{RP\_Matrix}\spxextra{class in TRAPT.Tools}, \hyperpage{22}
+  \item \spxentry{RP\_Matrix\_TR\_Sample}\spxextra{TRAPT.CalcTRAUC.CalcTRAUC attribute}, 
+		\hyperpage{5}
+  \item \spxentry{RPMatrix}\spxextra{class in TRAPT.Tools}, \hyperpage{22}
+  \item \spxentry{run()}\spxextra{TRAPT.CalcTRAUC.CalcTRAUC method}, \hyperpage{6}
+  \item \spxentry{run()}\spxextra{TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix method}, 
+		\hyperpage{9}
+  \item \spxentry{run()}\spxextra{TRAPT.DLFS.FeatureSelection method}, \hyperpage{12}
+  \item \spxentry{run()}\spxextra{TRAPT.DLVGAE.CalcSTM method}, \hyperpage{16}
+  \item \spxentry{runTRAPT()}\spxextra{in module TRAPT.Run}, \hyperpage{19}
+
+  \indexspace
+  \bigletter S
+  \item \spxentry{save\_graph()}\spxextra{TRAPT.DLVGAE.CalcSTM method}, \hyperpage{16}
+  \item \spxentry{seed\_tensorflow()}\spxextra{in module TRAPT.DLFS}, \hyperpage{13}
+  \item \spxentry{seed\_torch()}\spxextra{in module TRAPT.DLVGAE}, \hyperpage{17}
+  \item \spxentry{sort\_by\_group()}\spxextra{TRAPT.DLFS.FeatureSelection method}, \hyperpage{12}
+  \item \spxentry{source}\spxextra{TRAPT.Tools.Args attribute}, \hyperpage{22}
+  \item \spxentry{sparse\_to\_tensor()}\spxextra{TRAPT.DLVGAE.CalcSTM static method}, 
+		\hyperpage{16}
+  \item \spxentry{SparseGroupLasso}\spxextra{class in TRAPT.DLFS}, \hyperpage{12}
+  \item \spxentry{standard\_scale()}\spxextra{TRAPT.Tools.RPMatrix method}, \hyperpage{22}
+  \item \spxentry{str2bool()}\spxextra{in module TRAPT.CalcTRRPMatrix}, \hyperpage{7}
+  \item \spxentry{str2bool()}\spxextra{in module TRAPT.Run}, \hyperpage{19}
+
+  \indexspace
+  \bigletter T
+  \item \spxentry{threads}\spxextra{TRAPT.Tools.Args attribute}, \hyperpage{21}
+  \item \spxentry{tr\_type}\spxextra{TRAPT.Tools.Args attribute}, \hyperpage{22}
+  \item \spxentry{train()}\spxextra{TRAPT.DLFS.FeatureSelection method}, \hyperpage{12}
+  \item \spxentry{training}\spxextra{TRAPT.DLVGAE.CVAE attribute}, \hyperpage{15}
+  \item \spxentry{training}\spxextra{TRAPT.DLVGAE.InnerProductDecoderWeight attribute}, 
+		\hyperpage{16}
+  \item \spxentry{training}\spxextra{TRAPT.DLVGAE.VariationalGCNEncoder attribute}, \hyperpage{17}
+  \item \spxentry{TRAPT}
+    \subitem \spxentry{module}, \hyperpage{23}
+  \item \spxentry{TRAPT.CalcSampleRPMatrix}
+    \subitem \spxentry{module}, \hyperpage{3}
+  \item \spxentry{TRAPT.CalcTRAUC}
+    \subitem \spxentry{module}, \hyperpage{5}
+  \item \spxentry{TRAPT.CalcTRRPMatrix}
+    \subitem \spxentry{module}, \hyperpage{7}
+  \item \spxentry{TRAPT.CalcTRSampleRPMatrix}
+    \subitem \spxentry{module}, \hyperpage{9}
+  \item \spxentry{TRAPT.DLFS}
+    \subitem \spxentry{module}, \hyperpage{11}
+  \item \spxentry{TRAPT.DLVGAE}
+    \subitem \spxentry{module}, \hyperpage{15}
+  \item \spxentry{TRAPT.Run}
+    \subitem \spxentry{module}, \hyperpage{19}
+  \item \spxentry{TRAPT.Tools}
+    \subitem \spxentry{module}, \hyperpage{21}
+  \item \spxentry{trunk\_size}\spxextra{TRAPT.Tools.Args attribute}, \hyperpage{21}
+  \item \spxentry{TSFS()}\spxextra{TRAPT.DLFS.FeatureSelection method}, \hyperpage{12}
+  \item \spxentry{Type}\spxextra{class in TRAPT.Tools}, \hyperpage{22}
+
+  \indexspace
+  \bigletter U
+  \item \spxentry{use\_kd}\spxextra{TRAPT.Tools.Args attribute}, \hyperpage{21}
+
+  \indexspace
+  \bigletter V
+  \item \spxentry{VariationalGCNEncoder}\spxextra{class in TRAPT.DLVGAE}, \hyperpage{16}
+
+  \indexspace
+  \bigletter W
+  \item \spxentry{w}\spxextra{TRAPT.CalcTRAUC.CalcTRAUC attribute}, \hyperpage{5}
+
+\end{sphinxtheindex}

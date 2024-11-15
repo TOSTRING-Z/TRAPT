@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TRAPT package &mdash; TRAPT 0.1.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            TRAPT
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">TRAPT package</a><ul>
+<li><a class="reference internal" href="#module-TRAPT.CalcSampleRPMatrix">TRAPT.CalcSampleRPMatrix module</a><ul>
+<li><a class="reference internal" href="#TRAPT.CalcSampleRPMatrix.dhs2gene"><code class="docutils literal notranslate"><span class="pre">dhs2gene()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-TRAPT.CalcTRAUC">TRAPT.CalcTRAUC module</a><ul>
+<li><a class="reference internal" href="#TRAPT.CalcTRAUC.CalcTRAUC"><code class="docutils literal notranslate"><span class="pre">CalcTRAUC</span></code></a><ul>
+<li><a class="reference internal" href="#TRAPT.CalcTRAUC.CalcTRAUC.args"><code class="docutils literal notranslate"><span class="pre">CalcTRAUC.args</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.CalcTRAUC.CalcTRAUC.RP_Matrix_TR_Sample"><code class="docutils literal notranslate"><span class="pre">CalcTRAUC.RP_Matrix_TR_Sample</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.CalcTRAUC.CalcTRAUC.w"><code class="docutils literal notranslate"><span class="pre">CalcTRAUC.w</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.CalcTRAUC.CalcTRAUC.get_auc"><code class="docutils literal notranslate"><span class="pre">CalcTRAUC.get_auc()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.CalcTRAUC.CalcTRAUC.iter_params"><code class="docutils literal notranslate"><span class="pre">CalcTRAUC.iter_params()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.CalcTRAUC.CalcTRAUC.run"><code class="docutils literal notranslate"><span class="pre">CalcTRAUC.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-TRAPT.CalcTRRPMatrix">TRAPT.CalcTRRPMatrix module</a><ul>
+<li><a class="reference internal" href="#TRAPT.CalcTRRPMatrix.dhs2gene"><code class="docutils literal notranslate"><span class="pre">dhs2gene()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.CalcTRRPMatrix.str2bool"><code class="docutils literal notranslate"><span class="pre">str2bool()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-TRAPT.CalcTRSampleRPMatrix">TRAPT.CalcTRSampleRPMatrix module</a><ul>
+<li><a class="reference internal" href="#TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix"><code class="docutils literal notranslate"><span class="pre">CalcTRSampleRPMatrix</span></code></a><ul>
+<li><a class="reference internal" href="#TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix.run"><code class="docutils literal notranslate"><span class="pre">CalcTRSampleRPMatrix.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-TRAPT.DLFS">TRAPT.DLFS module</a><ul>
+<li><a class="reference internal" href="#TRAPT.DLFS.CustomSigmoid"><code class="docutils literal notranslate"><span class="pre">CustomSigmoid</span></code></a><ul>
+<li><a class="reference internal" href="#TRAPT.DLFS.CustomSigmoid.call"><code class="docutils literal notranslate"><span class="pre">CustomSigmoid.call()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#TRAPT.DLFS.FeatureSelection"><code class="docutils literal notranslate"><span class="pre">FeatureSelection</span></code></a><ul>
+<li><a class="reference internal" href="#TRAPT.DLFS.FeatureSelection.TSFS"><code class="docutils literal notranslate"><span class="pre">FeatureSelection.TSFS()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.DLFS.FeatureSelection.get_act"><code class="docutils literal notranslate"><span class="pre">FeatureSelection.get_act()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.DLFS.FeatureSelection.get_corr"><code class="docutils literal notranslate"><span class="pre">FeatureSelection.get_corr()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.DLFS.FeatureSelection.get_loss"><code class="docutils literal notranslate"><span class="pre">FeatureSelection.get_loss()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.DLFS.FeatureSelection.run"><code class="docutils literal notranslate"><span class="pre">FeatureSelection.run()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.DLFS.FeatureSelection.sort_by_group"><code class="docutils literal notranslate"><span class="pre">FeatureSelection.sort_by_group()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.DLFS.FeatureSelection.train"><code class="docutils literal notranslate"><span class="pre">FeatureSelection.train()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#TRAPT.DLFS.SparseGroupLasso"><code class="docutils literal notranslate"><span class="pre">SparseGroupLasso</span></code></a><ul>
+<li><a class="reference internal" href="#TRAPT.DLFS.SparseGroupLasso.get_config"><code class="docutils literal notranslate"><span class="pre">SparseGroupLasso.get_config()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#TRAPT.DLFS.seed_tensorflow"><code class="docutils literal notranslate"><span class="pre">seed_tensorflow()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-TRAPT.DLVGAE">TRAPT.DLVGAE module</a><ul>
+<li><a class="reference internal" href="#TRAPT.DLVGAE.CVAE"><code class="docutils literal notranslate"><span class="pre">CVAE</span></code></a><ul>
+<li><a class="reference internal" href="#TRAPT.DLVGAE.CVAE.forward"><code class="docutils literal notranslate"><span class="pre">CVAE.forward()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.DLVGAE.CVAE.kl_div"><code class="docutils literal notranslate"><span class="pre">CVAE.kl_div()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.DLVGAE.CVAE.predict_h"><code class="docutils literal notranslate"><span class="pre">CVAE.predict_h()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.DLVGAE.CVAE.reparametrize"><code class="docutils literal notranslate"><span class="pre">CVAE.reparametrize()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.DLVGAE.CVAE.training"><code class="docutils literal notranslate"><span class="pre">CVAE.training</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#TRAPT.DLVGAE.CalcSTM"><code class="docutils literal notranslate"><span class="pre">CalcSTM</span></code></a><ul>
+<li><a class="reference internal" href="#TRAPT.DLVGAE.CalcSTM.get_cos_similar_matrix"><code class="docutils literal notranslate"><span class="pre">CalcSTM.get_cos_similar_matrix()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.DLVGAE.CalcSTM.get_edge_index"><code class="docutils literal notranslate"><span class="pre">CalcSTM.get_edge_index()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.DLVGAE.CalcSTM.init_cvae"><code class="docutils literal notranslate"><span class="pre">CalcSTM.init_cvae()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.DLVGAE.CalcSTM.init_vgae"><code class="docutils literal notranslate"><span class="pre">CalcSTM.init_vgae()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.DLVGAE.CalcSTM.recon_loss"><code class="docutils literal notranslate"><span class="pre">CalcSTM.recon_loss()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.DLVGAE.CalcSTM.run"><code class="docutils literal notranslate"><span class="pre">CalcSTM.run()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.DLVGAE.CalcSTM.save_graph"><code class="docutils literal notranslate"><span class="pre">CalcSTM.save_graph()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.DLVGAE.CalcSTM.sparse_to_tensor"><code class="docutils literal notranslate"><span class="pre">CalcSTM.sparse_to_tensor()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#TRAPT.DLVGAE.InnerProductDecoderWeight"><code class="docutils literal notranslate"><span class="pre">InnerProductDecoderWeight</span></code></a><ul>
+<li><a class="reference internal" href="#TRAPT.DLVGAE.InnerProductDecoderWeight.forward"><code class="docutils literal notranslate"><span class="pre">InnerProductDecoderWeight.forward()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.DLVGAE.InnerProductDecoderWeight.training"><code class="docutils literal notranslate"><span class="pre">InnerProductDecoderWeight.training</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#TRAPT.DLVGAE.VariationalGCNEncoder"><code class="docutils literal notranslate"><span class="pre">VariationalGCNEncoder</span></code></a><ul>
+<li><a class="reference internal" href="#TRAPT.DLVGAE.VariationalGCNEncoder.forward"><code class="docutils literal notranslate"><span class="pre">VariationalGCNEncoder.forward()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.DLVGAE.VariationalGCNEncoder.predict_h"><code class="docutils literal notranslate"><span class="pre">VariationalGCNEncoder.predict_h()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.DLVGAE.VariationalGCNEncoder.training"><code class="docutils literal notranslate"><span class="pre">VariationalGCNEncoder.training</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#TRAPT.DLVGAE.seed_torch"><code class="docutils literal notranslate"><span class="pre">seed_torch()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-TRAPT.Run">TRAPT.Run module</a><ul>
+<li><a class="reference internal" href="#TRAPT.Run.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.Run.runTRAPT"><code class="docutils literal notranslate"><span class="pre">runTRAPT()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.Run.args"><code class="docutils literal notranslate"><span class="pre">args</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.Run.Returns"><code class="docutils literal notranslate"><span class="pre">Returns</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.Run.str2bool"><code class="docutils literal notranslate"><span class="pre">str2bool()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-TRAPT.Tools">TRAPT.Tools module</a><ul>
+<li><a class="reference internal" href="#TRAPT.Tools.Args"><code class="docutils literal notranslate"><span class="pre">Args</span></code></a><ul>
+<li><a class="reference internal" href="#TRAPT.Tools.Args.input"><code class="docutils literal notranslate"><span class="pre">Args.input</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.Tools.Args.output"><code class="docutils literal notranslate"><span class="pre">Args.output</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.Tools.Args.library"><code class="docutils literal notranslate"><span class="pre">Args.library</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.Tools.Args.threads"><code class="docutils literal notranslate"><span class="pre">Args.threads</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.Tools.Args.trunk_size"><code class="docutils literal notranslate"><span class="pre">Args.trunk_size</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.Tools.Args.background_genes"><code class="docutils literal notranslate"><span class="pre">Args.background_genes</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.Tools.Args.use_kd"><code class="docutils literal notranslate"><span class="pre">Args.use_kd</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.Tools.Args.tr_type"><code class="docutils literal notranslate"><span class="pre">Args.tr_type</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.Tools.Args.source"><code class="docutils literal notranslate"><span class="pre">Args.source</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#TRAPT.Tools.RPMatrix"><code class="docutils literal notranslate"><span class="pre">RPMatrix</span></code></a><ul>
+<li><a class="reference internal" href="#TRAPT.Tools.RPMatrix.add"><code class="docutils literal notranslate"><span class="pre">RPMatrix.add()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.Tools.RPMatrix.binarization"><code class="docutils literal notranslate"><span class="pre">RPMatrix.binarization()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.Tools.RPMatrix.get_data"><code class="docutils literal notranslate"><span class="pre">RPMatrix.get_data()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.Tools.RPMatrix.minmax_scale"><code class="docutils literal notranslate"><span class="pre">RPMatrix.minmax_scale()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.Tools.RPMatrix.norm"><code class="docutils literal notranslate"><span class="pre">RPMatrix.norm()</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.Tools.RPMatrix.standard_scale"><code class="docutils literal notranslate"><span class="pre">RPMatrix.standard_scale()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#TRAPT.Tools.RP_Matrix"><code class="docutils literal notranslate"><span class="pre">RP_Matrix</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.Tools.Type"><code class="docutils literal notranslate"><span class="pre">Type</span></code></a><ul>
+<li><a class="reference internal" href="#TRAPT.Tools.Type.ATAC"><code class="docutils literal notranslate"><span class="pre">Type.ATAC</span></code></a></li>
+<li><a class="reference internal" href="#TRAPT.Tools.Type.H3K27ac"><code class="docutils literal notranslate"><span class="pre">Type.H3K27ac</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-TRAPT">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">TRAPT</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">TRAPT package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="trapt-package">
+<h1>TRAPT package<a class="headerlink" href="#trapt-package" title="Permalink to this heading"></a></h1>
+<p>November 15, 2024</p>
+<p><strong>Title</strong> TRAPT: A multi-stage fused deep learning framework for transcriptional
+regulators prediction via integrating large-scale epigenomic data</p>
+<p><strong>Maintainer</strong> Guorui Zhang &lt;<a class="reference external" href="mailto:mp798378522&#37;&#52;&#48;gmail&#46;com">mp798378522<span>&#64;</span>gmail<span>&#46;</span>com</a>&gt;</p>
+<p><strong>Description</strong> TRAPT is a multi-omics integration framework designed
+for inferring transcriptional regulator activity from a set of query genes.
+TRAPT employs a multi-stage fusion strategy to address the issues
+of incomplete cis-regulatory profile coverage and TRBP problems.
+By leveraging two-stage self-knowledge distillation to extract the activity
+embedding of regulatory elements, TRAPT can predicts key regulatory
+factors for sets of query genes through a fusion strategy.</p>
+<section id="module-TRAPT.CalcSampleRPMatrix">
+<span id="trapt-calcsamplerpmatrix-module"></span><h2>TRAPT.CalcSampleRPMatrix module<a class="headerlink" href="#module-TRAPT.CalcSampleRPMatrix" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="TRAPT.CalcSampleRPMatrix.dhs2gene">
+<span class="sig-prename descclassname"><span class="pre">TRAPT.CalcSampleRPMatrix.</span></span><span class="sig-name descname"><span class="pre">dhs2gene</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.CalcSampleRPMatrix.dhs2gene" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the Epi regulatory potential score.</p>
+<p>Parameters:
+args : argparse.Namespace</p>
+<blockquote>
+<div><p>Global parameters.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>sample<span class="classifier">str</span></dt><dd><p>Epi sample name.</p>
+</dd>
+<dt>vec<span class="classifier">np.array</span></dt><dd><p>Epi PRE score.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Epi sample name, and Epi-RP score.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-TRAPT.CalcTRAUC">
+<span id="trapt-calctrauc-module"></span><h2>TRAPT.CalcTRAUC module<a class="headerlink" href="#module-TRAPT.CalcTRAUC" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="TRAPT.CalcTRAUC.CalcTRAUC">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TRAPT.CalcTRAUC.</span></span><span class="sig-name descname"><span class="pre">CalcTRAUC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RP_Matrix_TR_Sample</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.CalcTRAUC.CalcTRAUC" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Calculate the area under the curve (AUC) for each TR curve.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="TRAPT.CalcTRAUC.CalcTRAUC.args">
+<span class="sig-name descname"><span class="pre">args</span></span><a class="headerlink" href="#TRAPT.CalcTRAUC.CalcTRAUC.args" title="Permalink to this definition"></a></dt>
+<dd><p>Global parameters for TRAPT.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#TRAPT.Tools.Args" title="TRAPT.Tools.Args">TRAPT.Tools.Args</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="TRAPT.CalcTRAUC.CalcTRAUC.RP_Matrix_TR_Sample">
+<span class="sig-name descname"><span class="pre">RP_Matrix_TR_Sample</span></span><a class="headerlink" href="#TRAPT.CalcTRAUC.CalcTRAUC.RP_Matrix_TR_Sample" title="Permalink to this definition"></a></dt>
+<dd><p>The sum of TR-RP scores and D-RP scores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>anndata.AnnData</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="TRAPT.CalcTRAUC.CalcTRAUC.w">
+<span class="sig-name descname"><span class="pre">w</span></span><a class="headerlink" href="#TRAPT.CalcTRAUC.CalcTRAUC.w" title="Permalink to this definition"></a></dt>
+<dd><p>U-RP scores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Notes</p>
+<p>The input is the RP matrix, and the calculation is performed as follows:</p>
+<div class="math notranslate nohighlight">
+\[IRP = (TRRP + DRP) \times URP\]</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.CalcTRAUC.CalcTRAUC.get_auc">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_auc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.CalcTRAUC.CalcTRAUC.get_auc" title="Permalink to this definition"></a></dt>
+<dd><p>Parallel computing module.</p>
+<p>Parameters:
+i : int</p>
+<blockquote>
+<div><p>The i-th row of the I-RP matrix.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>j<span class="classifier">int</span></dt><dd><p>Default is 0.</p>
+</dd>
+<dt>labels<span class="classifier">np.array</span></dt><dd><p>Gene vector.</p>
+</dd>
+<dt>vec<span class="classifier">np.array</span></dt><dd><p>I-RP vector.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>i, j, and the AUC score of the i-th TR.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.CalcTRAUC.CalcTRAUC.iter_params">
+<span class="sig-name descname"><span class="pre">iter_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gene_vec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trunk</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.CalcTRAUC.CalcTRAUC.iter_params" title="Permalink to this definition"></a></dt>
+<dd><p>Parallel parameter module.</p>
+<p>Parameters:
+gene_vec : np.array</p>
+<blockquote>
+<div><p>Gene vector.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>trunk<span class="classifier">int</span></dt><dd><p>Number of blocks.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An iterator.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.CalcTRAUC.CalcTRAUC.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.CalcTRAUC.CalcTRAUC.run" title="Permalink to this definition"></a></dt>
+<dd><p>TR auc calculation module execution entry point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A pd.DataFrame of AUC scores for TRs.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-TRAPT.CalcTRRPMatrix">
+<span id="trapt-calctrrpmatrix-module"></span><h2>TRAPT.CalcTRRPMatrix module<a class="headerlink" href="#module-TRAPT.CalcTRRPMatrix" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="TRAPT.CalcTRRPMatrix.dhs2gene">
+<span class="sig-prename descclassname"><span class="pre">TRAPT.CalcTRRPMatrix.</span></span><span class="sig-name descname"><span class="pre">dhs2gene</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.CalcTRRPMatrix.dhs2gene" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the TR regulatory potential score.</p>
+<p>Parameters:
+args : argparse.Namespace</p>
+<blockquote>
+<div><p>Global parameters.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>sample<span class="classifier">str</span></dt><dd><p>TR sample name.</p>
+</dd>
+<dt>vec<span class="classifier">np.array</span></dt><dd><p>TR PRE score.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>TR sample name, and TR-RP score.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="TRAPT.CalcTRRPMatrix.str2bool">
+<span class="sig-prename descclassname"><span class="pre">TRAPT.CalcTRRPMatrix.</span></span><span class="sig-name descname"><span class="pre">str2bool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.CalcTRRPMatrix.str2bool" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-TRAPT.CalcTRSampleRPMatrix">
+<span id="trapt-calctrsamplerpmatrix-module"></span><h2>TRAPT.CalcTRSampleRPMatrix module<a class="headerlink" href="#module-TRAPT.CalcTRSampleRPMatrix" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TRAPT.CalcTRSampleRPMatrix.</span></span><span class="sig-name descname"><span class="pre">CalcTRSampleRPMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">library</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'library'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'library'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'H3K27ac'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix.run" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-TRAPT.DLFS">
+<span id="trapt-dlfs-module"></span><h2>TRAPT.DLFS module<a class="headerlink" href="#module-TRAPT.DLFS" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="TRAPT.DLFS.CustomSigmoid">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TRAPT.DLFS.</span></span><span class="sig-name descname"><span class="pre">CustomSigmoid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLFS.CustomSigmoid" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Layer</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.DLFS.CustomSigmoid.call">
+<span class="sig-name descname"><span class="pre">call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLFS.CustomSigmoid.call" title="Permalink to this definition"></a></dt>
+<dd><p>This is where the layer’s logic lives.</p>
+<p>The <cite>call()</cite> method may not create state (except in its first
+invocation, wrapping the creation of variables or other resources in
+<cite>tf.init_scope()</cite>).  It is recommended to create state, including
+<cite>tf.Variable</cite> instances and nested <cite>Layer</cite> instances,</p>
+<blockquote>
+<div><p>in <cite>__init__()</cite>, or in the <cite>build()</cite> method that is</p>
+</div></blockquote>
+<p>called automatically before <cite>call()</cite> executes for the first time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> – <p>Input tensor, or dict/list/tuple of input tensors.
+The first positional <cite>inputs</cite> argument is subject to special rules:
+- <cite>inputs</cite> must be explicitly passed. A layer cannot have zero</p>
+<blockquote>
+<div><p>arguments, and <cite>inputs</cite> cannot be provided via the default value
+of a keyword argument.</p>
+</div></blockquote>
+<ul>
+<li><p>NumPy array or Python scalar values in <cite>inputs</cite> get cast as
+tensors.</p></li>
+<li><p>Keras mask metadata is only collected from <cite>inputs</cite>.</p></li>
+<li><p>Layers are built (<cite>build(input_shape)</cite> method)
+using shape info from <cite>inputs</cite> only.</p></li>
+<li><p><cite>input_spec</cite> compatibility is only checked against <cite>inputs</cite>.</p></li>
+<li><p>Mixed precision input casting is only applied to <cite>inputs</cite>.
+If a layer has tensor arguments in <cite>*args</cite> or <cite>**kwargs</cite>, their
+casting behavior in mixed precision should be handled manually.</p></li>
+<li><p>The SavedModel input specification is generated using <cite>inputs</cite>
+only.</p></li>
+<li><p>Integration with various ecosystem packages like TFMOT, TFLite,
+TF.js, etc is only supported for <cite>inputs</cite> and not for tensors in
+positional and keyword arguments.</p></li>
+</ul>
+</p></li>
+<li><p><strong>*args</strong> – Additional positional arguments. May contain tensors, although
+this is not recommended, for the reasons above.</p></li>
+<li><p><strong>**kwargs</strong> – <p>Additional keyword arguments. May contain tensors, although
+this is not recommended, for the reasons above.
+The following optional keyword arguments are reserved:
+- <cite>training</cite>: Boolean scalar tensor of Python boolean indicating</p>
+<blockquote>
+<div><p>whether the <cite>call</cite> is meant for training or inference.</p>
+</div></blockquote>
+<ul>
+<li><p><cite>mask</cite>: Boolean input mask. If the layer’s <cite>call()</cite> method takes a
+<cite>mask</cite> argument, its default value will be set to the mask
+generated for <cite>inputs</cite> by the previous layer (if <cite>input</cite> did come
+from a layer that generated a corresponding mask, i.e. if it came
+from a Keras layer with masking support).</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tensor or list/tuple of tensors.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="TRAPT.DLFS.FeatureSelection">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TRAPT.DLFS.</span></span><span class="sig-name descname"><span class="pre">FeatureSelection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_ad</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLFS.FeatureSelection" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.DLFS.FeatureSelection.TSFS">
+<span class="sig-name descname"><span class="pre">TSFS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLFS.FeatureSelection.TSFS" title="Permalink to this definition"></a></dt>
+<dd><p>Teacher-Student Feature Selection.</p>
+<p>Parameters:
+X : np.array</p>
+<blockquote>
+<div><p>Epi-RP matrix.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>T<span class="classifier">str</span></dt><dd><p>Input genes vector.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Index values sorted by Epi sample weights, and Epi sample weights.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.DLFS.FeatureSelection.get_act">
+<span class="sig-name descname"><span class="pre">get_act</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLFS.FeatureSelection.get_act" title="Permalink to this definition"></a></dt>
+<dd><p>U-RP teacher model activation function.</p>
+<p>Parameters:
+t : float</p>
+<blockquote>
+<div><p>Temperature value.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.DLFS.FeatureSelection.get_corr">
+<span class="sig-name descname"><span class="pre">get_corr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLFS.FeatureSelection.get_corr" title="Permalink to this definition"></a></dt>
+<dd><p>Correlation calculation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.DLFS.FeatureSelection.get_loss">
+<span class="sig-name descname"><span class="pre">get_loss</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLFS.FeatureSelection.get_loss" title="Permalink to this definition"></a></dt>
+<dd><p>U-RP teacher model loss function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.DLFS.FeatureSelection.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLFS.FeatureSelection.run" title="Permalink to this definition"></a></dt>
+<dd><p>Method execution entry point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A pd.DataFrame of U-RP scores for query Genes, and selected sample information.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.DLFS.FeatureSelection.sort_by_group">
+<span class="sig-name descname"><span class="pre">sort_by_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLFS.FeatureSelection.sort_by_group" title="Permalink to this definition"></a></dt>
+<dd><p>Grouping function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.DLFS.FeatureSelection.train">
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLFS.FeatureSelection.train" title="Permalink to this definition"></a></dt>
+<dd><p>U-RP model training entry function.</p>
+<p>Parameters:
+X : np.array</p>
+<blockquote>
+<div><p>Epi-RP matrix.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>y<span class="classifier">str</span></dt><dd><p>Input genes vector.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>U-RP model.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="TRAPT.DLFS.SparseGroupLasso">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TRAPT.DLFS.</span></span><span class="sig-name descname"><span class="pre">SparseGroupLasso</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLFS.SparseGroupLasso" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Regularizer</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.DLFS.SparseGroupLasso.get_config">
+<span class="sig-name descname"><span class="pre">get_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLFS.SparseGroupLasso.get_config" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the config of the regularizer.</p>
+<p>An regularizer config is a Python dictionary (serializable)
+containing all configuration parameters of the regularizer.
+The same regularizer can be reinstantiated later
+(without any saved state) from this configuration.</p>
+<p>This method is optional if you are just training and executing models,
+exporting to and from SavedModels, or using weight checkpoints.</p>
+<p>This method is required for Keras <cite>model_to_estimator</cite>, saving and
+loading models to HDF5 formats, Keras model cloning, some visualization
+utilities, and exporting models to and from JSON.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Python dictionary.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="TRAPT.DLFS.seed_tensorflow">
+<span class="sig-prename descclassname"><span class="pre">TRAPT.DLFS.</span></span><span class="sig-name descname"><span class="pre">seed_tensorflow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2023</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLFS.seed_tensorflow" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-TRAPT.DLVGAE">
+<span id="trapt-dlvgae-module"></span><h2>TRAPT.DLVGAE module<a class="headerlink" href="#module-TRAPT.DLVGAE" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="TRAPT.DLVGAE.CVAE">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TRAPT.DLVGAE.</span></span><span class="sig-name descname"><span class="pre">CVAE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">condition_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_dim</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLVGAE.CVAE" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.DLVGAE.CVAE.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLVGAE.CVAE.forward" title="Permalink to this definition"></a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.DLVGAE.CVAE.kl_div">
+<span class="sig-name descname"><span class="pre">kl_div</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLVGAE.CVAE.kl_div" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.DLVGAE.CVAE.predict_h">
+<span class="sig-name descname"><span class="pre">predict_h</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLVGAE.CVAE.predict_h" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.DLVGAE.CVAE.reparametrize">
+<span class="sig-name descname"><span class="pre">reparametrize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mu</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logstd</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLVGAE.CVAE.reparametrize" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="TRAPT.DLVGAE.CVAE.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></em><a class="headerlink" href="#TRAPT.DLVGAE.CVAE.training" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="TRAPT.DLVGAE.CalcSTM">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TRAPT.DLVGAE.</span></span><span class="sig-name descname"><span class="pre">CalcSTM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">RP_Matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cuda'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLVGAE.CalcSTM" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>D-RP model network reconstruction module.</p>
+<p>Parameters:
+RP_Matrix : TRAPT.Tools.RP_Matrix</p>
+<blockquote>
+<div><p>TR-RP matrix and Epi-RP matrix.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>type<span class="classifier">str</span></dt><dd><p>Epi-RP type.</p>
+</dd>
+<dt>checkpoint_path<span class="classifier">str</span></dt><dd><p>Model save path.</p>
+</dd>
+<dt>device<span class="classifier">str, optional</span></dt><dd><p>cpu/cuda.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.DLVGAE.CalcSTM.get_cos_similar_matrix">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_cos_similar_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">m1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLVGAE.CalcSTM.get_cos_similar_matrix" title="Permalink to this definition"></a></dt>
+<dd><p>Matrix cosine similarity calculation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.DLVGAE.CalcSTM.get_edge_index">
+<span class="sig-name descname"><span class="pre">get_edge_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLVGAE.CalcSTM.get_edge_index" title="Permalink to this definition"></a></dt>
+<dd><p>Construct a heterogeneous network.</p>
+<p>Parameters:
+A : anndata.AnnData</p>
+<blockquote>
+<div><p>TR-RP matrix.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>B<span class="classifier">anndata.AnnData</span></dt><dd><p>Epi-RP matrix.</p>
+</dd>
+<dt>n<span class="classifier">int</span></dt><dd><p>Number of nearest neighbors for TR.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>TR-Epi heterogeneous network.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.DLVGAE.CalcSTM.init_cvae">
+<span class="sig-name descname"><span class="pre">init_cvae</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLVGAE.CalcSTM.init_cvae" title="Permalink to this definition"></a></dt>
+<dd><p>D-RP teacher model training function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.DLVGAE.CalcSTM.init_vgae">
+<span class="sig-name descname"><span class="pre">init_vgae</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_kd</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLVGAE.CalcSTM.init_vgae" title="Permalink to this definition"></a></dt>
+<dd><p>D-RP student model training function.</p>
+<p>Parameters:
+h : torch.Tensor</p>
+<blockquote>
+<div><p>Potential representation of the D-RP teacher model.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>use_kd<span class="classifier">bool</span></dt><dd><p>Utilize knowledge distillation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.DLVGAE.CalcSTM.recon_loss">
+<span class="sig-name descname"><span class="pre">recon_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">norm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLVGAE.CalcSTM.recon_loss" title="Permalink to this definition"></a></dt>
+<dd><p>Variational Gaussian Autoencoder (VGAE) reconstruction loss.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.DLVGAE.CalcSTM.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_kd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLVGAE.CalcSTM.run" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.DLVGAE.CalcSTM.save_graph">
+<span class="sig-name descname"><span class="pre">save_graph</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLVGAE.CalcSTM.save_graph" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.DLVGAE.CalcSTM.sparse_to_tensor">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sparse_to_tensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sparse'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLVGAE.CalcSTM.sparse_to_tensor" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="TRAPT.DLVGAE.InnerProductDecoderWeight">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TRAPT.DLVGAE.</span></span><span class="sig-name descname"><span class="pre">InnerProductDecoderWeight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A_e</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLVGAE.InnerProductDecoderWeight" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">InnerProductDecoder</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.DLVGAE.InnerProductDecoderWeight.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigmoid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLVGAE.InnerProductDecoderWeight.forward" title="Permalink to this definition"></a></dt>
+<dd><p>Decodes the latent variables <code class="xref py py-obj docutils literal notranslate"><span class="pre">z</span></code> into edge probabilities for
+the given node-pairs <code class="xref py py-obj docutils literal notranslate"><span class="pre">edge_index</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>z</strong> (<em>torch.Tensor</em>) – The latent space <span class="math notranslate nohighlight">\(\mathbf{Z}\)</span>.</p></li>
+<li><p><strong>sigmoid</strong> (<em>bool</em><em>, </em><em>optional</em>) – If set to <code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code>, does not apply
+the logistic sigmoid function to the output.
+(default: <code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="TRAPT.DLVGAE.InnerProductDecoderWeight.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></em><a class="headerlink" href="#TRAPT.DLVGAE.InnerProductDecoderWeight.training" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="TRAPT.DLVGAE.VariationalGCNEncoder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TRAPT.DLVGAE.</span></span><span class="sig-name descname"><span class="pre">VariationalGCNEncoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_channels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_dim</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLVGAE.VariationalGCNEncoder" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.DLVGAE.VariationalGCNEncoder.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLVGAE.VariationalGCNEncoder.forward" title="Permalink to this definition"></a></dt>
+<dd><p>Defines the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.DLVGAE.VariationalGCNEncoder.predict_h">
+<span class="sig-name descname"><span class="pre">predict_h</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_index</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLVGAE.VariationalGCNEncoder.predict_h" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="TRAPT.DLVGAE.VariationalGCNEncoder.training">
+<span class="sig-name descname"><span class="pre">training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></em><a class="headerlink" href="#TRAPT.DLVGAE.VariationalGCNEncoder.training" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="TRAPT.DLVGAE.seed_torch">
+<span class="sig-prename descclassname"><span class="pre">TRAPT.DLVGAE.</span></span><span class="sig-name descname"><span class="pre">seed_torch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2023</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.DLVGAE.seed_torch" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-TRAPT.Run">
+<span id="trapt-run-module"></span><h2>TRAPT.Run module<a class="headerlink" href="#module-TRAPT.Run" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="TRAPT.Run.main">
+<span class="sig-prename descclassname"><span class="pre">TRAPT.Run.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.Run.main" title="Permalink to this definition"></a></dt>
+<dd><p>TRAPT method entry function.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="TRAPT.Run.runTRAPT">
+<span class="sig-prename descclassname"><span class="pre">TRAPT.Run.</span></span><span class="sig-name descname"><span class="pre">runTRAPT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.Run.runTRAPT" title="Permalink to this definition"></a></dt>
+<dd><p>TRAPT execution entry function.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="TRAPT.Run.args">
+<span class="sig-prename descclassname"><span class="pre">TRAPT.Run.</span></span><span class="sig-name descname"><span class="pre">args</span></span><a class="headerlink" href="#TRAPT.Run.args" title="Permalink to this definition"></a></dt>
+<dd><p>Global parameters for TRAPT.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#TRAPT.Tools.Args" title="TRAPT.Tools.Args">TRAPT.Tools.Args</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="TRAPT.Run.Returns">
+<span class="sig-prename descclassname"><span class="pre">TRAPT.Run.</span></span><span class="sig-name descname"><span class="pre">Returns</span></span><a class="headerlink" href="#TRAPT.Run.Returns" title="Permalink to this definition"></a></dt>
+<dd><p>A pd.DataFrame of TR activity.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="TRAPT.Run.str2bool">
+<span class="sig-prename descclassname"><span class="pre">TRAPT.Run.</span></span><span class="sig-name descname"><span class="pre">str2bool</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.Run.str2bool" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-TRAPT.Tools">
+<span id="trapt-tools-module"></span><h2>TRAPT.Tools module<a class="headerlink" href="#module-TRAPT.Tools" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="TRAPT.Tools.Args">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TRAPT.Tools.</span></span><span class="sig-name descname"><span class="pre">Args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">library</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'library'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trunk_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32768</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_genes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_kd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tr_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.Tools.Args" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>TRAPT Global Parameters.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="TRAPT.Tools.Args.input">
+<span class="sig-name descname"><span class="pre">input</span></span><a class="headerlink" href="#TRAPT.Tools.Args.input" title="Permalink to this definition"></a></dt>
+<dd><p>Input path for the gene set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="TRAPT.Tools.Args.output">
+<span class="sig-name descname"><span class="pre">output</span></span><a class="headerlink" href="#TRAPT.Tools.Args.output" title="Permalink to this definition"></a></dt>
+<dd><p>Output path for TRAPT results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="TRAPT.Tools.Args.library">
+<span class="sig-name descname"><span class="pre">library</span></span><a class="headerlink" href="#TRAPT.Tools.Args.library" title="Permalink to this definition"></a></dt>
+<dd><p>Path to the background library, default is the ‘library’ path in the current directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="TRAPT.Tools.Args.threads">
+<span class="sig-name descname"><span class="pre">threads</span></span><a class="headerlink" href="#TRAPT.Tools.Args.threads" title="Permalink to this definition"></a></dt>
+<dd><p>Number of processes used for TRAPT inference.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="TRAPT.Tools.Args.trunk_size">
+<span class="sig-name descname"><span class="pre">trunk_size</span></span><a class="headerlink" href="#TRAPT.Tools.Args.trunk_size" title="Permalink to this definition"></a></dt>
+<dd><p>Size of the chunks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="TRAPT.Tools.Args.background_genes">
+<span class="sig-name descname"><span class="pre">background_genes</span></span><a class="headerlink" href="#TRAPT.Tools.Args.background_genes" title="Permalink to this definition"></a></dt>
+<dd><p>Number of background genes selected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="TRAPT.Tools.Args.use_kd">
+<span class="sig-name descname"><span class="pre">use_kd</span></span><a class="headerlink" href="#TRAPT.Tools.Args.use_kd" title="Permalink to this definition"></a></dt>
+<dd><p>Use knowledge distillation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="TRAPT.Tools.Args.tr_type">
+<span class="sig-name descname"><span class="pre">tr_type</span></span><a class="headerlink" href="#TRAPT.Tools.Args.tr_type" title="Permalink to this definition"></a></dt>
+<dd><p>all/tf/tcof/cr.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="TRAPT.Tools.Args.source">
+<span class="sig-name descname"><span class="pre">source</span></span><a class="headerlink" href="#TRAPT.Tools.Args.source" title="Permalink to this definition"></a></dt>
+<dd><p>all/cistrome/chip_altas/gtrd/remap/chip-atlas/remap/encode/geo.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="TRAPT.Tools.RPMatrix">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TRAPT.Tools.</span></span><span class="sig-name descname"><span class="pre">RPMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">library</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_array</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.Tools.RPMatrix" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.Tools.RPMatrix.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.Tools.RPMatrix.add" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.Tools.RPMatrix.binarization">
+<span class="sig-name descname"><span class="pre">binarization</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.Tools.RPMatrix.binarization" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.Tools.RPMatrix.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.Tools.RPMatrix.get_data" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">AnnData</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.Tools.RPMatrix.minmax_scale">
+<span class="sig-name descname"><span class="pre">minmax_scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.Tools.RPMatrix.minmax_scale" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.Tools.RPMatrix.norm">
+<span class="sig-name descname"><span class="pre">norm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'l2'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.Tools.RPMatrix.norm" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TRAPT.Tools.RPMatrix.standard_scale">
+<span class="sig-name descname"><span class="pre">standard_scale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.Tools.RPMatrix.standard_scale" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="TRAPT.Tools.RP_Matrix">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TRAPT.Tools.</span></span><span class="sig-name descname"><span class="pre">RP_Matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">library</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TRAPT.Tools.RP_Matrix" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="TRAPT.Tools.Type">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">TRAPT.Tools.</span></span><span class="sig-name descname"><span class="pre">Type</span></span><a class="headerlink" href="#TRAPT.Tools.Type" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="TRAPT.Tools.Type.ATAC">
+<span class="sig-name descname"><span class="pre">ATAC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'ATAC'</span></em><a class="headerlink" href="#TRAPT.Tools.Type.ATAC" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="TRAPT.Tools.Type.H3K27ac">
+<span class="sig-name descname"><span class="pre">H3K27ac</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'H3K27ac'</span></em><a class="headerlink" href="#TRAPT.Tools.Type.H3K27ac" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-TRAPT">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-TRAPT" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Guorui Zhang.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

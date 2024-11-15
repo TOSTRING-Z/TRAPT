@@ -1,0 +1,92 @@
+\indexentry{module@\spxentry{module}!TRAPT.CalcSampleRPMatrix@\spxentry{TRAPT.CalcSampleRPMatrix}|hyperpage}{3}
+\indexentry{TRAPT.CalcSampleRPMatrix@\spxentry{TRAPT.CalcSampleRPMatrix}!module@\spxentry{module}|hyperpage}{3}
+\indexentry{dhs2gene() (in module TRAPT.CalcSampleRPMatrix)@\spxentry{dhs2gene()}\spxextra{in module TRAPT.CalcSampleRPMatrix}|hyperpage}{3}
+\indexentry{module@\spxentry{module}!TRAPT.CalcTRAUC@\spxentry{TRAPT.CalcTRAUC}|hyperpage}{5}
+\indexentry{TRAPT.CalcTRAUC@\spxentry{TRAPT.CalcTRAUC}!module@\spxentry{module}|hyperpage}{5}
+\indexentry{CalcTRAUC (class in TRAPT.CalcTRAUC)@\spxentry{CalcTRAUC}\spxextra{class in TRAPT.CalcTRAUC}|hyperpage}{5}
+\indexentry{args (TRAPT.CalcTRAUC.CalcTRAUC attribute)@\spxentry{args}\spxextra{TRAPT.CalcTRAUC.CalcTRAUC attribute}|hyperpage}{5}
+\indexentry{RP\_Matrix\_TR\_Sample (TRAPT.CalcTRAUC.CalcTRAUC attribute)@\spxentry{RP\_Matrix\_TR\_Sample}\spxextra{TRAPT.CalcTRAUC.CalcTRAUC attribute}|hyperpage}{5}
+\indexentry{w (TRAPT.CalcTRAUC.CalcTRAUC attribute)@\spxentry{w}\spxextra{TRAPT.CalcTRAUC.CalcTRAUC attribute}|hyperpage}{5}
+\indexentry{get\_auc() (TRAPT.CalcTRAUC.CalcTRAUC static method)@\spxentry{get\_auc()}\spxextra{TRAPT.CalcTRAUC.CalcTRAUC static method}|hyperpage}{5}
+\indexentry{iter\_params() (TRAPT.CalcTRAUC.CalcTRAUC method)@\spxentry{iter\_params()}\spxextra{TRAPT.CalcTRAUC.CalcTRAUC method}|hyperpage}{6}
+\indexentry{run() (TRAPT.CalcTRAUC.CalcTRAUC method)@\spxentry{run()}\spxextra{TRAPT.CalcTRAUC.CalcTRAUC method}|hyperpage}{6}
+\indexentry{module@\spxentry{module}!TRAPT.CalcTRRPMatrix@\spxentry{TRAPT.CalcTRRPMatrix}|hyperpage}{7}
+\indexentry{TRAPT.CalcTRRPMatrix@\spxentry{TRAPT.CalcTRRPMatrix}!module@\spxentry{module}|hyperpage}{7}
+\indexentry{dhs2gene() (in module TRAPT.CalcTRRPMatrix)@\spxentry{dhs2gene()}\spxextra{in module TRAPT.CalcTRRPMatrix}|hyperpage}{7}
+\indexentry{str2bool() (in module TRAPT.CalcTRRPMatrix)@\spxentry{str2bool()}\spxextra{in module TRAPT.CalcTRRPMatrix}|hyperpage}{7}
+\indexentry{module@\spxentry{module}!TRAPT.CalcTRSampleRPMatrix@\spxentry{TRAPT.CalcTRSampleRPMatrix}|hyperpage}{9}
+\indexentry{TRAPT.CalcTRSampleRPMatrix@\spxentry{TRAPT.CalcTRSampleRPMatrix}!module@\spxentry{module}|hyperpage}{9}
+\indexentry{CalcTRSampleRPMatrix (class in TRAPT.CalcTRSampleRPMatrix)@\spxentry{CalcTRSampleRPMatrix}\spxextra{class in TRAPT.CalcTRSampleRPMatrix}|hyperpage}{9}
+\indexentry{run() (TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix method)@\spxentry{run()}\spxextra{TRAPT.CalcTRSampleRPMatrix.CalcTRSampleRPMatrix method}|hyperpage}{9}
+\indexentry{module@\spxentry{module}!TRAPT.DLFS@\spxentry{TRAPT.DLFS}|hyperpage}{11}
+\indexentry{TRAPT.DLFS@\spxentry{TRAPT.DLFS}!module@\spxentry{module}|hyperpage}{11}
+\indexentry{CustomSigmoid (class in TRAPT.DLFS)@\spxentry{CustomSigmoid}\spxextra{class in TRAPT.DLFS}|hyperpage}{11}
+\indexentry{call() (TRAPT.DLFS.CustomSigmoid method)@\spxentry{call()}\spxextra{TRAPT.DLFS.CustomSigmoid method}|hyperpage}{11}
+\indexentry{FeatureSelection (class in TRAPT.DLFS)@\spxentry{FeatureSelection}\spxextra{class in TRAPT.DLFS}|hyperpage}{12}
+\indexentry{TSFS() (TRAPT.DLFS.FeatureSelection method)@\spxentry{TSFS()}\spxextra{TRAPT.DLFS.FeatureSelection method}|hyperpage}{12}
+\indexentry{get\_act() (TRAPT.DLFS.FeatureSelection method)@\spxentry{get\_act()}\spxextra{TRAPT.DLFS.FeatureSelection method}|hyperpage}{12}
+\indexentry{get\_corr() (TRAPT.DLFS.FeatureSelection method)@\spxentry{get\_corr()}\spxextra{TRAPT.DLFS.FeatureSelection method}|hyperpage}{12}
+\indexentry{get\_loss() (TRAPT.DLFS.FeatureSelection method)@\spxentry{get\_loss()}\spxextra{TRAPT.DLFS.FeatureSelection method}|hyperpage}{12}
+\indexentry{run() (TRAPT.DLFS.FeatureSelection method)@\spxentry{run()}\spxextra{TRAPT.DLFS.FeatureSelection method}|hyperpage}{12}
+\indexentry{sort\_by\_group() (TRAPT.DLFS.FeatureSelection method)@\spxentry{sort\_by\_group()}\spxextra{TRAPT.DLFS.FeatureSelection method}|hyperpage}{12}
+\indexentry{train() (TRAPT.DLFS.FeatureSelection method)@\spxentry{train()}\spxextra{TRAPT.DLFS.FeatureSelection method}|hyperpage}{12}
+\indexentry{SparseGroupLasso (class in TRAPT.DLFS)@\spxentry{SparseGroupLasso}\spxextra{class in TRAPT.DLFS}|hyperpage}{12}
+\indexentry{get\_config() (TRAPT.DLFS.SparseGroupLasso method)@\spxentry{get\_config()}\spxextra{TRAPT.DLFS.SparseGroupLasso method}|hyperpage}{13}
+\indexentry{seed\_tensorflow() (in module TRAPT.DLFS)@\spxentry{seed\_tensorflow()}\spxextra{in module TRAPT.DLFS}|hyperpage}{13}
+\indexentry{module@\spxentry{module}!TRAPT.DLVGAE@\spxentry{TRAPT.DLVGAE}|hyperpage}{15}
+\indexentry{TRAPT.DLVGAE@\spxentry{TRAPT.DLVGAE}!module@\spxentry{module}|hyperpage}{15}
+\indexentry{CVAE (class in TRAPT.DLVGAE)@\spxentry{CVAE}\spxextra{class in TRAPT.DLVGAE}|hyperpage}{15}
+\indexentry{forward() (TRAPT.DLVGAE.CVAE method)@\spxentry{forward()}\spxextra{TRAPT.DLVGAE.CVAE method}|hyperpage}{15}
+\indexentry{kl\_div() (TRAPT.DLVGAE.CVAE method)@\spxentry{kl\_div()}\spxextra{TRAPT.DLVGAE.CVAE method}|hyperpage}{15}
+\indexentry{predict\_h() (TRAPT.DLVGAE.CVAE method)@\spxentry{predict\_h()}\spxextra{TRAPT.DLVGAE.CVAE method}|hyperpage}{15}
+\indexentry{reparametrize() (TRAPT.DLVGAE.CVAE method)@\spxentry{reparametrize()}\spxextra{TRAPT.DLVGAE.CVAE method}|hyperpage}{15}
+\indexentry{training (TRAPT.DLVGAE.CVAE attribute)@\spxentry{training}\spxextra{TRAPT.DLVGAE.CVAE attribute}|hyperpage}{15}
+\indexentry{CalcSTM (class in TRAPT.DLVGAE)@\spxentry{CalcSTM}\spxextra{class in TRAPT.DLVGAE}|hyperpage}{15}
+\indexentry{get\_cos\_similar\_matrix() (TRAPT.DLVGAE.CalcSTM static method)@\spxentry{get\_cos\_similar\_matrix()}\spxextra{TRAPT.DLVGAE.CalcSTM static method}|hyperpage}{15}
+\indexentry{get\_edge\_index() (TRAPT.DLVGAE.CalcSTM method)@\spxentry{get\_edge\_index()}\spxextra{TRAPT.DLVGAE.CalcSTM method}|hyperpage}{15}
+\indexentry{init\_cvae() (TRAPT.DLVGAE.CalcSTM method)@\spxentry{init\_cvae()}\spxextra{TRAPT.DLVGAE.CalcSTM method}|hyperpage}{16}
+\indexentry{init\_vgae() (TRAPT.DLVGAE.CalcSTM method)@\spxentry{init\_vgae()}\spxextra{TRAPT.DLVGAE.CalcSTM method}|hyperpage}{16}
+\indexentry{recon\_loss() (TRAPT.DLVGAE.CalcSTM method)@\spxentry{recon\_loss()}\spxextra{TRAPT.DLVGAE.CalcSTM method}|hyperpage}{16}
+\indexentry{run() (TRAPT.DLVGAE.CalcSTM method)@\spxentry{run()}\spxextra{TRAPT.DLVGAE.CalcSTM method}|hyperpage}{16}
+\indexentry{save\_graph() (TRAPT.DLVGAE.CalcSTM method)@\spxentry{save\_graph()}\spxextra{TRAPT.DLVGAE.CalcSTM method}|hyperpage}{16}
+\indexentry{sparse\_to\_tensor() (TRAPT.DLVGAE.CalcSTM static method)@\spxentry{sparse\_to\_tensor()}\spxextra{TRAPT.DLVGAE.CalcSTM static method}|hyperpage}{16}
+\indexentry{InnerProductDecoderWeight (class in TRAPT.DLVGAE)@\spxentry{InnerProductDecoderWeight}\spxextra{class in TRAPT.DLVGAE}|hyperpage}{16}
+\indexentry{forward() (TRAPT.DLVGAE.InnerProductDecoderWeight method)@\spxentry{forward()}\spxextra{TRAPT.DLVGAE.InnerProductDecoderWeight method}|hyperpage}{16}
+\indexentry{training (TRAPT.DLVGAE.InnerProductDecoderWeight attribute)@\spxentry{training}\spxextra{TRAPT.DLVGAE.InnerProductDecoderWeight attribute}|hyperpage}{16}
+\indexentry{VariationalGCNEncoder (class in TRAPT.DLVGAE)@\spxentry{VariationalGCNEncoder}\spxextra{class in TRAPT.DLVGAE}|hyperpage}{16}
+\indexentry{forward() (TRAPT.DLVGAE.VariationalGCNEncoder method)@\spxentry{forward()}\spxextra{TRAPT.DLVGAE.VariationalGCNEncoder method}|hyperpage}{16}
+\indexentry{predict\_h() (TRAPT.DLVGAE.VariationalGCNEncoder method)@\spxentry{predict\_h()}\spxextra{TRAPT.DLVGAE.VariationalGCNEncoder method}|hyperpage}{17}
+\indexentry{training (TRAPT.DLVGAE.VariationalGCNEncoder attribute)@\spxentry{training}\spxextra{TRAPT.DLVGAE.VariationalGCNEncoder attribute}|hyperpage}{17}
+\indexentry{seed\_torch() (in module TRAPT.DLVGAE)@\spxentry{seed\_torch()}\spxextra{in module TRAPT.DLVGAE}|hyperpage}{17}
+\indexentry{module@\spxentry{module}!TRAPT.Run@\spxentry{TRAPT.Run}|hyperpage}{19}
+\indexentry{TRAPT.Run@\spxentry{TRAPT.Run}!module@\spxentry{module}|hyperpage}{19}
+\indexentry{main() (in module TRAPT.Run)@\spxentry{main()}\spxextra{in module TRAPT.Run}|hyperpage}{19}
+\indexentry{runTRAPT() (in module TRAPT.Run)@\spxentry{runTRAPT()}\spxextra{in module TRAPT.Run}|hyperpage}{19}
+\indexentry{args (in module TRAPT.Run)@\spxentry{args}\spxextra{in module TRAPT.Run}|hyperpage}{19}
+\indexentry{Returns (in module TRAPT.Run)@\spxentry{Returns}\spxextra{in module TRAPT.Run}|hyperpage}{19}
+\indexentry{str2bool() (in module TRAPT.Run)@\spxentry{str2bool()}\spxextra{in module TRAPT.Run}|hyperpage}{19}
+\indexentry{module@\spxentry{module}!TRAPT.Tools@\spxentry{TRAPT.Tools}|hyperpage}{21}
+\indexentry{TRAPT.Tools@\spxentry{TRAPT.Tools}!module@\spxentry{module}|hyperpage}{21}
+\indexentry{Args (class in TRAPT.Tools)@\spxentry{Args}\spxextra{class in TRAPT.Tools}|hyperpage}{21}
+\indexentry{input (TRAPT.Tools.Args attribute)@\spxentry{input}\spxextra{TRAPT.Tools.Args attribute}|hyperpage}{21}
+\indexentry{output (TRAPT.Tools.Args attribute)@\spxentry{output}\spxextra{TRAPT.Tools.Args attribute}|hyperpage}{21}
+\indexentry{library (TRAPT.Tools.Args attribute)@\spxentry{library}\spxextra{TRAPT.Tools.Args attribute}|hyperpage}{21}
+\indexentry{threads (TRAPT.Tools.Args attribute)@\spxentry{threads}\spxextra{TRAPT.Tools.Args attribute}|hyperpage}{21}
+\indexentry{trunk\_size (TRAPT.Tools.Args attribute)@\spxentry{trunk\_size}\spxextra{TRAPT.Tools.Args attribute}|hyperpage}{21}
+\indexentry{background\_genes (TRAPT.Tools.Args attribute)@\spxentry{background\_genes}\spxextra{TRAPT.Tools.Args attribute}|hyperpage}{21}
+\indexentry{use\_kd (TRAPT.Tools.Args attribute)@\spxentry{use\_kd}\spxextra{TRAPT.Tools.Args attribute}|hyperpage}{21}
+\indexentry{tr\_type (TRAPT.Tools.Args attribute)@\spxentry{tr\_type}\spxextra{TRAPT.Tools.Args attribute}|hyperpage}{22}
+\indexentry{source (TRAPT.Tools.Args attribute)@\spxentry{source}\spxextra{TRAPT.Tools.Args attribute}|hyperpage}{22}
+\indexentry{RPMatrix (class in TRAPT.Tools)@\spxentry{RPMatrix}\spxextra{class in TRAPT.Tools}|hyperpage}{22}
+\indexentry{add() (TRAPT.Tools.RPMatrix method)@\spxentry{add()}\spxextra{TRAPT.Tools.RPMatrix method}|hyperpage}{22}
+\indexentry{binarization() (TRAPT.Tools.RPMatrix method)@\spxentry{binarization()}\spxextra{TRAPT.Tools.RPMatrix method}|hyperpage}{22}
+\indexentry{get\_data() (TRAPT.Tools.RPMatrix method)@\spxentry{get\_data()}\spxextra{TRAPT.Tools.RPMatrix method}|hyperpage}{22}
+\indexentry{minmax\_scale() (TRAPT.Tools.RPMatrix method)@\spxentry{minmax\_scale()}\spxextra{TRAPT.Tools.RPMatrix method}|hyperpage}{22}
+\indexentry{norm() (TRAPT.Tools.RPMatrix method)@\spxentry{norm()}\spxextra{TRAPT.Tools.RPMatrix method}|hyperpage}{22}
+\indexentry{standard\_scale() (TRAPT.Tools.RPMatrix method)@\spxentry{standard\_scale()}\spxextra{TRAPT.Tools.RPMatrix method}|hyperpage}{22}
+\indexentry{RP\_Matrix (class in TRAPT.Tools)@\spxentry{RP\_Matrix}\spxextra{class in TRAPT.Tools}|hyperpage}{22}
+\indexentry{Type (class in TRAPT.Tools)@\spxentry{Type}\spxextra{class in TRAPT.Tools}|hyperpage}{22}
+\indexentry{ATAC (TRAPT.Tools.Type attribute)@\spxentry{ATAC}\spxextra{TRAPT.Tools.Type attribute}|hyperpage}{22}
+\indexentry{H3K27ac (TRAPT.Tools.Type attribute)@\spxentry{H3K27ac}\spxextra{TRAPT.Tools.Type attribute}|hyperpage}{22}
+\indexentry{module@\spxentry{module}!TRAPT@\spxentry{TRAPT}|hyperpage}{23}
+\indexentry{TRAPT@\spxentry{TRAPT}!module@\spxentry{module}|hyperpage}{23}

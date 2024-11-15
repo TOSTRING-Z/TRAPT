@@ -1,6 +1,6 @@
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../../src/TRAPT'))
+sys.path.insert(0, os.path.abspath('../src/TRAPT'))
 
 # Configuration file for the Sphinx documentation builder.
 #
@@ -13,7 +13,7 @@ sys.path.insert(0, os.path.abspath('../../src/TRAPT'))
 project = 'TRAPT'
 copyright = '2024, Guorui Zhang'
 author = 'Guorui Zhang'
-release = '0.1.6'
+release = '0.1.7'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
