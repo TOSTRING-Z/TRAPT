@@ -65,7 +65,7 @@ python3 src/TRAPT/CalcTRSampleRPMatrix.py ATAC library
 ```
 
 ### Parameter Documentation
-Online documentation can be found [here](https://trapt.readthedocs.io/en/latest/).
+Documentation can be found on [readthedocs](https://trapt.readthedocs.io/en/latest/) or [pdf](https://github.com/TOSTRING-Z/TRAPT/blob/main/docs/_build/latex/trapt.pdf).
 
 ## Case 1: Inferring Key Regulators in Breast Cancer Using Bulk RNA-seq
 ### Data Preparation
