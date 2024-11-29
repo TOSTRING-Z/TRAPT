@@ -77,7 +77,9 @@ wget -c https://tcga-xena-hub.s3.us-east-1.amazonaws.com/download/TCGA.BRCA.samp
 ```shell
 Rscript new/script/case1/data_processing.r
 ```
-![img](./new/result/case1/volcano_plot_limma_voom.svg)
+
+<img src="./new/result/case1/volcano_plot_limma_voom.svg" alt="" style="width: 50%" />
+
 ### TRAPT Infers Key Regulators
 ```shell
 trapt --library library \
@@ -97,9 +99,13 @@ Rscript new/script/case2/data_processing.r
 python3 new/script/case2/integrated_degs.py
 Rscript new/script/case2/multi_volcano_plot.r
 ```
-![img](./new/result/case2/cluster-umap.svg)
-![img](./new/result/case2/cluster-pca.svg)
-![img](./new/result/case2/mult_volcano_plot.svg)
+
+<img src="./new/result/case2/cluster-umap.svg" alt="" style="width: 50%;" />
+
+<img src="./new/result/case2/cluster-pca.svg" alt="" style="width: 50%" />
+
+<img src="./new/result/case2/mult_volcano_plot.svg" alt="" style="width: 50%" />
+
 
 ### TRAPT Infers Key Regulators of Cell Fate Determination
 ```shell
@@ -118,7 +124,9 @@ python3 new/script/2.8/RankTRAPT_var.py --output_dir output/KnockTFv1 --rank_pat
 
 python3 new/script/2.8/var_predict.py --rank_x new/result/2.8/files/rank_TRAPT-H3K27ac.csv --rank_y new/result/2.8/files/rank_TRAPT-ATAC.csv --output_path new/result/2.8/figure/rank_scatterplot_h3k27ac-atac.svg --title "TRAPT-H3K27ac vs. TRAPT-ATAC"
 ```
-![img](./new/result/2.8/figure/rank_scatterplot_h3k27ac-atac.svg)
+
+<img src="./new/result/2.8/figure/rank_scatterplot_h3k27ac-atac.svg" alt="" style="width: 50%" />
+
 
 ```shell
 python3 new/script/2.8/RankTRAPT_var.py --output_dir output/KnockTFv1 --rank_path new/result/2.8/files --name TRAPT --model TRAPT
@@ -134,11 +142,15 @@ python3 new/script/2.8/RankTRAPT_var.py --output_dir new/result/2.8/output-TR_pe
 
 python3 new/script/2.8/var_predict.py --rank_x new/result/2.8/files/rank_TRAPT.csv --rank_y new/result/2.8/files/rank_Peak-promoter-model.csv --output_path new/result/2.8/figure/rank_scatterplot_trapt-peak.svg --title "TRAPT vs. Peak-promoter-model"
 ```
-![img](./new/result/2.8/figure/rank_scatterplot_trapt-peak.svg)
+
+<img src="./new/result/2.8/figure/rank_scatterplot_trapt-peak.svg" alt="" style="width: 50%" />
+
 ```shell
 python3 new/script/2.8/Rank_var.py --output_path new/result/2.8/figure --name Model-variant --type ALL --rank_path new/result/2.8/files --source KnockTF --columns TRAPT,TRAPT-H3K27ac,TR-model,Peak-promoter-model --col_names 'TRAPT,TRAPT(ATAC-),TRAPT(H3K27ac-),Peak-promoter-model'
 ```
-![img](./new/result/2.8/figure/rank_Model-variant@mmr_bar.svg)
+
+<img src="./new/result/2.8/figure/rank_Model-variant@mmr_bar.svg" alt="" style="width: 50%" />
+
 
 ### Algorithm comparison using cistrome background data
 ```shell
@@ -154,9 +166,13 @@ python3 new/script/3.11/Rank_all.py --output_path new/result/2.11/figure --name 
 
 python3 new/script/2.11/Rank_pile.py --output_path new/result/2.11/figure --name TRAPT-cistrome --type ALL --rank_path new/result/2.11/files --source KnockTF --columns TRAPT-source_of_cistrome,Lisa,BART --col_names 'TRAPT-source_of_cistrome,Lisa,BART'
 ```
-![img](./new/result/2.11/figure/rank_TRAPT-cistrome@boxplot.svg)
-![img](./new/result/2.11/figure/rank_TRAPT-cistrome@mmr_bar.svg)
-![img](./new/result/2.11/figure/rank_TRAPT-cistrome@mmr_pile_bar.svg)
+
+<img src="./new/result/2.11/figure/rank_TRAPT-cistrome@boxplot.svg" alt="" style="width: 50%" />
+
+<img src="./new/result/2.11/figure/rank_TRAPT-cistrome@mmr_bar.svg" alt="" style="width: 50%" />
+
+<img src="./new/result/2.11/figure/rank_TRAPT-cistrome@mmr_pile_bar.svg" alt="" style="width: 50%" />
+
 ```shell
 # Lisa benchmark dataset
 
@@ -183,8 +199,11 @@ python3 new/script/2.11/RankicisTarget.py --match_dir new/result/2.11/output-Lis
 
 python3 new/script/2.11/Rank.py --output_path new/result/2.11/figure --name Lisa-benchmark-dataset --type ALL --rank_path new/result/2.11/files_lisa --source Lisa --columns TRAPT-cistrome_lisa,Lisa,BART,i-cisTarget,ChEA3
 ```
-![img](./new/result/2.11/figure/rank_Lisa-benchmark-dataset@boxplot.svg)
-![img](./new/result/2.11/figure/rank_Lisa-benchmark-dataset@mmr_bar.svg)
+
+<img src="./new/result/2.11/figure/rank_Lisa-benchmark-dataset@boxplot.svg" alt="" style="width: 50%" />
+
+<img src="./new/result/2.11/figure/rank_Lisa-benchmark-dataset@mmr_bar.svg" alt="" style="width: 50%" />
+
 
 ### TR decay rate
 ```shell
@@ -192,8 +211,11 @@ python3 new/script/2.5/CalcTRRPMatrix.py --library library --output new/result/2
 Rscript new/script/2.5/gsea_run.r
 python3 new/script/2.5/decay_rate.py
 ```
-![img](./new/result/2.5/long.svg)
-![img](./new/result/2.5/short.svg)
+
+<img src="./new/result/2.5/long.svg" alt="" style="width: 50%" />
+
+<img src="./new/result/2.5/short.svg" alt="" style="width: 50%" />
+
 
 ### Overlap between selected epigenetic profiles and TR peaks
 ```shell
@@ -230,29 +252,43 @@ python3 new/script/2.11/RankicisTarget.py --match_dir output/KnockTFv1 --input_p
 python3 new/script/3.11/Rank_all.py --output_path 'new/result/3.11/Fig. 2/figure' --name rank_KnockTF-benchmark-dataset --type ALL --rank_path 'new/result/3.11/Fig. 2/files' --source KnockTF --columns TRAPT,Lisa,BART,i-cisTarget,ChEA3
 ```
 
-![img](./new/result/3.11/Fig.%202/figure/rank_rank_KnockTF-benchmark-dataset@mmr_bar.svg)
-![img](./new/result/3.11/Fig.%202/figure/rank_rank_KnockTF-benchmark-dataset@boxplot.svg)
-![img](./new/result/3.11/Fig.%202/figure/rank_rank_KnockTF-benchmark-dataset@bar.svg)
-![img](./new/result/3.11/Fig.%202/figure/rank_rank_KnockTF-benchmark-dataset@line.svg)
-![img](./new/result/3.11/Fig.%202/figure/rank_rank_KnockTF-benchmark-dataset@groupbar.svg)
+<img src="./new/result/3.11/Fig.%202/figure/rank_rank_KnockTF-benchmark-dataset@mmr_bar.svg" alt="" style="width: 50%" />
+
+<img src="./new/result/3.11/Fig.%202/figure/rank_rank_KnockTF-benchmark-dataset@boxplot.svg" alt="" style="width: 50%" />
+
+<img src="./new/result/3.11/Fig.%202/figure/rank_rank_KnockTF-benchmark-dataset@bar.svg" alt="" style="width: 50%" />
+
+<img src="./new/result/3.11/Fig.%202/figure/rank_rank_KnockTF-benchmark-dataset@line.svg" alt="" style="width: 50%" />
+
+<img src="./new/result/3.11/Fig.%202/figure/rank_rank_KnockTF-benchmark-dataset@groupbar.svg" alt="" style="width: 50%" />
+
 ```shell
 # Fig. 3 | Using the differential gene sets from TR knockdown/knockout experiments by KnockTF, we evaluated the performance of TRAPT.
 python3 new/script/3.11/rank_scatter_plot.py
 ```
-![img](./new/result/3.11/Fig.%203/figure/rank_scatter.svg)
+
+<img src="./new/result/3.11/Fig.%203/figure/rank_scatter.svg" alt="" style="width: 50%" />
+
 ```shell
 # Fig. 4 | Illustration of the TRAPT framework using downregulated genes from ESR1 gene knockout experiments in gastric cancer and KMCF7 breast cancer.
 python3 new/script/3.11/case_esr1.py
 ```
-![img](./new/result/3.11/Fig.%204/figure/ESR1-KD-MCF7.svg)
-![img](./new/result/3.11/Fig.%204/figure/ppi.svg)
-![img](./new/result/3.11/Fig.%204/GTEx.svg)
-![img](./new/result/3.11/Fig.%204/TCGA.svg)
+
+<img src="./new/result/3.11/Fig.%204/figure/ESR1-KD-MCF7.svg" alt="" style="width: 50%" />
+
+<img src="./new/result/3.11/Fig.%204/figure/ppi.svg" alt="" style="width: 50%" />
+
+<img src="./new/result/3.11/Fig.%204/GTEx.svg" alt="" style="width: 50%" />
+
+<img src="./new/result/3.11/Fig.%204/TCGA.svg" alt="" style="width: 50%" />
+
 ```shell
 # Fig. 5 | Prediction of functional transcriptional regulators for Alzheimer's disease using post-GWAS analysis.
 python3 new/script/3.11/enrichment.py
 ```
-![img](./new/result/3.11/Fig.%205/figure/enrichment.svg)
+
+<img src="./new/result/3.11/Fig.%205/figure/enrichment.svg" alt="" style="width: 50%" />
+
 
 ```shell
 # Fig. 6 | TRAPT identifies transcriptional regulators associated with cell fate and tissue identity. 
@@ -260,4 +296,5 @@ python3 new/script/3.11/enrichment.py
 python3 new/script/case2/gtex_diff_analysis.py
 python3 new/script/3.11/gtex_heatmap.py
 ```
-![img](./new/result/3.11/Fig.%206/figure/GTEx-heatmap.svg)
+
+<img src="./new/result/3.11/Fig.%206/figure/GTEx-heatmap.svg" alt="" style="width: 50%" />
