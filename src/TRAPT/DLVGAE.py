@@ -190,7 +190,7 @@ class CalcSTM:
         data.write_h5ad(f'{self.checkpoint_path}/A_pred_{self.type}.h5ad')
 
     def recon_loss(self, z, data, norm, weight):
-        r"""Variational Gaussian Autoencoder (VGAE) reconstruction loss.
+        r"""VGAE reconstruction loss.
         """
         y_pred = self.model_vgae.decoder(z, data.edge_label_index, sigmoid=True)
         loss = (

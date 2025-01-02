@@ -161,6 +161,7 @@ plt.close()
 # # # # # # # # # # # # # # # # # # # # # # # #
 # # # # # # # # mean rank 箱线图 # # # # # # # #
 # # # # # # # # # # # # # # # # # # # # # # # #
+from scipy import stats
 
 data = pd.DataFrame()
 for method in columns:
@@ -175,6 +176,21 @@ for method in columns:
 sn = sns.boxplot(
     x="method", y="rank", data=data, palette=color_palette, fliersize=1, width=0.8
 )
-# sn.set_ylim(top, 0 - 10)
+
+data_kd = data[data['method'] == columns[0]]['rank']
+data_nkd = data[data['method'] == columns[1]]['rank']
+t_stat, p_value = stats.ttest_ind(data_kd, data_nkd)
+
+y1 = data_kd.max() + data_kd.max()/40
+y2 = data_nkd.max() + data_kd.max()/40
+label_y = data['rank'].max() + data['rank'].max()/15
+
+line_y = data['rank'].max() + data['rank'].max()/20
+
+sn.plot([0, 0, 1, 1], [y1,line_y,line_y, y2], color='black')
+sn.text(0.5, label_y, f"p = {p_value:.3f}", ha='center', va='bottom')
+
+plt.ylim(0, data['rank'].max() + data['rank'].max()/8)
+
 plt.savefig(f"{output_path}/rank_{name}@boxplot.svg")
 plt.close()
