@@ -11,7 +11,10 @@ We have developed a corresponding web service (https://bio.liclab.net/TRAPT). Th
 
 First, download library: 
 
-[TRAPT library](https://bio.liclab.net/TRAPT/download)
+[TRAPT library](https://bio.liclab.net/TRAPT/download) or 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8080171.svg)](https://doi.org/10.5281/zenodo.8080171)
+
+
 
 
 Second, install TRAPT:
