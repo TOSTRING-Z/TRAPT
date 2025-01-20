@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Guorui
+    given-names: Zhang
+    orcid: https://orcid.org/0000-0002-7124-1309
+title: "TRAPT: A multi-stage fused deep learning framework for predicting transcriptional regulators based on large-scale epigenomic data"
+version: 0.1.9
+version: publish
+date-released: 2025-01-20
