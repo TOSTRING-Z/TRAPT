@@ -66,6 +66,10 @@ def runTRAPT(args: Args):
     )
     TR_detail = pd.concat([TR_activity, data_auc], axis=1).reset_index()
     TR_detail.columns = ["TR", "TR activity", "RP_TR_H3K27ac_auc", "RP_TR_ATAC_auc"]
+    obs.index.name = "TR"
+    TR_detail = TR_detail.merge(obs.reset_index(), on="TR").sort_values(
+        "TR activity", ascending=False
+    )
     if args.tr_type != "all":
         TR_detail = TR_detail[TR_detail.TR.str.contains({
             "tf":"Sample",
@@ -73,11 +77,9 @@ def runTRAPT(args: Args):
             "cr":"CR"
         }[args.tr_type], flags=re.IGNORECASE)]
     if args.source != "all":
-        TR_detail = TR_detail[TR_detail.Source.str.contains(args.source, flags=re.IGNORECASE)]
-    obs.index.name = "TR"
-    TR_detail = TR_detail.merge(obs.reset_index(), on="TR").sort_values(
-        "TR activity", ascending=False
-    )
+        TR_detail = TR_detail.iloc[
+            np.where(TR_detail.Source.str.contains(args.source, flags=re.IGNORECASE))
+        ]
     TR_detail.to_csv(os.path.join(args.output, "TR_detail.txt"), index=False, sep="\t")
     print("Program execution completed.")
     return TR_detail
